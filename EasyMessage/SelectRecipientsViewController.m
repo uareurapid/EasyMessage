@@ -7,6 +7,7 @@
 //
 
 #import "SelectRecipientsViewController.h"
+#import "PCViewController.h"
 
 @interface SelectRecipientsViewController ()
 
@@ -14,7 +15,7 @@
 
 @implementation SelectRecipientsViewController
 
-@synthesize contactsList,selectedContactsList;
+@synthesize contactsList,selectedContactsList,rootViewController;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -38,6 +39,52 @@
     return self;
 }
 
+-(id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil rootViewController: (PCViewController*) viewController{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if(self) {
+        self.contactsList = [[NSMutableArray alloc] init];
+        self.selectedContactsList = [[NSMutableArray alloc] init];
+        self.rootViewController = viewController;
+        
+        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done"
+                                                                       style:UIBarButtonItemStyleDone target:self action:@selector(goBackAfterSelection:)];
+        self.navigationItem.rightBarButtonItem = doneButton;
+        self.tabBarItem.image = [UIImage imageNamed:@"phone-book"];
+        self.title = @"Recipients";
+    }
+    return self;
+}
+
+
+-(id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil contacts: (NSMutableArray *) contacts rootViewController: (PCViewController*) viewController{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if(self) {
+        self.contactsList = [[NSMutableArray alloc] initWithArray:contacts];
+        self.selectedContactsList = [[NSMutableArray alloc] init];
+        self.rootViewController = viewController;
+        
+        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done"
+                                                                       style:UIBarButtonItemStyleDone target:self action:@selector(goBackAfterSelection:)];
+        self.navigationItem.rightBarButtonItem = doneButton;
+    }
+    return self;
+}
+
+-(id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil contacts: (NSMutableArray *) contacts
+         selectedOnes: (NSMutableArray *) selectedRecipients rootViewController: (PCViewController*) viewController {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if(self) {
+        self.contactsList = [[NSMutableArray alloc] initWithArray:contacts];
+        self.selectedContactsList = [[NSMutableArray alloc] initWithArray:selectedRecipients];
+        self.rootViewController = viewController;
+        
+        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done"
+                                                                       style:UIBarButtonItemStyleDone target:self action:@selector(goBackAfterSelection:)];
+        self.navigationItem.rightBarButtonItem = doneButton;
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -47,6 +94,7 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+ 
 }
 
 - (void)didReceiveMemoryWarning
@@ -56,7 +104,28 @@
 }
 
 -(IBAction)goBackAfterSelection:(id)sender {
-    [self.navigationController popToRootViewControllerAnimated:NO];
+    //[rootViewController.selectedRecipientsList addObjectsFromArray:selectedContactsList];
+    [self.tabBarController setSelectedIndex:0];// popToRootViewControllerAnimated:YES];
+}
+
+
+-(void) viewWillDisappear:(BOOL)animated {
+    //if ([self.navigationController.viewControllers indexOfObject:self]==NSNotFound) {
+        // back button was pressed.  We know this is true because self is no longer
+        // in the navigation stack.
+    //}
+   
+    [rootViewController.selectedRecipientsList removeAllObjects];
+    [rootViewController.selectedRecipientsList addObjectsFromArray:selectedContactsList];
+    
+    if(!rootViewController.selectedRecipientsList.count==0) {
+        NSString *msg = [NSString stringWithFormat:@"Selected %d recipients!",rootViewController.selectedRecipientsList.count];
+        [[[[iToast makeText:msg]
+           setGravity:iToastGravityBottom] setDuration:2000] show];
+    }
+    
+    
+   
 }
 
 #pragma mark - Table view data source
@@ -72,7 +141,6 @@
 {
 #warning Incomplete method implementation.
     // Return the number of rows in the section.
-    NSLog(@"ret %d", contactsList.count);
     return contactsList.count;
 }
 
@@ -102,9 +170,8 @@
         cell.detailTextLabel.text = @"Phone";
     }
     
-    
-    NSString *rowAsString  = [NSString stringWithFormat:@"%d",indexPath.row];
-    if([selectedContactsList containsObject:rowAsString]) {
+    if([selectedContactsList containsObject:contact]) {
+        NSLog(@"already contains: %@",contact.name);
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }
     else {
@@ -165,16 +232,16 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
     NSInteger row = indexPath.row;
-    NSString *rowAsString  = [NSString stringWithFormat:@"%d",row];
+   
 
-    //Contact *c = [contactsList objectAtIndex:row];
+    Contact *contact = [contactsList objectAtIndex:row];
     
-   if(![selectedContactsList containsObject:rowAsString]) {
-           [selectedContactsList addObject:rowAsString]; 
+   if(![selectedContactsList containsObject:contact]) {
+           [selectedContactsList addObject:contact];
    }
    else {
      //already contains, remove it
-     [selectedContactsList removeObject:rowAsString];
+     [selectedContactsList removeObject:contact];
    }
     
    [self.tableView reloadData];

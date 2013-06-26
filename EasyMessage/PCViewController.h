@@ -13,14 +13,19 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import "iToast.h"
 
-@interface PCViewController : UIViewController <MFMailComposeViewControllerDelegate,MFMessageComposeViewControllerDelegate,UIImagePickerControllerDelegate>
+@class SelectRecipientsViewController;
+
+@interface PCViewController : UIViewController <MFMailComposeViewControllerDelegate,MFMessageComposeViewControllerDelegate,UIImagePickerControllerDelegate,UITextViewDelegate,UITextFieldDelegate>
 - (IBAction)sendMessage:(id)sender;
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 
 -(IBAction)loadContactsList:(id)sender;
 - (IBAction)showSettings:(id)sender;
-- (IBAction)showEmail:(id)sender;
+- (IBAction)sendEmail:(id)sender;
 -(IBAction)sendSMS:(id)sender;
 -(IBAction)presentMediaPicker:(id) sender;
+-(NSMutableArray *) getEmailAdresses;
+-(NSMutableArray *) getPhoneNumbers;
 
 @property (strong, nonatomic) IBOutlet UITextField *subject;
 @property (strong, nonatomic) UIImage *image;
@@ -28,6 +33,13 @@
 
 
 @property(strong,nonatomic) SettingsViewController* settingsController;
+@property(strong,nonatomic) SelectRecipientsViewController *recipientsController;
+
+
+@property (strong,nonatomic) NSMutableArray *selectedRecipientsList;
+
+@property BOOL emailSentOK;
+@property BOOL smsSentOK;
 
 
 @end

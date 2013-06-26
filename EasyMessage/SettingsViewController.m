@@ -7,6 +7,8 @@
 //
 
 #import "SettingsViewController.h"
+#import "iToast.h"
+#import "PreferedItemOrderViewController.h"
 
 @interface SettingsViewController ()
 
@@ -16,6 +18,8 @@
 
 @synthesize sendOptions,preferedServiceOptions;
 @synthesize selectPreferredService,selectSendOption;
+@synthesize furtherOptionsController;
+@synthesize showToast;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -36,42 +40,63 @@
     preferedServiceOptions = [[NSMutableArray alloc] initWithObjects:OPTION_PREF_SERVICE_EMAIL,OPTION_PREF_SERVICE_SMS,OPTION_PREF_SERVICE_ALL, nil];
     
     //deafult values on startup
-    selectSendOption = 0;//send both
-    selectPreferredService = 0; //email is preferred, because is cheaper
+    selectSendOption = OPTION_ALWAYS_SEND_BOTH_ID;
+    selectPreferredService = OPTION_PREF_SERVICE_ALL_ID;
     
     NSString *selectedSendSaved = [[NSUserDefaults standardUserDefaults] objectForKey:SETTINGS_PREF_SEND_OPTION_KEY];
     NSString *selectedPrefServiceSaved = [[NSUserDefaults standardUserDefaults] objectForKey:SETTINGS_PREF_SERVICE_KEY];
     
     if(selectedSendSaved!=nil) {
         if([selectedSendSaved isEqualToString:OPTION_SEND_EMAIL_ONLY]) {
-            selectSendOption = 1;
+            selectSendOption = OPTION_SEND_EMAIL_ONLY_ID;
         }
         if([selectedSendSaved isEqualToString:OPTION_SEND_SMS_ONLY]) {
-            selectSendOption = 2;
+            selectSendOption = OPTION_SEND_SMS_ONLY_ID;
         }
     }
     
     if(selectedPrefServiceSaved!=nil) {
         if([selectedPrefServiceSaved isEqualToString:OPTION_PREF_SERVICE_SMS]) {
-            selectPreferredService = 1;
+            selectPreferredService = OPTION_PREF_SERVICE_SMS_ID;
         }
-        if([selectedPrefServiceSaved isEqualToString:OPTION_PREF_SERVICE_ALL]) {
-            selectPreferredService = 2;
+        if([selectedPrefServiceSaved isEqualToString:OPTION_PREF_SERVICE_EMAIL]) {
+            selectPreferredService = OPTION_PREF_SERVICE_EMAIL_ID;
         }
     }
     
- 
+    //UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done"
+     //                                                              style:UIBarButtonItemStyleDone target:self action:@selector(goBackAfterSelection:)];
+    //self.navigationItem.rightBarButtonItem = doneButton;
+    
+    furtherOptionsController = [[PreferedItemOrderViewController alloc] initWithNibName:@"PreferedItemOrderViewController" bundle:nil previousController:self];
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    showToast = YES;
+    
+    
+    
+}
+
+-(id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil  {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if(self) {
+        self.title = @"Settings";
+        self.tabBarItem.image = [UIImage imageNamed:@"gear"];
+    }
+    
+    return self;
 }
 
 //save user preferrences
 -(void) viewWillDisappear:(BOOL)animated {
     [self saveSettings];
+}
+
+-(void) viewWillAppear:(BOOL)animated {
+    if(showToast==NO) {
+        showToast=YES;
+    }
+    
+    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:NO];
 }
 
 - (void)didReceiveMemoryWarning
@@ -86,41 +111,56 @@
 {
 #warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 2;
+    return 3;
 }
 
-
+-(IBAction)goBackAfterSelection:(id)sender {
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
 
 -(void) saveSettings {
     
     //the default send option
+    NSString *msg;
     
     switch (selectSendOption) {
-        case 0:
+        case OPTION_ALWAYS_SEND_BOTH_ID:
             [[NSUserDefaults standardUserDefaults] setObject:OPTION_ALWAYS_SEND_BOTH forKey:SETTINGS_PREF_SEND_OPTION_KEY];
+            msg = @"Will send both SMS and email!";
             break;
-        case 1:
+        case OPTION_SEND_EMAIL_ONLY_ID:
             [[NSUserDefaults standardUserDefaults] setObject:OPTION_SEND_EMAIL_ONLY forKey:SETTINGS_PREF_SEND_OPTION_KEY];
+            msg = @"Will send email only!";
             break;
-        default: //case 2
+        default: //case 2 -> OPTION_SEND_SMS_ONLY_ID
             [[NSUserDefaults standardUserDefaults] setObject:OPTION_SEND_SMS_ONLY forKey:SETTINGS_PREF_SEND_OPTION_KEY];
+            msg = @"Will send SMS only!";
             break;
     }
     
     //now the preferred service
-    
-    if (selectPreferredService == 0) {
+    if(selectPreferredService == OPTION_PREF_SERVICE_ALL_ID) {
+        [[NSUserDefaults standardUserDefaults] setObject:OPTION_PREF_SERVICE_ALL forKey:SETTINGS_PREF_SERVICE_KEY];
+    }
+    else if(selectPreferredService == OPTION_PREF_SERVICE_EMAIL_ID) {
    
         [[NSUserDefaults standardUserDefaults] setObject:OPTION_PREF_SERVICE_EMAIL forKey:SETTINGS_PREF_SERVICE_KEY];
     }
-    else if(selectPreferredService==1) {
+    else { //OPTION_PREF_SERVICE_SMS_ID
         [[NSUserDefaults standardUserDefaults] setObject:OPTION_PREF_SERVICE_SMS forKey:SETTINGS_PREF_SERVICE_KEY]; 
     }
-    else {
-        [[NSUserDefaults standardUserDefaults] setObject:OPTION_PREF_SERVICE_ALL forKey:SETTINGS_PREF_SERVICE_KEY];
-    }
+    
     
     [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    if(showToast) {
+        [[[[iToast makeText:msg]
+           setGravity:iToastGravityBottom] setDuration:2000] show];
+    }
+    
+    
+    
+    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -130,25 +170,41 @@
     if(section==0) {
         return sendOptions.count;
     }
-    return preferedServiceOptions.count;
+    else if(section==1) {
+       return preferedServiceOptions.count; 
+    }
+    else {
+        return 1; //just one for the prefered item options
+    }
+    
 }
 
 -(NSString *) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if(section==0) {
-        return @"Send Options";
+        return @"Message - Send Options";
     }
-    return @"Preferred Service";
-}
-
--(NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section{
-    if(section==0) {
-        return @"Choose the messaging service(s) to use";
+    else if(section==1) {
+       return @"Preferred Service"; 
     }
     else {
-        return @"Choose the the preferred messaging service (in case the contact has  both entries)";
+       return @"Advanced Options";
     }
     
 }
+
+//-(NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section{
+    /*if(section==0) {
+        return @"Choose the messaging service(s) to use";
+    }
+    else if(section==1) {
+        return @"Choose the preferred service (in case the contact has both)";
+    }
+    else {
+        return @"";
+        //@"Since a single contact can have several email addresses and/or several phone numbers you can choose one as default (or let us choose one)";
+    }*/
+    
+//}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -165,7 +221,7 @@
     
     if(section==0) {
         cell.textLabel.text = [sendOptions objectAtIndex:row];
-        cell.accessoryView.accessibilityLabel = @"hi";
+        //cell.accessoryView.accessibilityLabel = @"hi";
         
         if(row == selectSendOption) {
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
@@ -174,10 +230,19 @@
             cell.accessoryType = UITableViewCellAccessoryNone;
         }
     }
-    else {
+    else if (section==1 ) {
         cell.textLabel.text = [preferedServiceOptions objectAtIndex:row];
         if(row == selectPreferredService) {
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        }
+        else {
+            cell.accessoryType = UITableViewCellAccessoryNone;
+        }
+    }
+    else {//section 2
+        cell.textLabel.text = OPTION_PREFERED_EMAIL_PHONE_ITEMS;
+        if(row == 0) {
+            cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
         }
         else {
             cell.accessoryType = UITableViewCellAccessoryNone;
@@ -234,13 +299,20 @@
 
     
     if(section==0) {
-        selectSendOption = row; 
+        selectSendOption = row;
+        [self.tableView reloadData];
+    }
+    else if(section==1) {
+        selectPreferredService = row;
+        [self.tableView reloadData];
     }
     else {
-        selectPreferredService = row;
+        //present the other table
+        showToast = NO;
+        [self.navigationController pushViewController:furtherOptionsController animated:YES];
     }
    // [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
-    [self.tableView reloadData];
+    
     
     //[self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
     //[self.tableView selectRowAtIndexPath:indexPath animated:nil scrollPosition:nil];

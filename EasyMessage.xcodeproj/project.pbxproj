@@ -32,6 +32,11 @@
 		728F279A1776362D00A61BC8 /* iToast.m in Sources */ = {isa = PBXBuildFile; fileRef = 728F27981776362D00A61BC8 /* iToast.m */; };
 		728F913E1775C8D300254D36 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 728F913D1775C8D300254D36 /* MediaPlayer.framework */; };
 		728F913F1775C8E200254D36 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 728F913B1775C78700254D36 /* CoreMedia.framework */; };
+		72A2C27A177B99F2006FF12F /* email.png in Resources */ = {isa = PBXBuildFile; fileRef = 72A2C279177B99F2006FF12F /* email.png */; };
+		72A2C27C177B9AE9006FF12F /* gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 72A2C27B177B9AE9006FF12F /* gear.png */; };
+		72A2C27E177B9F6D006FF12F /* phone-book.png in Resources */ = {isa = PBXBuildFile; fileRef = 72A2C27D177B9F6D006FF12F /* phone-book.png */; };
+		72FB67C5177B39E700D5E364 /* PreferedItemOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 72FB67C3177B39E700D5E364 /* PreferedItemOrderViewController.m */; };
+		72FB67C6177B39E700D5E364 /* PreferedItemOrderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 72FB67C4177B39E700D5E364 /* PreferedItemOrderViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -71,6 +76,12 @@
 		728F27991776362D00A61BC8 /* iToast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iToast.h; sourceTree = "<group>"; };
 		728F913B1775C78700254D36 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		728F913D1775C8D300254D36 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		72A2C279177B99F2006FF12F /* email.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = email.png; sourceTree = "<group>"; };
+		72A2C27B177B9AE9006FF12F /* gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gear.png; sourceTree = "<group>"; };
+		72A2C27D177B9F6D006FF12F /* phone-book.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "phone-book.png"; sourceTree = "<group>"; };
+		72FB67C2177B39E700D5E364 /* PreferedItemOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferedItemOrderViewController.h; sourceTree = "<group>"; };
+		72FB67C3177B39E700D5E364 /* PreferedItemOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferedItemOrderViewController.m; sourceTree = "<group>"; };
+		72FB67C4177B39E700D5E364 /* PreferedItemOrderViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreferedItemOrderViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +138,9 @@
 		722415411771148800989C3B /* EasyMessage */ = {
 			isa = PBXGroup;
 			children = (
+				72A2C27D177B9F6D006FF12F /* phone-book.png */,
+				72A2C27B177B9AE9006FF12F /* gear.png */,
+				72A2C279177B99F2006FF12F /* email.png */,
 				728F27981776362D00A61BC8 /* iToast.m */,
 				728F27991776362D00A61BC8 /* iToast.h */,
 				7224154A1771148800989C3B /* PCAppDelegate.h */,
@@ -148,6 +162,9 @@
 				72611B0A177216940043E508 /* SelectRecipientsViewController.xib */,
 				7269D4421774D6B500AE1662 /* UIPlaceHolderTextView.h */,
 				7269D4431774D6B500AE1662 /* UIPlaceHolderTextView.m */,
+				72FB67C2177B39E700D5E364 /* PreferedItemOrderViewController.h */,
+				72FB67C3177B39E700D5E364 /* PreferedItemOrderViewController.m */,
+				72FB67C4177B39E700D5E364 /* PreferedItemOrderViewController.xib */,
 			);
 			path = EasyMessage;
 			sourceTree = "<group>";
@@ -226,6 +243,10 @@
 				72611AFD1771E88B0043E508 /* SettingsViewController.xib in Resources */,
 				72611B05177213660043E508 /* EsyMessageViewController.xib in Resources */,
 				72611B0C177216940043E508 /* SelectRecipientsViewController.xib in Resources */,
+				72FB67C6177B39E700D5E364 /* PreferedItemOrderViewController.xib in Resources */,
+				72A2C27A177B99F2006FF12F /* email.png in Resources */,
+				72A2C27C177B9AE9006FF12F /* gear.png in Resources */,
+				72A2C27E177B9F6D006FF12F /* phone-book.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -245,6 +266,7 @@
 				72611B0B177216940043E508 /* SelectRecipientsViewController.m in Sources */,
 				7269D4441774D6B500AE1662 /* UIPlaceHolderTextView.m in Sources */,
 				728F279A1776362D00A61BC8 /* iToast.m in Sources */,
+				72FB67C5177B39E700D5E364 /* PreferedItemOrderViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

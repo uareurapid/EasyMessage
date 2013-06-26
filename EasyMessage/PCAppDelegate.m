@@ -9,6 +9,9 @@
 #import "PCAppDelegate.h"
 
 #import "PCViewController.h"
+#import "SettingsViewController.h"
+#import "SelectRecipientsViewController.h"
+
 
 @implementation PCAppDelegate
 
@@ -18,19 +21,41 @@
     // Override point for customization after application launch.
     self.viewController = [[PCViewController alloc] initWithNibName:@"PCViewController" bundle:nil];
     
-    UINavigationController *navController = [[UINavigationController alloc] init];
-    [navController setViewControllers: [[NSArray alloc]  initWithObjects:self.viewController,nil]];
+    self.settingsController = [[SettingsViewController alloc] initWithNibName:@"SettingsViewController" bundle:nil];
+    self.viewController.settingsController = self.settingsController;
     
-    self.window.rootViewController = navController;
+    self.recipientsController = [[SelectRecipientsViewController alloc] initWithNibName:@"SelectRecipientsViewController" bundle:nil rootViewController:self.viewController];
+    
+    self.viewController.recipientsController = self.recipientsController;
+    
+    
+    UINavigationController *navController = [[UINavigationController alloc] init];
+    [navController setViewControllers: [[NSArray alloc]  initWithObjects:self.settingsController,nil]];
+    
+    
+    UITabBarController *tabController = [[UITabBarController alloc] init];
+    [tabController setViewControllers: [NSArray arrayWithObjects:self.viewController,self.recipientsController,navController,nil] ];
+   
+    [tabController setSelectedIndex:0];
+    
+    
+    
+    self.window.rootViewController = tabController;//navController;
     [self.window makeKeyAndVisible];
     return YES;
 }
+
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 }
+/*
+- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
+{
+    return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskLandscapeLeft | UIInterfaceOrientationMaskLandscapeRight;
+}*/
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
