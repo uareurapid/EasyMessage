@@ -43,6 +43,9 @@
 @property (assign,nonatomic) NSInteger selectSendOption;
 @property (assign,nonatomic) NSInteger selectPreferredService;
 
+@property (assign,nonatomic) NSInteger initiallySelectedSendOption;
+@property (assign,nonatomic) NSInteger initiallySelectedPreferredService;
+
 @property BOOL showToast;
 
 @property (strong,nonatomic) PreferedItemOrderViewController *furtherOptionsController;

@@ -12,6 +12,7 @@
 #import "UIPlaceHolderTextView.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import "iToast.h"
+#import <AddressBook/AddressBook.h>
 
 @class SelectRecipientsViewController;
 
@@ -26,6 +27,11 @@
 -(IBAction)presentMediaPicker:(id) sender;
 -(NSMutableArray *) getEmailAdresses;
 -(NSMutableArray *) getPhoneNumbers;
+
+void addressBookChanged(ABAddressBookRef reference,
+                        CFDictionaryRef dictionary,
+                        void *context);
+-(void)setupAddressBook;
 
 @property (strong, nonatomic) IBOutlet UITextField *subject;
 @property (strong, nonatomic) UIImage *image;

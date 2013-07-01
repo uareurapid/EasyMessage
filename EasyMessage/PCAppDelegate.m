@@ -36,7 +36,7 @@
     UITabBarController *tabController = [[UITabBarController alloc] init];
     [tabController setViewControllers: [NSArray arrayWithObjects:self.viewController,self.recipientsController,navController,nil] ];
    
-    [tabController setSelectedIndex:0];
+    //[tabController setSelectedIndex:0];
     
     
     

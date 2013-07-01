@@ -17,4 +17,6 @@
 @property (copy,nonatomic) NSString *email;
 @property (copy,nonatomic) NSString *phone;
 @property (copy,nonatomic) NSString *name;
+@property (copy,nonatomic) NSString *lastName;
+@property (strong,nonatomic) UIImage *photo;
 @end

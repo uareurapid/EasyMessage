@@ -10,7 +10,7 @@
 
 @implementation Contact
 
-@synthesize phone,email,name;
+@synthesize phone,email,name,lastName,photo;
 
 //we just consider the name
 -(BOOL) isEqual:(id)object {
@@ -22,28 +22,23 @@
         return YES;
     }
     
-    Contact *other = (Contact *)object;
-    //NSString *otherName = other.name;
-    //NSString *otherEmail = other.email;
-    //NSString *otherPhone = other.phone;
+    Contact *otherContact = (Contact *)object;
+
     
-    if([name isEqualToString:other.name]) {
-       /* if(otherEmail!=nil && email!=nil) {
-            if([otherEmail isEqual:email]) {
-                return YES;
-            }
-            else {
-                return NO;
-            }
-        }
-        else {
-            return NO;
-        }*/
-        
+    if(name && otherContact.name && [name isEqualToString:otherContact.name]) {
+        return YES;
+    }
+    else if(lastName && otherContact.lastName && [lastName isEqualToString:otherContact.lastName]) {
+       return YES;
+    }
+    else if(email && otherContact.email && [email isEqualToString:otherContact.email]) {
+        return YES;
+    }
+    else if(phone && otherContact.phone && [phone isEqualToString:otherContact.phone]) {
         return YES;
     }
     else {
-       return NO;
+        return NO;
     }
 }
 

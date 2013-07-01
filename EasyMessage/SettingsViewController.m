@@ -20,6 +20,7 @@
 @synthesize selectPreferredService,selectSendOption;
 @synthesize furtherOptionsController;
 @synthesize showToast;
+@synthesize initiallySelectedPreferredService,initiallySelectedSendOption;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -42,6 +43,8 @@
     //deafult values on startup
     selectSendOption = OPTION_ALWAYS_SEND_BOTH_ID;
     selectPreferredService = OPTION_PREF_SERVICE_ALL_ID;
+    
+    
     
     NSString *selectedSendSaved = [[NSUserDefaults standardUserDefaults] objectForKey:SETTINGS_PREF_SEND_OPTION_KEY];
     NSString *selectedPrefServiceSaved = [[NSUserDefaults standardUserDefaults] objectForKey:SETTINGS_PREF_SERVICE_KEY];
@@ -92,9 +95,13 @@
 }
 
 -(void) viewWillAppear:(BOOL)animated {
-    if(showToast==NO) {
-        showToast=YES;
-    }
+    
+    initiallySelectedSendOption = selectSendOption;
+    initiallySelectedPreferredService = selectPreferredService;
+    
+    //if(showToast==NO) {
+    //    showToast=YES;
+    //}
     
     [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:NO];
 }
@@ -111,7 +118,7 @@
 {
 #warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 3;
+    return 2;
 }
 
 -(IBAction)goBackAfterSelection:(id)sender {
@@ -126,15 +133,15 @@
     switch (selectSendOption) {
         case OPTION_ALWAYS_SEND_BOTH_ID:
             [[NSUserDefaults standardUserDefaults] setObject:OPTION_ALWAYS_SEND_BOTH forKey:SETTINGS_PREF_SEND_OPTION_KEY];
-            msg = @"Will send both SMS and email!";
+            msg = @"Settings have been updated.\r\nWill send both SMS and email!";
             break;
         case OPTION_SEND_EMAIL_ONLY_ID:
             [[NSUserDefaults standardUserDefaults] setObject:OPTION_SEND_EMAIL_ONLY forKey:SETTINGS_PREF_SEND_OPTION_KEY];
-            msg = @"Will send email only!";
+            msg = @"Settings have been updated.\r\nWill send email only!";
             break;
         default: //case 2 -> OPTION_SEND_SMS_ONLY_ID
             [[NSUserDefaults standardUserDefaults] setObject:OPTION_SEND_SMS_ONLY forKey:SETTINGS_PREF_SEND_OPTION_KEY];
-            msg = @"Will send SMS only!";
+            msg = @"Settings have been updated.\r\nWill send SMS only!";
             break;
     }
     
@@ -153,7 +160,8 @@
     
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    if(showToast) {
+    //if there were any changes
+    if(initiallySelectedPreferredService != selectPreferredService || initiallySelectedSendOption!=selectSendOption) {
         [[[[iToast makeText:msg]
            setGravity:iToastGravityBottom] setDuration:2000] show];
     }
@@ -183,16 +191,16 @@
     if(section==0) {
         return @"Message - Send Options";
     }
-    else if(section==1) {
+    //else //if(section==1) {
        return @"Preferred Service"; 
-    }
-    else {
-       return @"Advanced Options";
-    }
+    //}
+    //else {
+    //   return @"Advanced Options";
+    //}
     
 }
 
-//-(NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section{
+-(NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section{
     /*if(section==0) {
         return @"Choose the messaging service(s) to use";
     }
@@ -203,8 +211,12 @@
         return @"";
         //@"Since a single contact can have several email addresses and/or several phone numbers you can choose one as default (or let us choose one)";
     }*/
+    if(section==0) {
+        return @"Select the service to send the message";
+    }
+    return @"Select the preferred service, in case contact has both entries and you don´t want him to receive both email and SMS.";
     
-//}
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -230,7 +242,8 @@
             cell.accessoryType = UITableViewCellAccessoryNone;
         }
     }
-    else if (section==1 ) {
+    else {
+        //if (section==1 ) {
         cell.textLabel.text = [preferedServiceOptions objectAtIndex:row];
         if(row == selectPreferredService) {
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
@@ -239,15 +252,15 @@
             cell.accessoryType = UITableViewCellAccessoryNone;
         }
     }
-    else {//section 2
-        cell.textLabel.text = OPTION_PREFERED_EMAIL_PHONE_ITEMS;
-        if(row == 0) {
-            cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
-        }
-        else {
-            cell.accessoryType = UITableViewCellAccessoryNone;
-        }
-    }
+    //else {//section 2
+    //    cell.textLabel.text = OPTION_PREFERED_EMAIL_PHONE_ITEMS;
+    //    if(row == 0) {
+    //        cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+    //    }
+    //    else {
+    //        cell.accessoryType = UITableViewCellAccessoryNone;
+    //    }
+    //}
     return cell;
 }
 
@@ -302,15 +315,16 @@
         selectSendOption = row;
         [self.tableView reloadData];
     }
-    else if(section==1) {
+    else {
+        //if(section==1) {
         selectPreferredService = row;
         [self.tableView reloadData];
     }
-    else {
+    //else {
         //present the other table
-        showToast = NO;
-        [self.navigationController pushViewController:furtherOptionsController animated:YES];
-    }
+    //    showToast = NO;
+    //    [self.navigationController pushViewController:furtherOptionsController animated:YES];
+    //}
    // [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
     
     
