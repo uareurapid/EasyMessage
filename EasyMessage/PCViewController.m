@@ -266,41 +266,9 @@
         NSString *email;
         
         //do we have more than 1?
-        if(count > 0) {
-            
-            email = [self getPreferredEmail: multi forLabel:kABHomeLabel count: count];
-            
-            //if(preferredEmailAddress!=ITEM_EMAIL_NONE_ID) {
-                //we we have a preferable email, use that one (if exists, of course)
-                
-                
-                //switch (preferredEmailAddress) {
-                //    case ITEM_EMAIL_HOME_ID:
-                        //email = [self getPreferredEmail: multi forLabel:kABHomeLabel count: count];
-                //        break;
-                //    case ITEM_EMAIL_WORK_ID:
-                //        email = [self getPreferredEmail: multi forLabel:kABWorkLabel count: count];
-                //        break;
-                        
-                //    case ITEM_EMAIL_OTHER_ID:
-                //        email = [self getPreferredEmail: multi forLabel:kABOtherLabel count: count];
-                //        break;
-                        
-                //    default:
-                //        break;
-                //}
-                
-            //}
-            //else {
-                //just grab the existing one
-             //   email = [self grabFirstEmailAddressInList:multi];
-            //}
-  
-        //}
-        //else if(count>0){
-            //just grab the existing one
-        //    email = [self grabFirstEmailAddressInList:multi];
-      }
+        if(count > 0) {   
+            email = [self getPreferredEmail: multi forLabel:kABHomeLabel count: count];  
+        }
         //else, we don´t have email
         
         //add it if we have it
@@ -316,51 +284,9 @@
         int countPhones = ABMultiValueGetCount(phoneMulti);
         
         if(countPhones>0) {
-            
             phone = [self getPreferredPhone: phoneMulti forLabel:kABPersonPhoneMobileLabel count: countPhones];
             
-            //if(preferredPhoneNumber!=ITEM_PHONE_NONE_ID) {
-                //we we have a preferable phone, use that one (if exists, of course)
-                
-                
-                //switch (preferredPhoneNumber) {
-                //    case ITEM_PHONE_HOME_ID:
-                //        phone = [self getPreferredPhone:  phoneMulti forLabel:kABHomeLabel count: countPhones];
-                //        break;
-                //    case ITEM_PHONE_WORK_ID:
-                //        phone = [self getPreferredPhone: phoneMulti forLabel:kABWorkLabel count: countPhones];
-                //        break;
-                        
-                //    case ITEM_PHONE_MAIN_ID:
-                //        phone = [self getPreferredPhone: phoneMulti forLabel:kABPersonPhoneMainLabel count: countPhones];
-                //        break;
-                        
-                //    case ITEM_PHONE_MOBILE_ID:
-                //        phone = [self getPreferredPhone: phoneMulti forLabel:kABPersonPhoneMobileLabel count: countPhones];
-                //        break;
-                        
-                //    case ITEM_PHONE_IPHONE_ID:
-                      //  if(phone==nil) {
-                      //      phone = [self getPreferredPhone: phoneMulti forLabel:kABPersonPhoneIPhoneLabel count: countPhones];
-                      //  }
-            
-                //        break;
-                        
-                //    default:
-                //        break;
-                // }
-                
-            //}
-            //else {
-                //just grab the first one
-            //    phone = [self grabFirstPhoneNumberInList:phoneMulti];
-            //}
-            
-        //}
-        //else if(count>0) {
-            //just grab the first one
-        //    phone = [self grabFirstPhoneNumberInList:phoneMulti];
-      }
+        }
     
       //add the phone number
       if(phone!=nil) {
@@ -372,7 +298,6 @@
         NSString *name = (__bridge NSString*)ABRecordCopyCompositeName(person);
         NSString *lastName =  (__bridge NSString*)ABRecordCopyValue(person, kABPersonLastNameProperty);
         
-        NSLog(@"name is: %@ and last name is: %@ and email is %@ and phone is %@", name, lastName,email,phone);
         
         //i must have some sort of contact info
         if(phone!=nil || email!=nil) {
@@ -404,10 +329,8 @@
                 ;
             }
             
-
-            if(![contacts containsObject:contact]) {
-                [contacts addObject:contact];    
-            }
+            [contacts addObject:contact];
+          
         }
     
      
@@ -493,7 +416,7 @@
     }
     else if(settingsController.selectSendOption != OPTION_ALWAYS_SEND_BOTH_ID) {
         //it means we don´t have email adresses and we´re not sending SMS next either
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"EasyMessage"
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"EasyMessage: Send email"
                                                         message:@"You need to select at least one valid recipient or adjust your settings!"
                                                        delegate:self
                                               cancelButtonTitle:@"OK"
@@ -592,7 +515,7 @@
         [self presentViewController:controller animated:YES completion:nil];
     }
     else {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"EasyMessage"
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"EasyMessage: Send SMS"
                                                         message:@"You need to select at least one valid recipient or adjust your settings!"
                                                        delegate:self
                                               cancelButtonTitle:@"OK"
@@ -603,7 +526,7 @@
     
  }
  else {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"EasyMessage"
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"EasyMessage: Send SMS"
                                                     message:@"It´s not possible to send the SMS, please check your device settings!"
                                                    delegate:self
                                           cancelButtonTitle:@"OK"
@@ -749,12 +672,17 @@ void addressBookChanged(ABAddressBookRef reference,
                         CFDictionaryRef dictionary,
                         void *context)
 {
+    ABAddressBookRegisterExternalChangeCallback(reference,dictionary,context);
+    
     PCViewController *_self = (__bridge PCViewController *)context;
-    NSLog(@"Address book changed!");
+   
     if(_self!=nil) {
+        
+        [_self showAlertBox:@"Your Address book has changed! Refreshing data..."];
+        [_self.selectedRecipientsList removeAllObjects];
         [_self loadContactsList:nil];
         [_self.recipientsController refreshPhonebook:nil];
-        [_self.recipientsController.tableView reloadData];
+      
     }
 }
 

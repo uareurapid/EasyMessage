@@ -17,29 +17,85 @@
     if(!object || ![object isKindOfClass: [self class]]) {
         return NO;
     }
-    
+   
     if(object==self) {
         return YES;
     }
     
     Contact *otherContact = (Contact *)object;
-
     
-    if(name && otherContact.name && [name isEqualToString:otherContact.name]) {
-        return YES;
+    if([self isNameEqual:otherContact]) {
+        
+        //same name, what about last name?
+        if([self isLastNameEqual:otherContact]) {
+            //same last name
+            //what about email?
+            if([self isEmailEqual:otherContact]) {
+                //same email
+                //what about phone?
+                if([self isPhoneEqual:otherContact]) {
+                    return YES;
+                }//phone is different
+                else {
+                    return NO;
+                }
+            }//email is different
+            else {
+                return NO;
+            }
+        }//last name is different
+        else {
+            return NO;
+        }
     }
-    else if(lastName && otherContact.lastName && [lastName isEqualToString:otherContact.lastName]) {
-       return YES;
+    
+    //if one has null name, they are not the same for sure
+    
+    return NO;
+}
+
+#pragma auxiliar comparing methods
+
+-(BOOL) isLastNameEqual: (Contact *) otherContact {
+    if(lastName && otherContact.lastName) {
+        if([lastName isEqualToString:otherContact.lastName]) {
+            return YES;
+        }
     }
-    else if(email && otherContact.email && [email isEqualToString:otherContact.email]) {
-        return YES;
+    return NO;
+}
+
+-(BOOL) isNameEqual: (Contact *) otherContact {
+    if(name && otherContact.name) {
+        
+        if([name isEqualToString:otherContact.name]) {
+            //ok name is equal, check lastname
+            return YES;
+        }
     }
-    else if(phone && otherContact.phone && [phone isEqualToString:otherContact.phone]) {
-        return YES;
+    return NO;
+}
+
+-(BOOL) isPhoneEqual: (Contact *) otherContact {
+    if(phone && otherContact.phone) {
+        if([phone isEqualToString:otherContact.phone]) {
+            return YES;
+        }
     }
-    else {
-        return NO;
+    
+    
+    return NO;
+}
+
+-(BOOL) isEmailEqual: (Contact *) otherContact {
+    
+    if(email && otherContact.email) { 
+        if([email isEqualToString:otherContact.email]) {
+            return YES;
+        }
     }
+    
+    return NO;
 }
 
 @end

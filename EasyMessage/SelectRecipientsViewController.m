@@ -51,9 +51,26 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
         self.selectedContactsList = [[NSMutableArray alloc] init];
         self.rootViewController = viewController;
         
-        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Refresh"
-                                                                       style:UIBarButtonItemStyleDone target:self action:@selector(goBackAfterSelection:)];
+        
+        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Select all"
+                                                                       style:UIBarButtonItemStyleDone target:self action:@selector(selectAllContacts:)];
         self.navigationItem.leftBarButtonItem = doneButton;
+        
+ 
+        NSArray* toolbarItems = [NSArray arrayWithObjects:
+                                 [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
+                                                                               target:self
+                                                                               action:@selector(goBackAfterSelection:)],nil];
+        
+        //***************************************************************************************
+        //[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch
+        //                                              target:self
+        //                                              action:@selector(goBackAfterSelection:)],
+        //[toolbarItems makeObjectsPerformSelector:@selector(release)];
+        //***************************************************************************************
+        
+        self.toolbarItems = toolbarItems;
+        self.navigationController.toolbarHidden = NO;
         self.tabBarItem.image = [UIImage imageNamed:@"phone-book"];
         self.title = @"Recipients";
         
@@ -97,6 +114,7 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
 
 -(IBAction)refreshPhonebook:(id)sender {
     contactsByLastNameInitial = [self loadInitialNamesDictionary];
+    [self.tableView reloadData];
 }
 
 //will group the contacts by last name initial
@@ -123,14 +141,11 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
             initial = [[contact.phone substringToIndex:1] uppercaseString];
         }
         
-        
-        NSLog(@"First sorted initial: %@", initial);
         id listForThatInitial = [dic objectForKey:initial];
         if(listForThatInitial == nil) {
             //doesnt exist yet, create the array
             NSMutableArray *array = [[NSMutableArray alloc] initWithObjects:contact, nil];
             [dic setObject:array forKey:initial];
-            NSLog(@"Adding  %@ to the sorted keys list", initial);
             [sortedKeys addObject:initial];
         }
         else {
@@ -291,6 +306,33 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
     [self.tabBarController setSelectedIndex:0];// popToRootViewControllerAnimated:YES];
 }
 
+-(IBAction)selectAllContacts:(id)sender {
+    
+    for (NSInteger s = 0; s < self.tableView.numberOfSections; s++) {
+        for (NSInteger r = 0; r < [self.tableView numberOfRowsInSection:s]; r++) {
+            
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:r inSection:s];
+            
+            
+            NSInteger section = indexPath.section;
+            //NSInteger row = indexPath.row;
+            
+            
+            NSString *key = [sortedKeys objectAtIndex:section];
+            
+            NSMutableArray *array = (NSMutableArray *) [contactsByLastNameInitial objectForKey:key];
+            for(Contact *contact in array) {
+                if(![selectedContactsList containsObject:contact]) {
+                    [selectedContactsList addObject:contact];
+                }
+            }
+ 
+        }
+    }
+    [self.tableView reloadData];
+
+}
+
 -(void) viewWillAppear:(BOOL)animated {
     
     initialSelectedContacts = selectedContactsList.count;
@@ -398,69 +440,7 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
     }
     
   
-    /*
-    int i=0;
-    for(id key in contactsByLastNameInitial.keyEnumerator) {
-        NSString *initial = (NSString *) key;
-        if(section==i) {
-            NSMutableArray *array = (NSMutableArray *) [contactsByLastNameInitial objectForKey:initial];
-            
-            Contact *contact = [array objectAtIndex:row];
-            cell.textLabel.text = contact.name;
-            
-            BOOL hasPhone = contact.phone!=nil;
-            BOOL hasEmail = contact.email!=nil;
-            
-            if(hasEmail && hasPhone) {
-                cell.detailTextLabel.text = @"Email + Phone";
-            }
-            else if(hasEmail) {
-                cell.detailTextLabel.text = @"Email";
-            }
-            else {
-                //only phone
-                cell.detailTextLabel.text = @"Phone";
-            }
-            
-            if([selectedContactsList containsObject:contact]) {
-                NSLog(@"already contains: %@",contact.name);
-                cell.accessoryType = UITableViewCellAccessoryCheckmark;
-            }
-            else {
-                cell.accessoryType = UITableViewCellAccessoryNone;
-            }
-        }
-        i++;
-        
-    }*/
     
-    // Configure the cell...
-    
-    /**
-    Contact *contact = [contactsList objectAtIndex:indexPath.row];
-    cell.textLabel.text = contact.name;
-    
-    BOOL hasPhone = contact.phone!=nil;
-    BOOL hasEmail = contact.email!=nil;
-    
-    if(hasEmail && hasPhone) {
-       cell.detailTextLabel.text = @"Email + Phone";
-    }
-    else if(hasEmail) {
-        cell.detailTextLabel.text = @"Email";
-    }
-    else {
-        //only phone
-        cell.detailTextLabel.text = @"Phone";
-    }
-    
-    if([selectedContactsList containsObject:contact]) {
-        NSLog(@"already contains: %@",contact.name);
-        cell.accessoryType = UITableViewCellAccessoryCheckmark;
-    }
-    else {
-        cell.accessoryType = UITableViewCellAccessoryNone;
-    }*/
     
     return cell;
 }
@@ -515,6 +495,7 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
+   
     NSInteger row = indexPath.row;
     NSInteger section = indexPath.section;
     

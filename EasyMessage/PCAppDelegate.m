@@ -30,11 +30,14 @@
     
     
     UINavigationController *navController = [[UINavigationController alloc] init];
-    [navController setViewControllers: [[NSArray alloc]  initWithObjects:self.settingsController,nil]];
+    [navController setViewControllers: [[NSArray alloc]  initWithObjects:self.settingsController, nil]];
+    
+    UINavigationController *navControllerRecipients = [[UINavigationController alloc] init];
+    [navControllerRecipients setViewControllers: [[NSArray alloc]  initWithObjects:self.recipientsController, nil]];
     
     
     UITabBarController *tabController = [[UITabBarController alloc] init];
-    [tabController setViewControllers: [NSArray arrayWithObjects:self.viewController,self.recipientsController,navController,nil] ];
+    [tabController setViewControllers: [NSArray arrayWithObjects:self.viewController,navControllerRecipients,navController,nil] ];
    
     //[tabController setSelectedIndex:0];
     
