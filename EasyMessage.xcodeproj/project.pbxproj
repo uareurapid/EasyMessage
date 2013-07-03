@@ -51,6 +51,7 @@
 		72A2C27A177B99F2006FF12F /* email.png in Resources */ = {isa = PBXBuildFile; fileRef = 72A2C279177B99F2006FF12F /* email.png */; };
 		72A2C27C177B9AE9006FF12F /* gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 72A2C27B177B9AE9006FF12F /* gear.png */; };
 		72A2C27E177B9F6D006FF12F /* phone-book.png in Resources */ = {isa = PBXBuildFile; fileRef = 72A2C27D177B9F6D006FF12F /* phone-book.png */; };
+		72CA9EFC17847B8F00D8D016 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 72CA9EFE17847B8F00D8D016 /* Localizable.strings */; };
 		72FB67C5177B39E700D5E364 /* PreferedItemOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 72FB67C3177B39E700D5E364 /* PreferedItemOrderViewController.m */; };
 		72FB67C6177B39E700D5E364 /* PreferedItemOrderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 72FB67C4177B39E700D5E364 /* PreferedItemOrderViewController.xib */; };
 /* End PBXBuildFile section */
@@ -111,6 +112,10 @@
 		72A2C279177B99F2006FF12F /* email.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = email.png; sourceTree = "<group>"; };
 		72A2C27B177B9AE9006FF12F /* gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gear.png; sourceTree = "<group>"; };
 		72A2C27D177B9F6D006FF12F /* phone-book.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "phone-book.png"; sourceTree = "<group>"; };
+		72CA9EFA17847B5300D8D016 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "pt-PT"; path = "pt-PT.lproj/PCViewController.xib"; sourceTree = "<group>"; };
+		72CA9EFB17847B5300D8D016 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		72CA9EFD17847B8F00D8D016 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		72CA9EFF17847BA500D8D016 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = file; name = "pt-PT"; path = "pt-PT.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		72FB67C2177B39E700D5E364 /* PreferedItemOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferedItemOrderViewController.h; sourceTree = "<group>"; };
 		72FB67C3177B39E700D5E364 /* PreferedItemOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferedItemOrderViewController.m; sourceTree = "<group>"; };
 		72FB67C4177B39E700D5E364 /* PreferedItemOrderViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreferedItemOrderViewController.xib; sourceTree = "<group>"; };
@@ -138,6 +143,7 @@
 		7224152F1771148700989C3B = {
 			isa = PBXGroup;
 			children = (
+				72CA9EFE17847B8F00D8D016 /* Localizable.strings */,
 				725A1C4B1780F015000CD825 /* Icon-72.png */,
 				725A1C4C1780F015000CD825 /* Icon-72@2x.png */,
 				725A1C4D1780F016000CD825 /* Icon-Small-50.png */,
@@ -267,6 +273,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				"pt-PT",
 			);
 			mainGroup = 7224152F1771148700989C3B;
 			productRefGroup = 722415391771148800989C3B /* Products */;
@@ -311,6 +318,7 @@
 				725A1C5C1780F016000CD825 /* Icon@2x.png in Resources */,
 				725A1C5D1780F016000CD825 /* iTunesArtwork.png in Resources */,
 				725A1C5E1780F016000CD825 /* iTunesArtwork@2x.png in Resources */,
+				72CA9EFC17847B8F00D8D016 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,6 +349,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				722415451771148800989C3B /* en */,
+				72CA9EFB17847B5300D8D016 /* pt-PT */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -349,8 +358,18 @@
 			isa = PBXVariantGroup;
 			children = (
 				722415571771148800989C3B /* en */,
+				72CA9EFA17847B5300D8D016 /* pt-PT */,
 			);
 			name = PCViewController.xib;
+			sourceTree = "<group>";
+		};
+		72CA9EFE17847B8F00D8D016 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				72CA9EFD17847B8F00D8D016 /* en */,
+				72CA9EFF17847BA500D8D016 /* pt-PT */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

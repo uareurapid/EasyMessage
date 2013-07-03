@@ -19,6 +19,7 @@
 @interface PCViewController : UIViewController <MFMailComposeViewControllerDelegate,MFMessageComposeViewControllerDelegate,UIImagePickerControllerDelegate,UITextViewDelegate,UITextFieldDelegate>
 - (IBAction)sendMessage:(id)sender;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (strong, nonatomic) IBOutlet UIButton *sendButton;
 
 -(IBAction)loadContactsList:(id)sender;
 - (IBAction)showSettings:(id)sender;

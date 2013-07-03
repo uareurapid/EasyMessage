@@ -21,14 +21,14 @@
 
 @synthesize settingsController,subject,body,image;
 @synthesize selectedRecipientsList,scrollView,recipientsController;
-@synthesize smsSentOK,emailSentOK;
+@synthesize smsSentOK,emailSentOK,sendButton;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     //settingsController = [[SettingsViewController alloc] initWithNibName:@"SettingsViewController" bundle:nil];
 	// Do any additional setup after loading the view, typically from a nib.
-    self.title = @"Compose";
+    self.title = NSLocalizedString(@"compose",nil);
     //add the settings button
     //UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithTitle:@"Settings"
       //                                                                 style:UIBarButtonItemStyleDone target:self action:@selector(showSettings:)];
@@ -43,7 +43,10 @@
 
     subject.delegate = self;
     body.delegate = self;
-    [body setPlaceholder:@"Your Message"];
+    sendButton.titleLabel.text = NSLocalizedString(@"send_message",nil);
+    subject.placeholder = NSLocalizedString(@"placeholder_subject",nil);
+    [body setPlaceholder: NSLocalizedString(@"placeholder_your_message", nil)];
+    
     
     selectedRecipientsList = [[NSMutableArray alloc]init];
     [scrollView flashScrollIndicators];

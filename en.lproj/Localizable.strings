@@ -1,0 +1,28 @@
+/* 
+  Localizable.strings
+  EasyMessage
+
+  Created by Paulo Cristo on 7/3/13.
+  Copyright (c) 2013 Paulo Cristo. All rights reserved.
+*/
+"subject" = "Subject:";
+"message" = "Message";
+"placeholder_your_message" = "Your Message";
+"placeholder_subject" = "Subject";
+"send_message" = "Send Message";
+"compose" = "Compose";
+"recipients" = "Recipients";
+"settings" = "Settings";
+"select_all" = "Select all";
+"choose_your_recipients" = "Choose your recipients:";
+"selected_num_recipients" = "Selected %@ recipients";
+"header_message_send_options" = "Message - Send Options";
+"option_send_both" = "Always send both";
+"option_send_email_only" = "Send email only";
+"option_send_sms_only" = "Send SMS only";
+"footer_select_service" = "Select the service to send the message";
+"header_preferred_service" = "Preferred Service";
+"preferred_email_service" = "Email service";
+"preferred_sms_service"= "SMS service";
+"preferred_use_both_services" = "Use both services";
+"footer_preferred_service" = "Select the preferred service, in case contact has both entries and you don´t want him to receive both email and SMS";
