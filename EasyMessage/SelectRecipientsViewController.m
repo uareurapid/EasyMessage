@@ -52,7 +52,7 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
         self.rootViewController = viewController;
         
         
-        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Select all"
+        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"select_all",nil)
                                                                        style:UIBarButtonItemStyleDone target:self action:@selector(selectAllContacts:)];
         self.navigationItem.leftBarButtonItem = doneButton;
         
@@ -72,7 +72,7 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
         self.toolbarItems = toolbarItems;
         self.navigationController.toolbarHidden = NO;
         self.tabBarItem.image = [UIImage imageNamed:@"phone-book"];
-        self.title = @"Recipients";
+        self.title =  NSLocalizedString(@"recipients",nil);
         
     }
     return self;
@@ -308,27 +308,49 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
 
 -(IBAction)selectAllContacts:(id)sender {
     
-    for (NSInteger s = 0; s < self.tableView.numberOfSections; s++) {
-        for (NSInteger r = 0; r < [self.tableView numberOfRowsInSection:s]; r++) {
+    //if we have all selected, remove selection
+    if(selectedContactsList.count > 0) {
+        
+        [selectedContactsList removeAllObjects];
+        dispatch_async(dispatch_get_main_queue(), ^{
+           self.navigationItem.leftBarButtonItem.title = NSLocalizedString(@"select_all", @"seleccionar tudo"); 
             
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:r inSection:s];
-            
-            
-            NSInteger section = indexPath.section;
-            //NSInteger row = indexPath.row;
-            
-            
-            NSString *key = [sortedKeys objectAtIndex:section];
-            
-            NSMutableArray *array = (NSMutableArray *) [contactsByLastNameInitial objectForKey:key];
-            for(Contact *contact in array) {
-                if(![selectedContactsList containsObject:contact]) {
-                    [selectedContactsList addObject:contact];
-                }
-            }
- 
-        }
+        });
+        
+        
+        
     }
+    else {
+        
+        for (NSInteger s = 0; s < self.tableView.numberOfSections; s++) {
+            for (NSInteger r = 0; r < [self.tableView numberOfRowsInSection:s]; r++) {
+                
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:r inSection:s];
+                
+                
+                NSInteger section = indexPath.section;
+                //NSInteger row = indexPath.row;
+                
+                
+                NSString *key = [sortedKeys objectAtIndex:section];
+                
+                NSMutableArray *array = (NSMutableArray *) [contactsByLastNameInitial objectForKey:key];
+                for(Contact *contact in array) {
+                    if(![selectedContactsList containsObject:contact]) {
+                        [selectedContactsList addObject:contact];
+                    }
+                }
+                
+            }
+        }
+       
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.navigationItem.leftBarButtonItem.title = NSLocalizedString(@"unselect_all", @"remover selecção");
+        });
+        
+        
+    }
+        
     [self.tableView reloadData];
 
 }
@@ -349,7 +371,7 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
     
     if(selectedContactsList.count>0 && initialSelectedContacts!=selectedContactsList.count) {
         
-        NSString *msg = [NSString stringWithFormat:@"Selected %d recipients!",selectedContactsList.count];
+        NSString *msg = [NSString stringWithFormat: NSLocalizedString(@"selected_%@_recipients", @"num of recipients"),@(selectedContactsList.count)];
         [[[[iToast makeText:msg]
            setGravity:iToastGravityBottom] setDuration:2000] show];
     }
@@ -417,14 +439,14 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
     BOOL hasEmail = contact.email!=nil;
     
     if(hasEmail && hasPhone) {
-        cell.detailTextLabel.text = @"Email + Phone";
+        cell.detailTextLabel.text =  [NSString stringWithFormat:@"Email + %@", NSLocalizedString(@"phone_label",@"Phone") ];
     }
     else if(hasEmail) {
         cell.detailTextLabel.text = @"Email";
     }
     else {
         //only phone
-        cell.detailTextLabel.text = @"Phone";
+        cell.detailTextLabel.text = NSLocalizedString(@"phone_label",@"Phone");
     }
     
    // if(contact.photo!=nil) {
@@ -514,6 +536,19 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
      [selectedContactsList removeObject:contact];
    }
     
+    if(selectedContactsList.count>0) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.navigationItem.leftBarButtonItem.title = NSLocalizedString(@"unselect_all", @"remover selecção");
+        });
+    }
+    else {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.navigationItem.leftBarButtonItem.title = NSLocalizedString(@"select_all", @"seleccionar tudo");
+            
+        });
+    }
+    
+
    [self.tableView reloadData];
 
 }
@@ -523,9 +558,9 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
     
    
     NSString *key = [sortedKeys objectAtIndex:section];
-    if(section==0) {
-        return [ NSString stringWithFormat: @"Choose your recipients:%@%@",@"\r\n",key ];
-    }
+    //if(section==0) {
+    //    return [ NSString stringWithFormat: @"%@%@ %@",NSLocalizedString(@"choose_your_recipients",@"choose recipients"),@"\r\n",key ];
+    //}
     return key;
     
 }
@@ -550,7 +585,7 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
 
 -(NSString *) tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     if(section == contactsByLastNameInitial.count-1) { //if is the last section
-        return [NSString stringWithFormat: @"Selected %d recipients",selectedContactsList.count];
+        return [NSString stringWithFormat: NSLocalizedString(@"selected_%@_recipients", @"num of recipients"),@(selectedContactsList.count)];
     }
     return @"";//
 }

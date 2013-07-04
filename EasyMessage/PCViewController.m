@@ -22,6 +22,7 @@
 @synthesize settingsController,subject,body,image;
 @synthesize selectedRecipientsList,scrollView,recipientsController;
 @synthesize smsSentOK,emailSentOK,sendButton;
+@synthesize labelMessage,labelSubject;
 
 - (void)viewDidLoad
 {
@@ -43,9 +44,13 @@
 
     subject.delegate = self;
     body.delegate = self;
-    sendButton.titleLabel.text = NSLocalizedString(@"send_message",nil);
+    [sendButton setTitle:NSLocalizedString(@"send_message",nil) forState:UIControlStateNormal];
+    
     subject.placeholder = NSLocalizedString(@"placeholder_subject",nil);
     [body setPlaceholder: NSLocalizedString(@"placeholder_your_message", nil)];
+    
+    labelSubject.text = NSLocalizedString(@"subject_label",nil);
+    labelMessage.text = NSLocalizedString(@"message_label",nil);
     
     
     selectedRecipientsList = [[NSMutableArray alloc]init];
@@ -107,19 +112,20 @@
 //load the contacts from device
 - (IBAction)sendMessage:(id)sender {
     
+    
     if(subject.text.length==0 && body.text.length==0) {
         
-        [self showAlertBox: @"Subject and message body cannot be empty!"];
+        [self showAlertBox: NSLocalizedString(@"alert_message_both_empty", @"Subject and message body cannot be empty!")];
          
     }
     else if(body.text.length==0) {
         
-        [self showAlertBox: @"The message body cannot be empty!"];
+        [self showAlertBox: NSLocalizedString(@"alert_message_body_empty",@"The message body cannot be empty!")];
 
     }
     else if(selectedRecipientsList.count==0) {
         
-        [self showAlertBox: @"You need to select at least one recipient!"];
+        [self showAlertBox: NSLocalizedString(@"alert_message_select_least_one",@"You need to select at least one recipient!")];
     }
     else {
         /**
@@ -176,7 +182,7 @@
         [self loadContactsList:nil];
     }
     @catch (NSException *exception) {
-        [self showAlertBox:[NSString stringWithFormat:@"Unable to load contacts from address book: %@",exception.description]];
+        [self showAlertBox:[NSString stringWithFormat: NSLocalizedString(@"unable_load_contacts_error_%@", @"unable to read contacts from AB"),exception.description]];
     }
     @finally {
         //do nothing
@@ -419,8 +425,8 @@
     }
     else if(settingsController.selectSendOption != OPTION_ALWAYS_SEND_BOTH_ID) {
         //it means we don´t have email adresses and we´re not sending SMS next either
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"EasyMessage: Send email"
-                                                        message:@"You need to select at least one valid recipient or adjust your settings!"
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"easymessage_send_email_title",@"EasyMessage: Send email")
+                                                        message:NSLocalizedString(@"recipients_least_one_recipient", @"select valid recipient")
                                                        delegate:self
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
@@ -439,19 +445,20 @@
 {
     NSString *msg;
     switch (result)
+    
     {
         case MFMailComposeResultCancelled:
-            msg = @"Mail cancelled";
+            msg = NSLocalizedString(@"message_mail_canceled",@"Mail cancelled");
             break;
         case MFMailComposeResultSaved:
-            msg = @"Mail saved";
+            msg = NSLocalizedString(@"message_mail_saved",@"Mail saved");
             break;
         case MFMailComposeResultSent:
-            msg = @"Mail sent";
+            msg = NSLocalizedString(@"message_mail_sent",@"Mail sent");
             emailSentOK = YES;
             break;
         case MFMailComposeResultFailed:
-            msg = [NSString stringWithFormat:@"Mail sent failure: %@", [error localizedDescription] ];
+            msg = [NSString stringWithFormat:NSLocalizedString(@"message_mail_sent_failure_%@", @"Mail sent failure"),[error localizedDescription]];
             break;
         default:
             break;
@@ -479,16 +486,17 @@
 //delegate for the sms controller
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result
 {
+    
     NSString *msg;
 	switch (result) {
 		case MessageComposeResultCancelled:
-            msg = @"Cancelled";
+            msg = NSLocalizedString(@"message_sms_canceled",@"Canceled");
 			break;
 		case MessageComposeResultFailed:
-            msg = @"Unable to compose SMS";
+            msg = NSLocalizedString(@"message_sms_unable_compose",@"Unable to compose SMS");
 			break;
 		case MessageComposeResultSent:
-            msg = @"SMS sent";
+            msg = NSLocalizedString(@"message_sms_sent",@"SMS sent");
             smsSentOK = YES;
 			break;
 		default:
@@ -518,8 +526,8 @@
         [self presentViewController:controller animated:YES completion:nil];
     }
     else {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"EasyMessage: Send SMS"
-                                                        message:@"You need to select at least one valid recipient or adjust your settings!"
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"easymessage_send_sms_title", @"EasyMessage: Send SMS")
+                                                        message: NSLocalizedString(@"recipients_least_one_recipient",@"recipient not valid")
                                                        delegate:self
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
@@ -529,8 +537,8 @@
     
  }
  else {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"EasyMessage: Send SMS"
-                                                    message:@"It´s not possible to send the SMS, please check your device settings!"
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"easymessage_send_sms_title", @"EasyMessage: Send SMS")
+                                                    message:NSLocalizedString(@"no_sms_device_settings",@"can´ send sms")
                                                    delegate:self
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles:nil];
@@ -681,7 +689,7 @@ void addressBookChanged(ABAddressBookRef reference,
    
     if(_self!=nil) {
         
-        [_self showAlertBox:@"Your Address book has changed! Refreshing data..."];
+        [_self showAlertBox: NSLocalizedString(@"address_book_changed_msg",@"address has changed")];
         [_self.selectedRecipientsList removeAllObjects];
         [_self loadContactsList:nil];
         [_self.recipientsController refreshPhonebook:nil];

@@ -17,7 +17,6 @@
 		722415501771148800989C3B /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7224154F1771148800989C3B /* Default@2x.png */; };
 		722415521771148800989C3B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 722415511771148800989C3B /* Default-568h@2x.png */; };
 		722415551771148800989C3B /* PCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 722415541771148800989C3B /* PCViewController.m */; };
-		722415581771148800989C3B /* PCViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 722415561771148800989C3B /* PCViewController.xib */; };
 		72241560177114DC00989C3B /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7224155E177114DC00989C3B /* AddressBook.framework */; };
 		72241561177114DC00989C3B /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7224155F177114DC00989C3B /* AddressBookUI.framework */; };
 		725A1C551780F016000CD825 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 725A1C4B1780F015000CD825 /* Icon-72.png */; };
@@ -39,6 +38,7 @@
 		72611B0B177216940043E508 /* SelectRecipientsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 72611B09177216940043E508 /* SelectRecipientsViewController.m */; };
 		72611B0C177216940043E508 /* SelectRecipientsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 72611B0A177216940043E508 /* SelectRecipientsViewController.xib */; };
 		7269D4441774D6B500AE1662 /* UIPlaceHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7269D4431774D6B500AE1662 /* UIPlaceHolderTextView.m */; };
+		726FAC54178595E4008F3EC4 /* PCViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 726FAC53178595E4008F3EC4 /* PCViewController.xib */; };
 		7285A6AB177CACFA006137B8 /* concrete_wall.png in Resources */ = {isa = PBXBuildFile; fileRef = 7285A6A9177CACFA006137B8 /* concrete_wall.png */; };
 		7285A6AC177CACFA006137B8 /* concrete_wall@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 7285A6AA177CACFA006137B8 /* concrete_wall@2X.png */; };
 		7285A6AF177CB0A3006137B8 /* tableViewBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7285A6AD177CB0A3006137B8 /* tableViewBackground@2x.png */; };
@@ -72,7 +72,6 @@
 		722415511771148800989C3B /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		722415531771148800989C3B /* PCViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PCViewController.h; sourceTree = "<group>"; };
 		722415541771148800989C3B /* PCViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PCViewController.m; sourceTree = "<group>"; };
-		722415571771148800989C3B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/PCViewController.xib; sourceTree = "<group>"; };
 		7224155E177114DC00989C3B /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		7224155F177114DC00989C3B /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		725A1C4B1780F015000CD825 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72.png"; path = "../../../Desktop/App Icon [Rounded]/Icon-72.png"; sourceTree = "<group>"; };
@@ -97,8 +96,11 @@
 		72611B08177216940043E508 /* SelectRecipientsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectRecipientsViewController.h; sourceTree = "<group>"; };
 		72611B09177216940043E508 /* SelectRecipientsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectRecipientsViewController.m; sourceTree = "<group>"; };
 		72611B0A177216940043E508 /* SelectRecipientsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectRecipientsViewController.xib; sourceTree = "<group>"; };
+		7265EB2217848A90003F5FE3 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Localizable.strings; sourceTree = "<group>"; };
+		7265EB2417848A90003F5FE3 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		7269D4421774D6B500AE1662 /* UIPlaceHolderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPlaceHolderTextView.h; sourceTree = "<group>"; };
 		7269D4431774D6B500AE1662 /* UIPlaceHolderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPlaceHolderTextView.m; sourceTree = "<group>"; };
+		726FAC53178595E4008F3EC4 /* PCViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PCViewController.xib; sourceTree = "<group>"; };
 		7285A6A9177CACFA006137B8 /* concrete_wall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = concrete_wall.png; sourceTree = "<group>"; };
 		7285A6AA177CACFA006137B8 /* concrete_wall@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "concrete_wall@2X.png"; sourceTree = "<group>"; };
 		7285A6AD177CB0A3006137B8 /* tableViewBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tableViewBackground@2x.png"; sourceTree = "<group>"; };
@@ -112,10 +114,9 @@
 		72A2C279177B99F2006FF12F /* email.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = email.png; sourceTree = "<group>"; };
 		72A2C27B177B9AE9006FF12F /* gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gear.png; sourceTree = "<group>"; };
 		72A2C27D177B9F6D006FF12F /* phone-book.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "phone-book.png"; sourceTree = "<group>"; };
-		72CA9EFA17847B5300D8D016 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "pt-PT"; path = "pt-PT.lproj/PCViewController.xib"; sourceTree = "<group>"; };
 		72CA9EFB17847B5300D8D016 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
-		72CA9EFD17847B8F00D8D016 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		72CA9EFF17847BA500D8D016 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = file; name = "pt-PT"; path = "pt-PT.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		72CA9EFD17847B8F00D8D016 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		72CA9EFF17847BA500D8D016 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		72FB67C2177B39E700D5E364 /* PreferedItemOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferedItemOrderViewController.h; sourceTree = "<group>"; };
 		72FB67C3177B39E700D5E364 /* PreferedItemOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferedItemOrderViewController.m; sourceTree = "<group>"; };
 		72FB67C4177B39E700D5E364 /* PreferedItemOrderViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreferedItemOrderViewController.xib; sourceTree = "<group>"; };
@@ -200,8 +201,8 @@
 				7224154A1771148800989C3B /* PCAppDelegate.h */,
 				7224154B1771148800989C3B /* PCAppDelegate.m */,
 				722415531771148800989C3B /* PCViewController.h */,
+				726FAC53178595E4008F3EC4 /* PCViewController.xib */,
 				722415541771148800989C3B /* PCViewController.m */,
-				722415561771148800989C3B /* PCViewController.xib */,
 				722415421771148800989C3B /* Supporting Files */,
 				72611AF91771E88B0043E508 /* SettingsViewController.h */,
 				72611AFA1771E88B0043E508 /* SettingsViewController.m */,
@@ -274,6 +275,7 @@
 			knownRegions = (
 				en,
 				"pt-PT",
+				pt,
 			);
 			mainGroup = 7224152F1771148700989C3B;
 			productRefGroup = 722415391771148800989C3B /* Products */;
@@ -294,7 +296,6 @@
 				7224154E1771148800989C3B /* Default.png in Resources */,
 				722415501771148800989C3B /* Default@2x.png in Resources */,
 				722415521771148800989C3B /* Default-568h@2x.png in Resources */,
-				722415581771148800989C3B /* PCViewController.xib in Resources */,
 				72611AFD1771E88B0043E508 /* SettingsViewController.xib in Resources */,
 				72611B05177213660043E508 /* EsyMessageViewController.xib in Resources */,
 				72611B0C177216940043E508 /* SelectRecipientsViewController.xib in Resources */,
@@ -319,6 +320,7 @@
 				725A1C5D1780F016000CD825 /* iTunesArtwork.png in Resources */,
 				725A1C5E1780F016000CD825 /* iTunesArtwork@2x.png in Resources */,
 				72CA9EFC17847B8F00D8D016 /* Localizable.strings in Resources */,
+				726FAC54178595E4008F3EC4 /* PCViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -350,17 +352,9 @@
 			children = (
 				722415451771148800989C3B /* en */,
 				72CA9EFB17847B5300D8D016 /* pt-PT */,
+				7265EB2417848A90003F5FE3 /* pt */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		722415561771148800989C3B /* PCViewController.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				722415571771148800989C3B /* en */,
-				72CA9EFA17847B5300D8D016 /* pt-PT */,
-			);
-			name = PCViewController.xib;
 			sourceTree = "<group>";
 		};
 		72CA9EFE17847B8F00D8D016 /* Localizable.strings */ = {
@@ -368,6 +362,7 @@
 			children = (
 				72CA9EFD17847B8F00D8D016 /* en */,
 				72CA9EFF17847BA500D8D016 /* pt-PT */,
+				7265EB2217848A90003F5FE3 /* pt */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

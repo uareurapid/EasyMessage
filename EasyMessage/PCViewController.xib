@@ -115,7 +115,7 @@
 							<object class="IBUILabel" id="556172506">
 								<reference key="NSNextResponder" ref="143327201"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{20, 85}, {87, 21}}</string>
+								<string key="NSFrame">{{20, 85}, {109, 21}}</string>
 								<reference key="NSSuperview" ref="143327201"/>
 								<reference key="NSNextKeyView" ref="319972731"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -135,7 +135,7 @@
 							<object class="IBUIButton" id="634690447">
 								<reference key="NSNextResponder" ref="143327201"/>
 								<int key="NSvFlags">293</int>
-								<string key="NSFrame">{{97, 298}, {129, 44}}</string>
+								<string key="NSFrame">{{97, 298}, {133, 44}}</string>
 								<reference key="NSSuperview" ref="143327201"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -4673,6 +4673,22 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">labelMessage</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="556172506"/>
+					</object>
+					<int key="connectionID">444</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">labelSubject</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="384484918"/>
+					</object>
+					<int key="connectionID">445</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">delegate</string>
 						<reference key="source" ref="714050587"/>
 						<reference key="destination" ref="372490531"/>
@@ -4785,7 +4801,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">443</int>
+			<int key="maxID">445</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>

@@ -20,6 +20,8 @@
 - (IBAction)sendMessage:(id)sender;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet UIButton *sendButton;
+@property (strong, nonatomic) IBOutlet UILabel *labelMessage;
+@property (strong, nonatomic) IBOutlet UILabel *labelSubject;
 
 -(IBAction)loadContactsList:(id)sender;
 - (IBAction)showSettings:(id)sender;

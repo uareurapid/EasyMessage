@@ -82,8 +82,9 @@
 -(id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil  {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if(self) {
-        self.title = @"Settings";
+
         self.tabBarItem.image = [UIImage imageNamed:@"gear"];
+        self.title =  NSLocalizedString(@"settings",nil);
     }
     
     return self;
@@ -129,19 +130,19 @@
     
     //the default send option
     NSString *msg;
-    
+
     switch (selectSendOption) {
         case OPTION_ALWAYS_SEND_BOTH_ID:
             [[NSUserDefaults standardUserDefaults] setObject:OPTION_ALWAYS_SEND_BOTH forKey:SETTINGS_PREF_SEND_OPTION_KEY];
-            msg = @"Settings have been updated.\r\nWill send both SMS and email!";
+            msg = NSLocalizedString(@"alert_message_settings_updated_both",@"Settings have been updated. Will send both SMS and email!");
             break;
         case OPTION_SEND_EMAIL_ONLY_ID:
             [[NSUserDefaults standardUserDefaults] setObject:OPTION_SEND_EMAIL_ONLY forKey:SETTINGS_PREF_SEND_OPTION_KEY];
-            msg = @"Settings have been updated.\r\nWill send email only!";
+            msg = NSLocalizedString(@"alert_message_settings_updated_email",@"Settings have been updated. Will send email only!");
             break;
         default: //case 2 -> OPTION_SEND_SMS_ONLY_ID
             [[NSUserDefaults standardUserDefaults] setObject:OPTION_SEND_SMS_ONLY forKey:SETTINGS_PREF_SEND_OPTION_KEY];
-            msg = @"Settings have been updated.\r\nWill send SMS only!";
+            msg = NSLocalizedString(@"alert_message_settings_updated_sms",@"Settings have been updated. Will send SMS only!");
             break;
     }
     
@@ -189,14 +190,15 @@
 
 -(NSString *) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if(section==0) {
-        return @"Message - Send Options";
+        return  NSLocalizedString(@"header_message_send_options",nil);
     }
-    //else //if(section==1) {
-       return @"Preferred Service"; 
+  
+    return NSLocalizedString(@"header_preferred_service",nil);
     //}
     //else {
     //   return @"Advanced Options";
     //}
+    
     
 }
 
@@ -212,9 +214,10 @@
         //@"Since a single contact can have several email addresses and/or several phone numbers you can choose one as default (or let us choose one)";
     }*/
     if(section==0) {
-        return @"Select the service to send the message";
+        return NSLocalizedString(@"footer_select_service", nil);
     }
-    return @"Select the preferred service, in case contact has both entries and you don´t want him to receive both email and SMS.";
+    return NSLocalizedString(@"footer_preferred_service", nil);
+    
     
 }
 
@@ -232,8 +235,7 @@
     NSInteger row = indexPath.row;
     
     if(section==0) {
-        cell.textLabel.text = [sendOptions objectAtIndex:row];
-        //cell.accessoryView.accessibilityLabel = @"hi";
+        cell.textLabel.text =  [self labelForOptionIndex:row atSection:section];// [sendOptions objectAtIndex:row];
         
         if(row == selectSendOption) {
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
@@ -244,7 +246,7 @@
     }
     else {
         //if (section==1 ) {
-        cell.textLabel.text = [preferedServiceOptions objectAtIndex:row];
+        cell.textLabel.text = [self labelForOptionIndex:row atSection:section];//[preferedServiceOptions objectAtIndex:row];
         if(row == selectPreferredService) {
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
         }
@@ -262,6 +264,46 @@
     //    }
     //}
     return cell;
+}
+
+-(NSString *) labelForOptionIndex: (NSInteger) rowIndex atSection: (NSInteger) section {
+    
+    
+    if(section==0) {//send options
+        switch (rowIndex) {
+            case 0:
+                //NSLog(@"returning %@", NSLocalizedString(@"option_send_both", @"send both email and sms"));
+                return NSLocalizedString(@"option_send_both", @"send both email and sms");
+            case 1:
+                return NSLocalizedString(@"option_send_email_only", @"send email only");
+            default:
+                return NSLocalizedString(@"option_send_sms_only",@"send only sms");
+        }
+    }
+    else {
+        switch (rowIndex) {//preferred services
+            case 0:
+                return NSLocalizedString(@"preferred_email_service", @"prefer email");
+            case 1:
+                return NSLocalizedString(@"preferred_sms_service", @"prefer sms");
+            default:
+                return NSLocalizedString(@"preferred_use_both_services",@"use both");
+        }
+    }
+    return @"";
+    //section 0
+    //OPTION_ALWAYS_SEND_BOTH, OPTION_SEND_EMAIL_ONLY, OPTION_SEND_SMS_ONLY
+    //section 1
+    //OPTION_PREF_SERVICE_EMAIL,OPTION_PREF_SERVICE_SMS,OPTION_PREF_SERVICE_ALL
+    /*
+    "option_send_both" = "Always send both";
+    "option_send_email_only" = "Send email only";
+    "option_send_sms_only" = "Send SMS only";
+    "footer_select_service" = "Select the service to send the message";
+    
+    "preferred_email_service" = "Email service";
+    "preferred_sms_service"= "SMS service";
+    "preferred_use_both_services" = "Use both services";*/
 }
 
 /*
