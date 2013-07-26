@@ -553,6 +553,29 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
 
 }
 
+//ADDED these 2 methods bellow for the alphabet stuff
+#pragma alhpabet scroll view stuff
+- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
+    
+    return [sortedKeys indexOfObject:title];
+}
+
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
+{
+    NSMutableArray *indices =
+    [NSMutableArray arrayWithCapacity:[sortedKeys count]+1];
+    
+    [indices addObject:UITableViewIndexSearch];
+    
+    for (NSString *item in sortedKeys)
+        [indices addObject:[item substringToIndex:1]];
+    
+    
+    return indices;
+}
+//###############################
+
+
 -(NSString *) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     
     
