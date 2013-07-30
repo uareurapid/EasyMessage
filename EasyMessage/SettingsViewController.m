@@ -21,12 +21,14 @@
 @synthesize furtherOptionsController;
 @synthesize showToast;
 @synthesize initiallySelectedPreferredService,initiallySelectedSendOption;
+@synthesize isFacebookAvailable,isTwitterAvailable;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
+        
     }
     return self;
 }
@@ -39,6 +41,8 @@
     
     sendOptions = [[NSMutableArray alloc] initWithObjects:OPTION_ALWAYS_SEND_BOTH, OPTION_SEND_EMAIL_ONLY, OPTION_SEND_SMS_ONLY,nil];
     preferedServiceOptions = [[NSMutableArray alloc] initWithObjects:OPTION_PREF_SERVICE_EMAIL,OPTION_PREF_SERVICE_SMS,OPTION_PREF_SERVICE_ALL, nil];
+    
+    [self checkSocialServicesAvailability];
     
     //deafult values on startup
     selectSendOption = OPTION_ALWAYS_SEND_BOTH_ID;
@@ -67,16 +71,44 @@
         }
     }
     
-    //UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done"
-     //                                                              style:UIBarButtonItemStyleDone target:self action:@selector(goBackAfterSelection:)];
-    //self.navigationItem.rightBarButtonItem = doneButton;
-    
     furtherOptionsController = [[PreferedItemOrderViewController alloc] initWithNibName:@"PreferedItemOrderViewController" bundle:nil previousController:self];
 
     showToast = YES;
     
     
     
+}
+
+//check if the facebook and twitter services are available/configured
+//and add/remove them accordingly
+-(void) checkSocialServicesAvailability {
+    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
+        isFacebookAvailable=YES;
+        NSLog(@"we have facebook");
+        if(![sendOptions containsObject:OPTION_SENDTO_FACEBOOK_ONLY])
+           [sendOptions addObject:OPTION_SENDTO_FACEBOOK_ONLY];
+    }
+    else {
+        NSLog(@"NOT facebook");
+        isFacebookAvailable = NO;
+        if([sendOptions containsObject:OPTION_SENDTO_FACEBOOK_ONLY])
+            [sendOptions removeObject:OPTION_SENDTO_FACEBOOK_ONLY];
+    }
+    
+    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
+        isTwitterAvailable=YES;
+        NSLog(@"we have twitter");
+        
+        if(![sendOptions containsObject:OPTION_SENDTO_TWITTER_ONLY])
+           [sendOptions addObject:OPTION_SENDTO_TWITTER_ONLY];
+    }
+    else {
+        NSLog(@"NOT twitter");
+        isTwitterAvailable = NO;
+        
+        if([sendOptions containsObject:OPTION_SENDTO_TWITTER_ONLY])
+           [sendOptions removeObject:OPTION_SENDTO_TWITTER_ONLY];
+    }
 }
 
 -(id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil  {
@@ -90,8 +122,11 @@
     return self;
 }
 
+
 //save user preferrences
 -(void) viewWillDisappear:(BOOL)animated {
+    //remove the notification listener for account changes
+    //[[NSNotificationCenter defaultCenter] removeObserver:ACAccountStoreDidChangeNotification];
     [self saveSettings];
 }
 
@@ -99,12 +134,10 @@
     
     initiallySelectedSendOption = selectSendOption;
     initiallySelectedPreferredService = selectPreferredService;
-    
-    //if(showToast==NO) {
-    //    showToast=YES;
-    //}
-    
+
     [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:NO];
+    //add a notification listener to detect account changes
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkSocialServicesAvailability) name:ACAccountStoreDidChangeNotification object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -119,6 +152,7 @@
 {
 #warning Potentially incomplete method implementation.
     // Return the number of sections.
+    
     return 2;
 }
 
@@ -140,10 +174,21 @@
             [[NSUserDefaults standardUserDefaults] setObject:OPTION_SEND_EMAIL_ONLY forKey:SETTINGS_PREF_SEND_OPTION_KEY];
             msg = NSLocalizedString(@"alert_message_settings_updated_email",@"Settings have been updated. Will send email only!");
             break;
-        default: //case 2 -> OPTION_SEND_SMS_ONLY_ID
+        case OPTION_SEND_SMS_ONLY_ID: //case 2 -> OPTION_SEND_SMS_ONLY_ID
             [[NSUserDefaults standardUserDefaults] setObject:OPTION_SEND_SMS_ONLY forKey:SETTINGS_PREF_SEND_OPTION_KEY];
             msg = NSLocalizedString(@"alert_message_settings_updated_sms",@"Settings have been updated. Will send SMS only!");
             break;
+        //twitter and facebook
+        case OPTION_SENDTO_FACEBOOK_ONLY_ID:
+            [[NSUserDefaults standardUserDefaults] setObject:OPTION_SENDTO_FACEBOOK_ONLY forKey:SETTINGS_PREF_SEND_OPTION_KEY];
+            msg = NSLocalizedString(@"alert_message_settings_updated_email",@"Settings have been updated. Will send email only!");
+            break;
+        case OPTION_SENDTO_TWITTER_ONLY_ID:
+            [[NSUserDefaults standardUserDefaults] setObject:OPTION_SENDTO_TWITTER_ONLY forKey:SETTINGS_PREF_SEND_OPTION_KEY];
+            msg = NSLocalizedString(@"alert_message_settings_updated_email",@"Settings have been updated. Will send email only!");
+            break;
+            
+        
     }
     
     //now the preferred service
@@ -182,9 +227,8 @@
     else if(section==1) {
        return preferedServiceOptions.count; 
     }
-    else {
-        return 1; //just one for the prefered item options
-    }
+   
+    return 1; //just one for the prefered item options
     
 }
 
@@ -192,12 +236,13 @@
     if(section==0) {
         return  NSLocalizedString(@"header_message_send_options",nil);
     }
-  
-    return NSLocalizedString(@"header_preferred_service",nil);
-    //}
-    //else {
-    //   return @"Advanced Options";
-    //}
+    else if(section==1) {
+      return NSLocalizedString(@"header_preferred_service",nil);
+    }
+    
+    else {
+       return @"Advanced Options";
+    }
     
     
 }
@@ -216,7 +261,12 @@
     if(section==0) {
         return NSLocalizedString(@"footer_select_service", nil);
     }
-    return NSLocalizedString(@"footer_preferred_service", nil);
+    else if(section==1) {
+        return NSLocalizedString(@"footer_preferred_service", nil);   
+    }
+    else {
+        return @"Use social services";
+    }
     
     
 }
@@ -243,8 +293,41 @@
         else {
             cell.accessoryType = UITableViewCellAccessoryNone;
         }
+        
+        if(row==0) {
+            cell.imageView.image = [UIImage imageNamed:@"emblem_package"];
+            //Author: VisualPharm, http://www.visualpharm.com/
+        //License: CC Attribution No Derivatives
+
+        }
+        else if(row==1) {
+             cell.imageView.image = [UIImage imageNamed:@"contact"];
+            //VisualPharm (Ivan Boyko)
+        }
+        else if(row==2) {
+            cell.imageView.image = [UIImage imageNamed:@"Sms-And-Mms-48"];
+            //Author: CrazEriC, http://crazeric.deviantart.com/
+        //License: CC Attribution
+        }
+        else if(row>2) {
+            if(isFacebookAvailable && ! isTwitterAvailable) {
+                cell.imageView.image = [UIImage imageNamed:@"facebook"];
+            }
+            else if(isTwitterAvailable && !isFacebookAvailable ) {
+                cell.imageView.image = [UIImage imageNamed:@"twitter"];
+            }
+            else {
+                //both available
+                cell.imageView.image = row==3 ? [UIImage imageNamed:@"facebook"] : [UIImage imageNamed:@"twitter"];
+            }//Lenka Meleakova CCLlicense
+        }
+        
+        
+        
+
+        
     }
-    else {
+    else if(section==1){
         //if (section==1 ) {
         cell.textLabel.text = [self labelForOptionIndex:row atSection:section];//[preferedServiceOptions objectAtIndex:row];
         if(row == selectPreferredService) {
@@ -253,16 +336,22 @@
         else {
             cell.accessoryType = UITableViewCellAccessoryNone;
         }
+        
+        
+        if(row==0) {
+            cell.imageView.image = [UIImage imageNamed:@"contact"];
+            //VisualPharm (Ivan Boyko)
+        }
+        else if(row==1) {
+            cell.imageView.image = [UIImage imageNamed:@"Sms-And-Mms-48"];
+        }
+        else {
+            cell.imageView.image = [UIImage imageNamed:@"emblem_package"];
+        }
+        
     }
-    //else {//section 2
-    //    cell.textLabel.text = OPTION_PREFERED_EMAIL_PHONE_ITEMS;
-    //    if(row == 0) {
-    //        cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
-    //    }
-    //    else {
-    //        cell.accessoryType = UITableViewCellAccessoryNone;
-    //    }
-    //}
+ 
+    
     return cell;
 }
 
@@ -276,11 +365,21 @@
                 return NSLocalizedString(@"option_send_both", @"send both email and sms");
             case 1:
                 return NSLocalizedString(@"option_send_email_only", @"send email only");
-            default:
+            case 2:
                 return NSLocalizedString(@"option_send_sms_only",@"send only sms");
+            case 3:
+                if(isFacebookAvailable && !isTwitterAvailable) {
+                    return NSLocalizedString(@"option_send_facebook_only",@"send only to facebook");
+                }
+                else if(isTwitterAvailable && !isFacebookAvailable) {
+                    return NSLocalizedString(@"option_send_twitter_only",@"send only to twitter");
+                }
+            case 4:
+               return NSLocalizedString(@"option_send_twitter_only",@"send only to twitter"); 
+  
         }
     }
-    else {
+    else if(section==1) {
         switch (rowIndex) {//preferred services
             case 0:
                 return NSLocalizedString(@"preferred_email_service", @"prefer email");
@@ -290,6 +389,7 @@
                 return NSLocalizedString(@"preferred_use_both_services",@"use both");
         }
     }
+  
     return @"";
     //section 0
     //OPTION_ALWAYS_SEND_BOTH, OPTION_SEND_EMAIL_ONLY, OPTION_SEND_SMS_ONLY
@@ -357,11 +457,11 @@
         selectSendOption = row;
         [self.tableView reloadData];
     }
-    else {
-        //if(section==1) {
+    else if(section==1) {
         selectPreferredService = row;
-        [self.tableView reloadData];
+        
     }
+    [self.tableView reloadData];
     //else {
         //present the other table
     //    showToast = NO;

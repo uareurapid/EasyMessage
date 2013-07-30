@@ -108,8 +108,12 @@
     return YES;
 }
 
+- (IBAction)sendMessage:(id)sender {
+    [self sendToTwitter:nil];
+}
 
 //load the contacts from device
+/*
 - (IBAction)sendMessage:(id)sender {
     
     
@@ -150,6 +154,8 @@
          #define ITEM_EMAIL_OTHER_ID 2
          
          **/
+
+/*
         if(settingsController.selectSendOption == OPTION_ALWAYS_SEND_BOTH_ID
            || settingsController.selectSendOption == OPTION_SEND_EMAIL_ONLY_ID) {
             
@@ -164,7 +170,7 @@
     }
     
        
-}
+}*/
 //showAlertBox messageios
 -(void) showAlertBox:(NSString *) msg {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"EasyMessage"
@@ -243,36 +249,38 @@
      NSMutableArray *contacts = [[NSMutableArray alloc] init];
     
     
-    ABRecordRef source = ABAddressBookCopyDefaultSource(addressBook);
-    //NSArray *thePeople = (__bridge NSArray*)ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(addressBook, source, kABPersonSortByLastName);
+    //ABRecordRef source = ABAddressBookCopyDefaultSource(addressBook);
+
     
-    //CFArrayRef allPeople = ABAddressBookCopyArrayOfAllPeople(addressBook);
+    //CFArrayRef allPeople = ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(addressBook, source, kABPersonSortByLastName);
     
+    //CFIndex numberOfPeople = ABAddressBookGetPersonCount(addressBook);
     
-    CFArrayRef allPeople = ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(addressBook, source, kABPersonSortByLastName);
-    
-    CFIndex numberOfPeople = ABAddressBookGetPersonCount(addressBook);
-    
-    //ABPersonCopyImageDataWithFormat(person, kABPersonImageFormatOriginalSize);
+    NSArray *arrayOfPeople = (__bridge_transfer NSArray*)ABAddressBookCopyArrayOfAllPeople(addressBook);
+    NSLog(@"number of people is: %d",arrayOfPeople.count);
     
     
-    
-    for(int i = 0; i < numberOfPeople; i++){
+    for(int i = 0; i < arrayOfPeople.count; i++){
         //NSData  *imgData = (__bridge_transfer NSData *) ABPersonCopyImageDataWithFormat(record, kABPersonImageFormatThumbnail);
         
         Contact *contact = [[Contact alloc] init];
-        ABRecordRef person = CFArrayGetValueAtIndex( allPeople, i );
-        ABMultiValueRef multi = ABRecordCopyValue(person, kABPersonEmailProperty);
+        ABRecordRef person = (__bridge ABRecordRef)[arrayOfPeople objectAtIndex:i];
+        // was ok +- CFArrayGetValueAtIndex( allPeople, i );
         
-        //FORGET THIS, WILL CONFUSE USERS MORE
-        //NSInteger preferredEmailAddress = settingsController.furtherOptionsController.selectedEmailOption;
-        //NSInteger preferredPhoneNumber = settingsController.furtherOptionsController.selectedPhoneOption;
-        //NSLog(@"preferred email: %d preferred number: %d", preferredEmailAddress,preferredPhoneNumber);
+        NSString *email;
+        
+        NSString *theName = (__bridge NSString*)ABRecordCopyCompositeName(person);
+        
+        NSLog(@"%@ i equals to %d, total is %d",theName, i,(int)arrayOfPeople.count);
+        
+    
+        
+        ABMultiValueRef multi = ABRecordCopyValue(person, kABPersonEmailProperty);
 
 #pragma GET EMAIL ADDRESS
         
+        
         int count = ABMultiValueGetCount(multi);
-        NSString *email;
         
         //do we have more than 1?
         if(count > 0) {   
@@ -284,6 +292,7 @@
         if(email!=nil) {
             contact.email = email;
         }
+          
         
 #pragma GET PHONE NUMBER
         
@@ -509,6 +518,71 @@
     
 	[self dismissViewControllerAnimated:YES completion:^{[self clearFieldsAndRecipients];}];
 }
+
+//will send the message to facebook
+- (IBAction)sendToFacebook:(id)sender {
+    
+    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
+        
+        SLComposeViewController *mySLComposerSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
+        
+        [mySLComposerSheet setInitialText:body.text];
+        
+        //[mySLComposerSheet addImage:[UIImage imageNamed:@"myImage.png"]];
+        
+        //[mySLComposerSheet addURL:[NSURL URLWithString:@"http://stackoverflow.com/questions/12503287/tutorial-for-slcomposeviewcontroller-sharing"]];
+        
+        [mySLComposerSheet setCompletionHandler:^(SLComposeViewControllerResult result) {
+            
+            switch (result) {
+                case SLComposeViewControllerResultCancelled:
+                    NSLog(@"Post to Facebook Canceled");
+                    break;
+                case SLComposeViewControllerResultDone:
+                    NSLog(@"Post to Facebook Sucessful");
+                    break;
+                    
+                default:
+                    break;
+            }
+        }];
+        
+        [self presentViewController:mySLComposerSheet animated:YES completion:nil];
+    }
+}
+
+//send the message also to twitter
+- (IBAction)sendToTwitter:(id)sender {
+    
+    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
+        
+        SLComposeViewController *mySLComposerSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
+        
+        [mySLComposerSheet setInitialText:body.text];
+        
+        //[mySLComposerSheet addImage:[UIImage imageNamed:@"myImage.png"]];
+        
+        //[mySLComposerSheet addURL:[NSURL URLWithString:@"http://stackoverflow.com/questions/12503287/tutorial-for-slcomposeviewcontroller-sharing"]];
+        
+        [mySLComposerSheet setCompletionHandler:^(SLComposeViewControllerResult result) {
+            
+            switch (result) {
+                case SLComposeViewControllerResultCancelled:
+                    NSLog(@"Post to Twitter Canceled");
+                    break;
+                case SLComposeViewControllerResultDone:
+                    NSLog(@"Post to Twitter Sucessful");
+                    break;
+                    
+                default:
+                    break;
+            }
+        }];
+        
+        [self presentViewController:mySLComposerSheet animated:YES completion:nil];
+    }
+}
+
 
 -(IBAction)sendSMS:(id)sender {
     

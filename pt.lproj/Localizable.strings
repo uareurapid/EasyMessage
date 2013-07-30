@@ -21,6 +21,8 @@
 "option_send_both" = "Enviar sempre ambos";
 "option_send_email_only" = "Enviar apenas email";
 "option_send_sms_only" = "Enviar apenas SMS";
+"option_send_facebook_only" = "Enviar apenas para o Facebook";
+"option_send_twitter_only" = "Enviar apenas para o Twitter";
 "footer_select_service" = "Seleccione o serviço a usar para enviar a mensagem";
 "header_preferred_service" = "Serviço Preferencial";
 "preferred_email_service" = "Email";

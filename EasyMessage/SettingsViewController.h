@@ -7,14 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Social/Social.h>
+//#import <Accounts/Accounts.h>
 
 #define OPTION_ALWAYS_SEND_BOTH   @"Always send both"
 #define OPTION_SEND_EMAIL_ONLY    @"Send email only"
 #define OPTION_SEND_SMS_ONLY      @"Send SMS only"
+#define OPTION_SENDTO_FACEBOOK_ONLY    @"Send to Facebook only"
+#define OPTION_SENDTO_TWITTER_ONLY      @"Send to Twitter only"
 
-#define OPTION_ALWAYS_SEND_BOTH_ID   0
-#define OPTION_SEND_EMAIL_ONLY_ID    1
-#define OPTION_SEND_SMS_ONLY_ID      2
+#define OPTION_ALWAYS_SEND_BOTH_ID      0
+#define OPTION_SEND_EMAIL_ONLY_ID       1
+#define OPTION_SEND_SMS_ONLY_ID         2
+#define OPTION_SENDTO_FACEBOOK_ONLY_ID      3
+#define OPTION_SENDTO_TWITTER_ONLY_ID      4
 
 #define OPTION_PREF_SERVICE_ALL    @"Use both services"
 #define OPTION_PREF_SERVICE_EMAIL  @"Email service"
@@ -47,6 +53,9 @@
 @property (assign,nonatomic) NSInteger initiallySelectedPreferredService;
 
 @property BOOL showToast;
+
+@property BOOL isFacebookAvailable;
+@property BOOL isTwitterAvailable;
 
 @property (strong,nonatomic) PreferedItemOrderViewController *furtherOptionsController;
 
