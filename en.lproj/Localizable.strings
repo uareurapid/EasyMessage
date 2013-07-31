@@ -21,16 +21,19 @@
 "option_send_both" = "Always send both";
 "option_send_email_only" = "Send email only";
 "option_send_sms_only" = "Send SMS only";
-"option_send_facebook_only" = "Send to Facebook only";
-"option_send_twitter_only" = "Send to Twitter only";
-"footer_select_service" = "Select the service to send the message";
+"option_send_facebook_only" = "Post to Facebook";
+"option_send_twitter_only" = "Post to Twitter";
+"option_send_include_social_network" = "Include social networks...";
+"footer_select_service" = "Select the service(s) to send the message";
 "header_preferred_service" = "Preferred Service";
 "preferred_email_service" = "Email service";
 "preferred_sms_service"= "SMS service";
 "preferred_use_both_services" = "Use both services";
 "footer_preferred_service" = "Select the preferred service, in case contact has both entries and you don´t want him to receive both email and SMS";
+"footer_social_networks" = "Posts to social networks work on a per message basis, which means your choices are not persisted between different messages";
 "phone_label" = "Phone";
 //alert box
+"alert_message_include_social_networks" = "Settings have been updated.\r\nWill include social networks!";
 "alert_message_both_empty" = "Subject and message body cannot be empty!";
 "alert_message_body_empty" = "The message body cannot be empty!";
 "alert_message_select_least_one" = "You need to select at least one recipient!";

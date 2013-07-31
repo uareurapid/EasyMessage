@@ -8,7 +8,7 @@
 
 #import "SettingsViewController.h"
 #import "iToast.h"
-#import "PreferedItemOrderViewController.h"
+#import "SocialNetworksViewController.h"
 
 @interface SettingsViewController ()
 
@@ -71,7 +71,19 @@
         }
     }
     
-    furtherOptionsController = [[PreferedItemOrderViewController alloc] initWithNibName:@"PreferedItemOrderViewController" bundle:nil previousController:self];
+    NSMutableArray *services = [[NSMutableArray alloc] init];
+    if(sendOptions.count>3) {
+        if(isFacebookAvailable) {
+            [services addObject:OPTION_SENDTO_FACEBOOK_ONLY];
+        }
+        if(isTwitterAvailable ) {
+            [services addObject:OPTION_SENDTO_TWITTER_ONLY];
+        }
+    }
+    
+    
+    furtherOptionsController = [[SocialNetworksViewController alloc] initWithNibName:@"PreferedItemOrderViewController"
+                                                                              bundle:nil previousController:self services:services];
 
     showToast = YES;
     
@@ -82,32 +94,33 @@
 //check if the facebook and twitter services are available/configured
 //and add/remove them accordingly
 -(void) checkSocialServicesAvailability {
+    //facebook
     if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
         isFacebookAvailable=YES;
-        NSLog(@"we have facebook");
-        if(![sendOptions containsObject:OPTION_SENDTO_FACEBOOK_ONLY])
-           [sendOptions addObject:OPTION_SENDTO_FACEBOOK_ONLY];
+
     }
     else {
-        NSLog(@"NOT facebook");
         isFacebookAvailable = NO;
-        if([sendOptions containsObject:OPTION_SENDTO_FACEBOOK_ONLY])
-            [sendOptions removeObject:OPTION_SENDTO_FACEBOOK_ONLY];
     }
+    //twitter
     
     if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
         isTwitterAvailable=YES;
-        NSLog(@"we have twitter");
-        
-        if(![sendOptions containsObject:OPTION_SENDTO_TWITTER_ONLY])
-           [sendOptions addObject:OPTION_SENDTO_TWITTER_ONLY];
     }
     else {
-        NSLog(@"NOT twitter");
         isTwitterAvailable = NO;
+    }
+    
+    if(isTwitterAvailable || isFacebookAvailable) {
+        if(![sendOptions containsObject:OPTION_INCLUDE_SOCIAL_SERVICES]) {
+        //add it
+           [sendOptions addObject:OPTION_INCLUDE_SOCIAL_SERVICES]; 
+        }
         
-        if([sendOptions containsObject:OPTION_SENDTO_TWITTER_ONLY])
-           [sendOptions removeObject:OPTION_SENDTO_TWITTER_ONLY];
+    }
+    else if(!isTwitterAvailable && !isFacebookAvailable && [sendOptions containsObject:OPTION_INCLUDE_SOCIAL_SERVICES]) {
+        //remove it
+        [sendOptions removeObject:OPTION_INCLUDE_SOCIAL_SERVICES];
     }
 }
 
@@ -138,6 +151,12 @@
     [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:NO];
     //add a notification listener to detect account changes
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkSocialServicesAvailability) name:ACAccountStoreDidChangeNotification object:nil];
+    
+    if(furtherOptionsController!=nil) {
+        if(furtherOptionsController.selectedServiceOptions.count > 0) {
+            //toast we will use social services
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -178,6 +197,7 @@
             [[NSUserDefaults standardUserDefaults] setObject:OPTION_SEND_SMS_ONLY forKey:SETTINGS_PREF_SEND_OPTION_KEY];
             msg = NSLocalizedString(@"alert_message_settings_updated_sms",@"Settings have been updated. Will send SMS only!");
             break;
+            /*
         //twitter and facebook
         case OPTION_SENDTO_FACEBOOK_ONLY_ID:
             [[NSUserDefaults standardUserDefaults] setObject:OPTION_SENDTO_FACEBOOK_ONLY forKey:SETTINGS_PREF_SEND_OPTION_KEY];
@@ -186,7 +206,7 @@
         case OPTION_SENDTO_TWITTER_ONLY_ID:
             [[NSUserDefaults standardUserDefaults] setObject:OPTION_SENDTO_TWITTER_ONLY forKey:SETTINGS_PREF_SEND_OPTION_KEY];
             msg = NSLocalizedString(@"alert_message_settings_updated_email",@"Settings have been updated. Will send email only!");
-            break;
+            break;*/
             
         
     }
@@ -248,16 +268,7 @@
 }
 
 -(NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section{
-    /*if(section==0) {
-        return @"Choose the messaging service(s) to use";
-    }
-    else if(section==1) {
-        return @"Choose the preferred service (in case the contact has both)";
-    }
-    else {
-        return @"";
-        //@"Since a single contact can have several email addresses and/or several phone numbers you can choose one as default (or let us choose one)";
-    }*/
+    
     if(section==0) {
         return NSLocalizedString(@"footer_select_service", nil);
     }
@@ -309,17 +320,11 @@
             //Author: CrazEriC, http://crazeric.deviantart.com/
         //License: CC Attribution
         }
-        else if(row>2) {
-            if(isFacebookAvailable && ! isTwitterAvailable) {
-                cell.imageView.image = [UIImage imageNamed:@"facebook"];
-            }
-            else if(isTwitterAvailable && !isFacebookAvailable ) {
-                cell.imageView.image = [UIImage imageNamed:@"twitter"];
-            }
-            else {
-                //both available
-                cell.imageView.image = row==3 ? [UIImage imageNamed:@"facebook"] : [UIImage imageNamed:@"twitter"];
-            }//Lenka Meleakova CCLlicense
+        else if(row==3) {
+            
+            cell.imageView.image = [UIImage imageNamed:@"About-me-icon"];
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            
         }
         
         
@@ -367,15 +372,12 @@
                 return NSLocalizedString(@"option_send_email_only", @"send email only");
             case 2:
                 return NSLocalizedString(@"option_send_sms_only",@"send only sms");
+                
             case 3:
-                if(isFacebookAvailable && !isTwitterAvailable) {
-                    return NSLocalizedString(@"option_send_facebook_only",@"send only to facebook");
-                }
-                else if(isTwitterAvailable && !isFacebookAvailable) {
-                    return NSLocalizedString(@"option_send_twitter_only",@"send only to twitter");
-                }
-            case 4:
-               return NSLocalizedString(@"option_send_twitter_only",@"send only to twitter"); 
+                return NSLocalizedString(@"option_send_include_social_network",@"include social networks");
+            default:
+                return @"";
+                      
   
         }
     }
@@ -455,13 +457,20 @@
     
     if(section==0) {
         selectSendOption = row;
-        [self.tableView reloadData];
+        if(row < 3) {
+          [self.tableView reloadData];
+        }
+        else {
+            showToast = NO;
+            [self.navigationController pushViewController:furtherOptionsController animated:YES];
+        }
     }
     else if(section==1) {
         selectPreferredService = row;
+        [self.tableView reloadData];
         
     }
-    [self.tableView reloadData];
+    
     //else {
         //present the other table
     //    showToast = NO;

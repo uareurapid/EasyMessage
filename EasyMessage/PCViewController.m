@@ -10,7 +10,7 @@
 #import "Contact.h"
 #import "SelectRecipientsViewController.h"
 #import <UIKit/UIKit.h>
-#import "PreferedItemOrderViewController.h"
+#import "SocialNetworksViewController.h"
 
 
 @interface PCViewController ()
@@ -109,7 +109,7 @@
 }
 
 - (IBAction)sendMessage:(id)sender {
-    [self sendToTwitter:nil];
+    [self sendToFacebook:nil];//http://www.visualpharm.com/
 }
 
 //load the contacts from device
@@ -240,7 +240,7 @@
         
     }
      
-    
+    //SEND BUTTON linkware http://www.fasticon.com/
     
 }
 
