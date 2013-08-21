@@ -13,6 +13,7 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import "iToast.h"
 #import <AddressBook/AddressBook.h>
+//#import "SocialNetworksViewController.h"
 
 @class SelectRecipientsViewController;
 
@@ -49,6 +50,11 @@ void addressBookChanged(ABAddressBookRef reference,
 
 @property BOOL emailSentOK;
 @property BOOL smsSentOK;
+
+@property BOOL facebookSentOK;
+@property BOOL twitterSentOK;
+@property BOOL sendToFacebook;
+@property BOOL sendToTwitter;
 
 
 @end

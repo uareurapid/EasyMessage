@@ -23,6 +23,7 @@
 @synthesize selectedRecipientsList,scrollView,recipientsController;
 @synthesize smsSentOK,emailSentOK,sendButton;
 @synthesize labelMessage,labelSubject;
+@synthesize sendToFacebook,sendToTwitter,facebookSentOK,twitterSentOK;
 
 - (void)viewDidLoad
 {
@@ -41,6 +42,10 @@
     
     smsSentOK = NO;
     emailSentOK = NO;
+    facebookSentOK = NO;
+    twitterSentOK = NO;
+    sendToTwitter = NO;
+    sendToFacebook = NO;
 
     subject.delegate = self;
     body.delegate = self;
@@ -108,14 +113,33 @@
     return YES;
 }
 
-- (IBAction)sendMessage:(id)sender {
-    [self sendToFacebook:nil];//http://www.visualpharm.com/
-}
-
-//load the contacts from device
 /*
 - (IBAction)sendMessage:(id)sender {
+    [self sendToFacebook:nil];//http://www.visualpharm.com/
+}*/
+
+//load the contacts from device
+
+- (IBAction)sendMessage:(id)sender {
     
+    
+    BOOL isFacebookAvailable = settingsController.socialOptionsController.isFacebookAvailable;
+    BOOL isTwitterAvailable = settingsController.socialOptionsController.isTwitterAvailable;
+    BOOL isFacebookSelected = NO;
+    BOOL isTwitterSelected = NO;
+    
+    if(isFacebookAvailable) {
+        isFacebookSelected = [settingsController.socialOptionsController.selectedServiceOptions containsObject: OPTION_SENDTO_FACEBOOK_ONLY];
+    }
+    if(isTwitterAvailable) {
+        isTwitterSelected = [settingsController.socialOptionsController.selectedServiceOptions containsObject: OPTION_SENDTO_TWITTER_ONLY];
+    }
+    
+    NSLog(@"facebook available %d twitter available %d facebook selected %d twitter selected %d",isFacebookAvailable,
+          isTwitterAvailable,isFacebookSelected,isTwitterSelected);
+    
+    sendToFacebook = isFacebookSelected;
+    sendToTwitter = isTwitterSelected;
     
     if(subject.text.length==0 && body.text.length==0) {
         
@@ -127,9 +151,17 @@
         [self showAlertBox: NSLocalizedString(@"alert_message_body_empty",@"The message body cannot be empty!")];
 
     }
-    else if(selectedRecipientsList.count==0) {
+    else if(selectedRecipientsList.count==0 ) {
         
-        [self showAlertBox: NSLocalizedString(@"alert_message_select_least_one",@"You need to select at least one recipient!")];
+        if(!sendToFacebook&& !sendToTwitter) {
+           [self showAlertBox: NSLocalizedString(@"alert_message_select_least_one",@"You need to select at least one recipient!")]; 
+        }
+        else {
+            [self sendToSocialNetworks];
+        
+        }
+        //if we do not have recipients, neither are using social networks show message
+        
     }
     else {
         /**
@@ -155,22 +187,34 @@
          
          **/
 
-/*
-        if(settingsController.selectSendOption == OPTION_ALWAYS_SEND_BOTH_ID
-           || settingsController.selectSendOption == OPTION_SEND_EMAIL_ONLY_ID) {
-            
-            emailSentOK = NO;
-            [self sendEmail:nil];//will send sms on dismiss email
+        @try {
+            if(settingsController.selectSendOption == OPTION_ALWAYS_SEND_BOTH_ID
+               || settingsController.selectSendOption == OPTION_SEND_EMAIL_ONLY_ID) {
+                
+                emailSentOK = NO;
+                [self sendEmail:nil];//will send sms on dismiss email
+            }
+            else if(settingsController.selectSendOption == OPTION_SEND_SMS_ONLY_ID) {
+                
+                smsSentOK = NO;
+                [self sendSMS:nil];
+            }
         }
-        else if(settingsController.selectSendOption == OPTION_SEND_SMS_ONLY_ID) {
-            
-            smsSentOK = NO;
-            [self sendSMS:nil];
+        @catch (NSException *exception) {
+            NSLog(@"Error sending message: %@", exception.description);
         }
+        @finally {
+            //clear facebook and twitter selection
+            //if(isTwitterSelected || isFacebookSelected) {
+            //    [self resetSocialNetworks];
+            //}
+        }
+
+        
     }
     
        
-}*/
+}
 //showAlertBox messageios
 -(void) showAlertBox:(NSString *) msg {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"EasyMessage"
@@ -179,6 +223,29 @@
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles:nil];
     [alert show];
+}
+
+//send to social networks
+-(void)sendToSocialNetworks {
+    
+    NSLog(@"send to social networks");
+    //@try {
+        if(sendToFacebook) {
+            //NOTE: if twitter is also selected, it will show up/send on facebook result
+            [self sendToFacebook:nil];
+        }
+        else if(sendToTwitter) {
+            [self sendToTwitter:nil];
+        }
+    //}
+    //@catch (NSException *exception) {
+    //    NSLog(@"Error sending to social networks: %@",exception.description);
+    //}
+    //@finally {
+        //nothing here
+    //}
+    
+    
 }
 
 //create the address book reference and register the callback
@@ -442,9 +509,10 @@
         
         [alert show];
     }
-    else {
-        [self sendSMS:nil];
-    }
+    //#BUGFIX this way was sending SMS 2 times! here and on checkIfSendBoth
+    //else {
+    //    [self sendSMS:nil];
+    //}
     
     
     
@@ -488,9 +556,25 @@
         [self sendSMS:nil];
     }
     else {
-        [self clearFieldsAndRecipients];
+
+        [self doSocialNetworksIfSelected];
     }
 }
+
+//this is called only from sms or email
+-(void) doSocialNetworksIfSelected{
+    
+    if(sendToFacebook || sendToTwitter) {
+        [self sendToSocialNetworks];
+  
+    }
+    else {
+       [self clearFieldsAndRecipients];
+    }
+    
+}
+
+
 
 //delegate for the sms controller
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result
@@ -516,7 +600,7 @@
            setGravity:iToastGravityBottom] setDuration:1000] show];
     }
     
-	[self dismissViewControllerAnimated:YES completion:^{[self clearFieldsAndRecipients];}];
+	[self dismissViewControllerAnimated:YES completion:^{[self doSocialNetworksIfSelected];}];
 }
 
 //will send the message to facebook
@@ -534,16 +618,35 @@
         
         [mySLComposerSheet setCompletionHandler:^(SLComposeViewControllerResult result) {
             
+            NSString *msg;
+            BOOL clear = YES;
             switch (result) {
                 case SLComposeViewControllerResultCancelled:
-                    NSLog(@"Post to Facebook Canceled");
+                    msg = NSLocalizedString(@"facebook_post_canceled", @"facebook_post_canceled");
+                    clear = NO;
+                    //NSLog(@"Post to Facebook Canceled");
                     break;
                 case SLComposeViewControllerResultDone:
-                    NSLog(@"Post to Facebook Sucessful");
+                    //NSLog(@"Post to Facebook Sucessful");
+                    msg = NSLocalizedString(@"facebook_post_ok", @"facebook_post_ok");
+                    
                     break;
                     
                 default:
                     break;
+            }
+            
+            if(msg!=nil) {
+                [[[[iToast makeText:msg]
+                   setGravity:iToastGravityBottom] setDuration:1000] show];
+            }
+            
+            if(sendToTwitter) {
+                [self sendToTwitter:nil]; //will reset inside
+            }
+            else {
+                //reset now
+                [self resetSocialNetworks:clear];
             }
         }];
         
@@ -551,7 +654,25 @@
     }
 }
 
-//send the message also to twitter
+//reset the booleans after sending the message
+-(void) resetSocialNetworks: (BOOL) clear {
+    
+    if(clear) {
+        sendToFacebook = NO;
+        sendToTwitter = NO;
+        [settingsController resetSocialNetworks];
+        
+        if(body.text.length>0) {
+            //we still haven´t cleared
+            [self clearFieldsAndRecipients];
+        }
+    }
+    
+    
+    //NSLog(@"resetting....");
+}
+
+//send the message also to twitter (facebook is always first if available)
 - (IBAction)sendToTwitter:(id)sender {
     
     if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
@@ -565,18 +686,34 @@
         //[mySLComposerSheet addURL:[NSURL URLWithString:@"http://stackoverflow.com/questions/12503287/tutorial-for-slcomposeviewcontroller-sharing"]];
         
         [mySLComposerSheet setCompletionHandler:^(SLComposeViewControllerResult result) {
+        
             
+            NSString *msg;
+            BOOL clear = YES;
             switch (result) {
                 case SLComposeViewControllerResultCancelled:
-                    NSLog(@"Post to Twitter Canceled");
+                    msg = NSLocalizedString(@"twitter_post_canceled", @"twitter_post_canceled");
+                    clear = NO;
+                    //NSLog(@"Post to Twitter Canceled");
                     break;
                 case SLComposeViewControllerResultDone:
-                    NSLog(@"Post to Twitter Sucessful");
+                    //NSLog(@"Post to Twitter Sucessful");
+                    msg = NSLocalizedString(@"twitter_post_ok", @"twitter_post_ok");
                     break;
                     
                 default:
                     break;
             }
+            
+            
+            //we need to dismiss manually for twitter
+            [mySLComposerSheet dismissViewControllerAnimated:YES completion:^{[self resetSocialNetworks:clear];}];
+            
+            if(msg!=nil) {
+                [[[[iToast makeText:msg]
+                   setGravity:iToastGravityBottom] setDuration:1000] show];
+            }
+            
         }];
         
         [self presentViewController:mySLComposerSheet animated:YES completion:nil];
@@ -623,13 +760,17 @@
     
 }
 
-//clear stuff
+//clear stuff, this is called after sending sms or email
 -(void)clearFieldsAndRecipients {
-    subject.text = @"";
-    body.text = @"";
+    
+    
+    NSLog(@"clearing stuff...");
+    
     [selectedRecipientsList removeAllObjects];
     [recipientsController.selectedContactsList removeAllObjects];
     [recipientsController.tableView reloadData];
+    subject.text = @"";
+    body.text = @"";
 }
 
 //get all emails

@@ -1,0 +1,57 @@
+/* Localizable.strings
+ EasyMessage
+ 
+ Created by Paulo Cristo on 7/3/13.
+ Copyright (c) 2013 Paulo Cristo. All rights reserved. */
+"subject_label" = "Sujet:";
+"message_label" = "Message:";
+"placeholder_your_message" = "Votre message";
+"placeholder_subject" = "Sujet";
+"send_message" = "Envoyer un message";
+"compose" = "Composer";
+"recipients" = "Destinataires";
+"settings" = "Paramètres";
+"select_all" = "Sélectionner tous";
+"unselect_all" = "Désélectionner tous";
+"choose_your_recipients" = "Choisissez vos destinataires:";
+"selected_%@_recipients" = "Sélectionnés %@ destinataires";
+"header_message_send_options" = "Message - options d'envoi";
+"option_send_both" = "Toujours envoyer les deux";
+"option_send_email_only" = "Envoyer un e-mail uniquement";
+"option_send_sms_only" = "Envoyer un SMS seulement";
+"option_send_facebook_only" = "Publier sur Facebook";
+"option_send_twitter_only" = "Publier sur Twitter";
+"option_send_include_social_network" = "Inclure les réseaux sociaux ...";
+"footer_select_service" = "Sélectionnez le service (s) pour envoyer le message";
+"header_preferred_service" = "Preferred Service";
+"preferred_email_service" = "Service de courriel";
+"preferred_sms_service" = "Service SMS";
+"preferred_use_both_services" = "Utilisez les deux services";
+"footer_preferred_service" = "Sélectionnez le service préféré, au cas du contact avoir les deux entrées et vous ne voulez pas qu'il reçoive e-mail et SMS aux même temps";
+"footer_social_networks" = "Les messages affichés sur les réseaux sociaux fonctionnent sur une base par message, qui signifie que vos choix ne sont pas conservées entre les différents messages";
+"phone_label" = "Téléphone";
+"alert_message_include_social_networks" = "Les paramètres ont été mis à jour. Comprendra les réseaux sociaux!";
+"alert_message_both_empty" = "Le sujet et le corps du message ne peut pas être vide!";
+"alert_message_body_empty" = "Le corps du message ne peut pas être vide!";
+"alert_message_select_least_one" = "Vous devez sélectionner au moins un destinataire!";
+"alert_message_settings_updated_both" = "Les paramètres ont été mis à jour. Va envoyer des SMS et e-mail!";
+"alert_message_settings_updated_email" = "Les paramètres ont été mis à jour. Enverra un courrier seulement!";
+"alert_message_settings_updated_sms" = "Les paramètres ont été mis à jour. Va envoyer des SMS seulement!";
+"unable_load_contacts_error_%@" = "Impossible de charger les contacts du carnet d'adresses: %@";
+"message_mail_canceled" = "Courrier annulé";
+"message_mail_saved" = "Courrier sauvé";
+"message_mail_sent" = "Courrier envoyé";
+"message_mail_sent_failure_%@" = "Le courrier envoyé échec: %@";
+"message_sms_canceled" = "SMS annulé";
+"message_sms_unable_compose" = "Impossible de composer des SMS";
+"message_sms_sent" = "SMS envoyé";
+"recipients_least_one_recipient" = "Vous devez sélectionner au moins un destinataire valide ou ajuster vos paramètres!";
+"easymessage_send_email_title" = "EasyMessage: Envoyer un email";
+"easymessage_send_sms_title" = "EasyMessage: Envoi SMS";
+"no_sms_device_settings" = "Il n'est pas possible d'envoyer des SMS, s'il vous plaît vérifier vos paramètres de l'appareil!";
+"address_book_changed_msg" = "Votre carnet d'adresse a changé! Actualisation des données ...";
+"facebook_post_ok" = "Message envoyé à Facebook";
+"twitter_post_ok" = "Message envoyé à Twitter";
+"facebook_post_canceled" = "Publier sur Facebook annulé";
+"twitter_post_canceled" = "Publier sur Twitter annulé";
+

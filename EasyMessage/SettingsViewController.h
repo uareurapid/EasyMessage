@@ -53,18 +53,22 @@
 
 @property(strong,nonatomic)NSMutableArray *sendOptions;
 @property(strong,nonatomic)NSMutableArray *preferedServiceOptions;
+@property(strong,nonatomic)NSMutableArray *socialServicesOptions;
 
 @property (assign,nonatomic) NSInteger selectSendOption;
 @property (assign,nonatomic) NSInteger selectPreferredService;
+@property (assign,nonatomic) NSInteger numSelectedSocialNetworks;
 
 @property (assign,nonatomic) NSInteger initiallySelectedSendOption;
 @property (assign,nonatomic) NSInteger initiallySelectedPreferredService;
+@property (assign,nonatomic) NSInteger initiallySelectedNumOfSocialNetworks;
 
 @property BOOL showToast;
 
 @property BOOL isFacebookAvailable;
 @property BOOL isTwitterAvailable;
 
-@property (strong,nonatomic) SocialNetworksViewController *furtherOptionsController;
+@property (strong,nonatomic) SocialNetworksViewController *socialOptionsController;
+-(void) resetSocialNetworks;
 
 @end

@@ -38,6 +38,10 @@
 		72611B071772143A0043E508 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72611B061772143A0043E508 /* MessageUI.framework */; };
 		72611B0B177216940043E508 /* SelectRecipientsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 72611B09177216940043E508 /* SelectRecipientsViewController.m */; };
 		72611B0C177216940043E508 /* SelectRecipientsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 72611B0A177216940043E508 /* SelectRecipientsViewController.xib */; };
+		7263E07017C435160065E538 /* mail-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 7263E06F17C435160065E538 /* mail-2.png */; };
+		72682BFD17C5184400A3318F /* world.png in Resources */ = {isa = PBXBuildFile; fileRef = 72682BFC17C5184400A3318F /* world.png */; };
+		72682C0017C519DD00A3318F /* world3.png in Resources */ = {isa = PBXBuildFile; fileRef = 72682BFE17C519DD00A3318F /* world3.png */; };
+		72682C0117C519DD00A3318F /* world2.png in Resources */ = {isa = PBXBuildFile; fileRef = 72682BFF17C519DD00A3318F /* world2.png */; };
 		7269D4441774D6B500AE1662 /* UIPlaceHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7269D4431774D6B500AE1662 /* UIPlaceHolderTextView.m */; };
 		726FAC54178595E4008F3EC4 /* PCViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 726FAC53178595E4008F3EC4 /* PCViewController.xib */; };
 		7285A6AB177CACFA006137B8 /* concrete_wall.png in Resources */ = {isa = PBXBuildFile; fileRef = 7285A6A9177CACFA006137B8 /* concrete_wall.png */; };
@@ -112,8 +116,16 @@
 		72611B08177216940043E508 /* SelectRecipientsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectRecipientsViewController.h; sourceTree = "<group>"; };
 		72611B09177216940043E508 /* SelectRecipientsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectRecipientsViewController.m; sourceTree = "<group>"; };
 		72611B0A177216940043E508 /* SelectRecipientsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectRecipientsViewController.xib; sourceTree = "<group>"; };
+		7263E06F17C435160065E538 /* mail-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mail-2.png"; sourceTree = "<group>"; };
 		7265EB2217848A90003F5FE3 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7265EB2417848A90003F5FE3 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		72682BFC17C5184400A3318F /* world.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = world.png; sourceTree = "<group>"; };
+		72682BFE17C519DD00A3318F /* world3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = world3.png; sourceTree = "<group>"; };
+		72682BFF17C519DD00A3318F /* world2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = world2.png; sourceTree = "<group>"; };
+		72682C0417C5292400A3318F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		72682C0517C5292400A3318F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		72682C0A17C5296500A3318F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		72682C0B17C5296500A3318F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		7269D4421774D6B500AE1662 /* UIPlaceHolderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPlaceHolderTextView.h; sourceTree = "<group>"; };
 		7269D4431774D6B500AE1662 /* UIPlaceHolderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPlaceHolderTextView.m; sourceTree = "<group>"; };
 		726FAC53178595E4008F3EC4 /* PCViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PCViewController.xib; sourceTree = "<group>"; };
@@ -176,6 +188,10 @@
 		7224152F1771148700989C3B = {
 			isa = PBXGroup;
 			children = (
+				72682BFE17C519DD00A3318F /* world3.png */,
+				72682BFF17C519DD00A3318F /* world2.png */,
+				72682BFC17C5184400A3318F /* world.png */,
+				7263E06F17C435160065E538 /* mail-2.png */,
 				72963F6A17A9825E00519FDC /* Forward.png */,
 				72963F6817A9800700519FDC /* send-icon.png */,
 				72963F6617A9793600519FDC /* About-me-icon.png */,
@@ -324,6 +340,13 @@
 				en,
 				"pt-PT",
 				pt,
+				de,
+				es,
+				ja,
+				"zh-Hans",
+				fr,
+				ar,
+				ko,
 			);
 			mainGroup = 7224152F1771148700989C3B;
 			productRefGroup = 722415391771148800989C3B /* Products */;
@@ -383,6 +406,10 @@
 				72963F6717A9793600519FDC /* About-me-icon.png in Resources */,
 				72963F6917A9800700519FDC /* send-icon.png in Resources */,
 				72963F6B17A9825E00519FDC /* Forward.png in Resources */,
+				7263E07017C435160065E538 /* mail-2.png in Resources */,
+				72682BFD17C5184400A3318F /* world.png in Resources */,
+				72682C0017C519DD00A3318F /* world3.png in Resources */,
+				72682C0117C519DD00A3318F /* world2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -415,6 +442,8 @@
 				722415451771148800989C3B /* en */,
 				72CA9EFB17847B5300D8D016 /* pt-PT */,
 				7265EB2417848A90003F5FE3 /* pt */,
+				72682C0517C5292400A3318F /* es */,
+				72682C0B17C5296500A3318F /* fr */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -425,6 +454,8 @@
 				72CA9EFD17847B8F00D8D016 /* en */,
 				72CA9EFF17847BA500D8D016 /* pt-PT */,
 				7265EB2217848A90003F5FE3 /* pt */,
+				72682C0417C5292400A3318F /* es */,
+				72682C0A17C5296500A3318F /* fr */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -503,7 +534,7 @@
 				INFOPLIST_FILE = "EasyMessage/EasyMessage-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -516,7 +547,7 @@
 				INFOPLIST_FILE = "EasyMessage/EasyMessage-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

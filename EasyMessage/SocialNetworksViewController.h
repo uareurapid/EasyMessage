@@ -22,6 +22,7 @@
 @property BOOL isTwitterAvailable;
 
 
--(id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil previousController: (UIViewController *) previous services:(NSArray *) services;
+-(id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+   previousController: (UIViewController *) previous services:(NSArray *) services;
 
 @end

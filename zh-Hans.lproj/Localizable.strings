@@ -42,7 +42,8 @@
 "alert_message_settings_updated_sms" ="Settings have been updated.\r\nWill send SMS only!";
 //contacts
 "unable_load_contacts_error_%@" = "Unable to load contacts from address book: %@";
-
+//"Unable to get contact photo, %@",[exception description]);
+//sms and email messages
 "message_mail_canceled" = "Mail cancelled";
 "message_mail_saved" = "Mail saved";
 "message_mail_sent" = "Mail sent";
@@ -55,8 +56,4 @@
 "easymessage_send_sms_title" = "EasyMessage: Send SMS";
 "no_sms_device_settings" = "It´s not possible to send the SMS, please check your device settings!";
 "address_book_changed_msg" = "Your Address book has changed! Refreshing data...";
-"facebook_post_ok" = "Post to Facebook Sucessful";
-"twitter_post_ok" = "Post to Twitter Sucessful";
-"facebook_post_canceled" = "Post to Facebook canceled";
-"twitter_post_canceled" = "Post to Twitter canceled";
 

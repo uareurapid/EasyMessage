@@ -16,11 +16,11 @@
 
 @implementation SettingsViewController
 
-@synthesize sendOptions,preferedServiceOptions;
-@synthesize selectPreferredService,selectSendOption;
-@synthesize furtherOptionsController;
+@synthesize sendOptions,preferedServiceOptions,socialServicesOptions;
+@synthesize selectPreferredService,selectSendOption,numSelectedSocialNetworks;
+@synthesize socialOptionsController;
 @synthesize showToast;
-@synthesize initiallySelectedPreferredService,initiallySelectedSendOption;
+@synthesize initiallySelectedPreferredService,initiallySelectedSendOption,initiallySelectedNumOfSocialNetworks;
 @synthesize isFacebookAvailable,isTwitterAvailable;
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -33,14 +33,27 @@
     return self;
 }
 
+-(void)resetSocialNetworks {
+    if(socialOptionsController!=nil) {
+        [socialOptionsController.selectedServiceOptions removeAllObjects];
+        [socialOptionsController.tableView reloadData];
+    }
+    
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    
-    
+  
     sendOptions = [[NSMutableArray alloc] initWithObjects:OPTION_ALWAYS_SEND_BOTH, OPTION_SEND_EMAIL_ONLY, OPTION_SEND_SMS_ONLY,nil];
     preferedServiceOptions = [[NSMutableArray alloc] initWithObjects:OPTION_PREF_SERVICE_EMAIL,OPTION_PREF_SERVICE_SMS,OPTION_PREF_SERVICE_ALL, nil];
+    
+    socialServicesOptions = [[NSMutableArray alloc] init];
+    
+    initiallySelectedNumOfSocialNetworks = 0;
+    numSelectedSocialNetworks = 0;
+    
     
     [self checkSocialServicesAvailability];
     
@@ -82,7 +95,7 @@
     }
     
     
-    furtherOptionsController = [[SocialNetworksViewController alloc] initWithNibName:@"PreferedItemOrderViewController"
+    socialOptionsController = [[SocialNetworksViewController alloc] initWithNibName:@"PreferedItemOrderViewController"
                                                                               bundle:nil previousController:self services:services];
 
     showToast = YES;
@@ -147,13 +160,17 @@
     
     initiallySelectedSendOption = selectSendOption;
     initiallySelectedPreferredService = selectPreferredService;
+    
+    numSelectedSocialNetworks = socialOptionsController.selectedServiceOptions.count;
+    initiallySelectedNumOfSocialNetworks = numSelectedSocialNetworks;
+
 
     [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:NO];
     //add a notification listener to detect account changes
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkSocialServicesAvailability) name:ACAccountStoreDidChangeNotification object:nil];
     
-    if(furtherOptionsController!=nil) {
-        if(furtherOptionsController.selectedServiceOptions.count > 0) {
+    if(socialOptionsController!=nil) {
+        if(socialOptionsController.selectedServiceOptions.count > 0) {
             //toast we will use social services
         }
     }
@@ -232,6 +249,9 @@
            setGravity:iToastGravityBottom] setDuration:2000] show];
     }
     
+    
+    NSString *msg2;
+
     
     
     
@@ -321,8 +341,8 @@
         //License: CC Attribution
         }
         else if(row==3) {
-            
-            cell.imageView.image = [UIImage imageNamed:@"About-me-icon"];
+            //these are free but anyway Zen Nikki - http://zen-nikki.deviantart.com/
+            cell.imageView.image = [UIImage imageNamed:@"world3"];//About-me-icon
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             
         }
@@ -462,7 +482,7 @@
         }
         else {
             showToast = NO;
-            [self.navigationController pushViewController:furtherOptionsController animated:YES];
+            [self.navigationController pushViewController:socialOptionsController animated:YES];
         }
     }
     else if(section==1) {

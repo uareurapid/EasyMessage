@@ -47,7 +47,13 @@
   
 }
 
-
+//view will appear
+-(void) viewWillAppear:(BOOL)animated {
+    //if(selectedServiceOptions.count>0) {
+    //    [selectedServiceOptions removeAllObjects];
+    //}
+    
+}
 
 //save user preferrences
 -(void) viewWillDisappear:(BOOL)animated {
@@ -55,6 +61,11 @@
     
     if(selectedServiceOptions.count >0) {
         NSString *msg = NSLocalizedString(@"alert_message_include_social_networks",@"alert_message_include_social_networks");
+        
+        
+        SettingsViewController *settings = (SettingsViewController *) previousController;
+        [settings.socialServicesOptions addObjectsFromArray:selectedServiceOptions];
+        
         [[[[iToast makeText:msg]
            setGravity:iToastGravityBottom] setDuration:2000] show];
     }

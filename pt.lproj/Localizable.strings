@@ -55,3 +55,7 @@
 "easymessage_send_sms_title" = "EasyMessage: Enviar SMS";
 "no_sms_device_settings" = "Não é possível enviar SMS, por favor verifique as definições do aparelho!";
 "address_book_changed_msg" = "A sua lista de contactos sofreu alterções! A actualizar...";
+"facebook_post_ok" = "Mensagem enviada para o Facebook";
+"twitter_post_ok" = "Mensagem enviada para o Twitter";
+"facebook_post_canceled" = "Envio para o Facebook cancelado";
+"twitter_post_canceled" = "Envio para o Twitter cancelado";

@@ -141,6 +141,7 @@
 								<string key="NSFrame">{{112, 271}, {102, 102}}</string>
 								<reference key="NSSuperview" ref="143327201"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -4825,8 +4826,6 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 						<string key="sendEmail:">id</string>
 						<string key="sendMessage:">id</string>
 						<string key="sendSMS:">id</string>
-						<string key="sendToFacebook:">id</string>
-						<string key="sendToTwitter:">id</string>
 						<string key="showSettings:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
@@ -4848,14 +4847,6 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 						</object>
 						<object class="IBActionInfo" key="sendSMS:">
 							<string key="name">sendSMS:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="sendToFacebook:">
-							<string key="name">sendToFacebook:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="sendToTwitter:">
-							<string key="name">sendToTwitter:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="showSettings:">
