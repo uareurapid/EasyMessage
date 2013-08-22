@@ -5,9 +5,10 @@
   Created by Paulo Cristo on 7/3/13.
   Copyright (c) 2013 Paulo Cristo. All rights reserved.
 */
+
 "subject_label" = "Subject:";
 "message_label" = "Message:";
-"placeholder_your_message" = "Your Message";
+"placeholder_your_message" = "Your Message (*)";
 "placeholder_subject" = "Subject";
 "send_message" = "Send Message";
 "compose" = "Compose";
@@ -59,4 +60,6 @@
 "twitter_post_ok" = "Post to Twitter Sucessful";
 "facebook_post_canceled" = "Post to Facebook canceled";
 "twitter_post_canceled" = "Post to Twitter canceled";
+"no_recipients_only_social" = "You don´t have any recipients selected. The message will be post to social networks only";
+"done_button" = "Done";
 

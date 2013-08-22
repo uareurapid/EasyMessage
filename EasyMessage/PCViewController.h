@@ -23,6 +23,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *sendButton;
 @property (strong, nonatomic) IBOutlet UILabel *labelMessage;
 @property (strong, nonatomic) IBOutlet UILabel *labelSubject;
+@property (strong, nonatomic) IBOutlet UILabel *labelOnlySocial;
 
 -(IBAction)loadContactsList:(id)sender;
 - (IBAction)showSettings:(id)sender;

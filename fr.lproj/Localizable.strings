@@ -5,7 +5,7 @@
  Copyright (c) 2013 Paulo Cristo. All rights reserved. */
 "subject_label" = "Sujet:";
 "message_label" = "Message:";
-"placeholder_your_message" = "Votre message";
+"placeholder_your_message" = "Votre message (*)";
 "placeholder_subject" = "Sujet";
 "send_message" = "Envoyer un message";
 "compose" = "Composer";
@@ -17,14 +17,14 @@
 "selected_%@_recipients" = "Sélectionnés %@ destinataires";
 "header_message_send_options" = "Message - options d'envoi";
 "option_send_both" = "Toujours envoyer les deux";
-"option_send_email_only" = "Envoyer un e-mail uniquement";
-"option_send_sms_only" = "Envoyer un SMS seulement";
+"option_send_email_only" = "Envoyer seulement email";
+"option_send_sms_only" = "Envoyer seulement SMS";
 "option_send_facebook_only" = "Publier sur Facebook";
 "option_send_twitter_only" = "Publier sur Twitter";
-"option_send_include_social_network" = "Inclure les réseaux sociaux ...";
+"option_send_include_social_network" = "Inclure réseaux sociaux ...";
 "footer_select_service" = "Sélectionnez le service (s) pour envoyer le message";
 "header_preferred_service" = "Preferred Service";
-"preferred_email_service" = "Service de courriel";
+"preferred_email_service" = "Service de email";
 "preferred_sms_service" = "Service SMS";
 "preferred_use_both_services" = "Utilisez les deux services";
 "footer_preferred_service" = "Sélectionnez le service préféré, au cas du contact avoir les deux entrées et vous ne voulez pas qu'il reçoive e-mail et SMS aux même temps";
@@ -54,4 +54,5 @@
 "twitter_post_ok" = "Message envoyé à Twitter";
 "facebook_post_canceled" = "Publier sur Facebook annulé";
 "twitter_post_canceled" = "Publier sur Twitter annulé";
-
+"no_recipients_only_social" = "Vous n'avez pas de destinataires. Le message sera affiché sur les réseaux sociaux seulement";
+"done_button" = "Fait";

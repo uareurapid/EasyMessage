@@ -180,7 +180,7 @@
 								<string key="NSFrame">{{22, 114}, {283, 152}}</string>
 								<reference key="NSSuperview" ref="143327201"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="634690447"/>
+								<reference key="NSNextKeyView" ref="382854094"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor">
 									<int key="NSColorSpace">1</int>
@@ -201,6 +201,36 @@
 								</object>
 								<reference key="IBUIFontDescription" ref="146052309"/>
 								<reference key="IBUIFont" ref="574028568"/>
+							</object>
+							<object class="IBUILabel" id="382854094">
+								<reference key="NSNextResponder" ref="143327201"/>
+								<int key="NSvFlags">292</int>
+								<string key="NSFrame">{{22, 362}, {283, 66}}</string>
+								<reference key="NSSuperview" ref="143327201"/>
+								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="634690447"/>
+								<string key="NSReuseIdentifierKey">_NS:9</string>
+								<bool key="IBUIOpaque">NO</bool>
+								<bool key="IBUIClipsSubviews">YES</bool>
+								<int key="IBUIContentMode">7</int>
+								<bool key="IBUIUserInteractionEnabled">NO</bool>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<string key="IBUIText"/>
+								<reference key="IBUITextColor" ref="117775713"/>
+								<nil key="IBUIHighlightedColor"/>
+								<int key="IBUIBaselineAdjustment">0</int>
+								<int key="IBUINumberOfLines">3</int>
+								<object class="IBUIFontDescription" key="IBUIFontDescription">
+									<int key="type">1</int>
+									<double key="pointSize">13</double>
+								</object>
+								<object class="NSFont" key="IBUIFont">
+									<string key="NSName">Helvetica</string>
+									<double key="NSSize">13</double>
+									<int key="NSfFlags">16</int>
+								</object>
+								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
+								<double key="preferredMaxLayoutWidth">283</double>
 							</object>
 						</array>
 						<string key="NSFrameSize">{333, 548}</string>
@@ -4701,6 +4731,14 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">labelOnlySocial</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="382854094"/>
+					</object>
+					<int key="connectionID">448</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">delegate</string>
 						<reference key="source" ref="714050587"/>
 						<reference key="destination" ref="372490531"/>
@@ -4761,6 +4799,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 							<reference ref="319972731"/>
 							<reference ref="714050587"/>
 							<reference ref="634690447"/>
+							<reference ref="382854094"/>
 						</array>
 						<reference key="parent" ref="774585933"/>
 					</object>
@@ -4793,6 +4832,11 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 						<array class="NSMutableArray" key="children"/>
 						<reference key="parent" ref="143327201"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">447</int>
+						<reference key="object" ref="382854094"/>
+						<reference key="parent" ref="143327201"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -4807,13 +4851,14 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 				<string key="223.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="224.CustomClassName">UIPlaceHolderTextView</string>
 				<string key="224.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="447.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">446</int>
+			<int key="maxID">448</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -4826,6 +4871,8 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 						<string key="sendEmail:">id</string>
 						<string key="sendMessage:">id</string>
 						<string key="sendSMS:">id</string>
+						<string key="sendToFacebook:">id</string>
+						<string key="sendToTwitter:">id</string>
 						<string key="showSettings:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
@@ -4849,6 +4896,14 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 							<string key="name">sendSMS:</string>
 							<string key="candidateClassName">id</string>
 						</object>
+						<object class="IBActionInfo" key="sendToFacebook:">
+							<string key="name">sendToFacebook:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="sendToTwitter:">
+							<string key="name">sendToTwitter:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="showSettings:">
 							<string key="name">showSettings:</string>
 							<string key="candidateClassName">id</string>
@@ -4857,6 +4912,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="body">UIPlaceHolderTextView</string>
 						<string key="labelMessage">UILabel</string>
+						<string key="labelOnlySocial">UILabel</string>
 						<string key="labelSubject">UILabel</string>
 						<string key="scrollView">UIScrollView</string>
 						<string key="sendButton">UIButton</string>
@@ -4869,6 +4925,10 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 						</object>
 						<object class="IBToOneOutletInfo" key="labelMessage">
 							<string key="name">labelMessage</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="labelOnlySocial">
+							<string key="name">labelOnlySocial</string>
 							<string key="candidateClassName">UILabel</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="labelSubject">

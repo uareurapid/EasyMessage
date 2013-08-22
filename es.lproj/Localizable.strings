@@ -5,29 +5,29 @@
   Copyright (c) 2013 Paulo Cristo. All rights reserved. */
 "subject_label" = "Tema:";
 "message_label" = "Mensaje:";
-"placeholder_your_message" = "Su Mensaje";
+"placeholder_your_message" = "Su Mensaje (*)";
 "placeholder_subject" = "Tema";
 "send_message" = "Enviar mensaje";
 "compose" = "Componer";
 "recipients" = "Destinatarios";
 "settings" = "Configuración";
-"select_all" = "Seleccione todos";
-"unselect_all" = "Elija ninguno";
+"select_all" = "Seleccionar todos";
+"unselect_all" = "Deseleccionar todos";
 "choose_your_recipients" = "Elija los destinatarios:";
 "selected_%@_recipients" = "Seleccionados %@ destinatarios";
 "header_message_send_options" = "Mensaje - Opciones de envío";
 "option_send_both" = "Siempre enviar ambos";
-"option_send_email_only" = "Enviar sólo correo electrónico";
+"option_send_email_only" = "Enviar sólo email";
 "option_send_sms_only" = "Enviar sólo SMS";
 "option_send_facebook_only" = "Publicar en Facebook";
 "option_send_twitter_only" = "Publicar en Twitter";
 "option_send_include_social_network" = "Incluir redes sociales ...";
 "footer_select_service" = "Seleccione el servicio (s) para enviar el mensaje";
 "header_preferred_service" = "Servicio Preferido";
-"preferred_email_service" = "Servicio de correo electrónico";
+"preferred_email_service" = "Servicio de email";
 "preferred_sms_service" = "Servicio SMS";
 "preferred_use_both_services" = "Utilizar ambos servicios";
-"footer_preferred_service" = "Seleccione el servicio preferido, caso el contacto tenga las dos entradas y no quiera que reciba correo electrónico y SMS";
+"footer_preferred_service" = "Seleccione el servicio preferido, caso el contacto tenga las dos entradas y no quiera que reciba correo electrónico y SMS al mismo tiempo";
 "footer_social_networks" = "Mensajes en las redes sociales funcionan de modo independientemente por cada mensaje, lo que significa que sus opciones no se conservan entre los diferentes mensajes";
 "phone_label" = "Teléfono";
 "alert_message_include_social_networks" = "Los ajustes se han actualizado. Incluir redes sociales!";
@@ -54,4 +54,6 @@
 "twitter_post_ok" = "Mensaje enviado a Twitter";
 "facebook_post_canceled" = "Subir a Facebook cancelado";
 "twitter_post_canceled" = "Subir a Twitter cancelado";
+"no_recipients_only_social" = "Usted no tiene ningún destinatario. El mensaje será enviada sólo a las redes sociales";
+"done_button" = "Hecho";
 

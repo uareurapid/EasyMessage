@@ -20,6 +20,8 @@
 @property (strong,nonatomic) UIViewController *previousController;
 @property BOOL isFacebookAvailable;
 @property BOOL isTwitterAvailable;
+@property (assign,nonatomic) NSInteger initiallySelectedNumOfSocialNetworks;
+//@property (assign,nonatomic) NSInteger numSelectedSocialNetworks;
 
 
 -(id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil

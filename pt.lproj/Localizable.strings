@@ -8,7 +8,7 @@
 "subject_label" = "Assunto:";
 "message_label" = "Mensagem:";
 "send_message" = "Enviar Mensagem";
-"placeholder_your_message" = "A sua mensagem";
+"placeholder_your_message" = "A sua mensagem (*)";
 "placeholder_subject" = "Assunto";
 "compose" = "Escrever";
 "recipients" = "Destinatários";
@@ -59,3 +59,6 @@
 "twitter_post_ok" = "Mensagem enviada para o Twitter";
 "facebook_post_canceled" = "Envio para o Facebook cancelado";
 "twitter_post_canceled" = "Envio para o Twitter cancelado";
+"no_recipients_only_social" = "Não há destinatários seleccionados. A mensagem será enviada apenas para as redes sociais";
+"done_button" = "Feito";
+

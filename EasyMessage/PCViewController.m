@@ -22,7 +22,7 @@
 @synthesize settingsController,subject,body,image;
 @synthesize selectedRecipientsList,scrollView,recipientsController;
 @synthesize smsSentOK,emailSentOK,sendButton;
-@synthesize labelMessage,labelSubject;
+@synthesize labelMessage,labelSubject,labelOnlySocial;
 @synthesize sendToFacebook,sendToTwitter,facebookSentOK,twitterSentOK;
 
 - (void)viewDidLoad
@@ -31,14 +31,7 @@
     //settingsController = [[SettingsViewController alloc] initWithNibName:@"SettingsViewController" bundle:nil];
 	// Do any additional setup after loading the view, typically from a nib.
     self.title = NSLocalizedString(@"compose",nil);
-    //add the settings button
-    //UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithTitle:@"Settings"
-      //                                                                 style:UIBarButtonItemStyleDone target:self action:@selector(showSettings:)];
-    //self.navigationItem.rightBarButtonItem = settingsButton;
-    
-    /*UIBarButtonItem *exitButton = [[UIBarButtonItem alloc] initWithTitle:@"Exit"
-                                                                       style:UIBarButtonItemStyleDone target:self action:@selector(showSettings:)];
-    self.navigationItem.leftBarButtonItem = exitButton;*/
+ 
     
     smsSentOK = NO;
     emailSentOK = NO;
@@ -47,6 +40,8 @@
     sendToTwitter = NO;
     sendToFacebook = NO;
 
+    labelOnlySocial.text = NSLocalizedString(@"no_recipients_only_social","@only social post, no recipients selected");
+    
     subject.delegate = self;
     body.delegate = self;
     [sendButton setTitle:NSLocalizedString(@"send_message",nil) forState:UIControlStateNormal];
@@ -77,9 +72,31 @@
     return  self;
 }
 
+//appear/disappear logic
 -(void) viewWillAppear:(BOOL)animated {
     
+    [self showHideSocialOnlyLabel];
 }
+
+//-(void) viewWillDisappear:(BOOL)animated {
+//    [self showHideSocialOnlyLabel];
+//}
+
+-(void) showHideSocialOnlyLabel {
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        if(selectedRecipientsList.count==0 && settingsController.socialOptionsController.selectedServiceOptions.count>0) {
+            labelOnlySocial.hidden = NO;
+        }
+        else {
+            labelOnlySocial.hidden = YES;
+        }
+        
+    });
+    
+}
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -134,9 +151,6 @@
     if(isTwitterAvailable) {
         isTwitterSelected = [settingsController.socialOptionsController.selectedServiceOptions containsObject: OPTION_SENDTO_TWITTER_ONLY];
     }
-    
-    NSLog(@"facebook available %d twitter available %d facebook selected %d twitter selected %d",isFacebookAvailable,
-          isTwitterAvailable,isFacebookSelected,isTwitterSelected);
     
     sendToFacebook = isFacebookSelected;
     sendToTwitter = isTwitterSelected;
@@ -228,7 +242,7 @@
 //send to social networks
 -(void)sendToSocialNetworks {
     
-    NSLog(@"send to social networks");
+    //NSLog(@"send to social networks");
     //@try {
         if(sendToFacebook) {
             //NOTE: if twitter is also selected, it will show up/send on facebook result
@@ -306,6 +320,7 @@
         // Send an alert telling user to change privacy setting in settings app
         
     }
+    [recipientsController refreshPhonebook:nil];
      
     //SEND BUTTON linkware http://www.fasticon.com/
     
@@ -324,7 +339,7 @@
     //CFIndex numberOfPeople = ABAddressBookGetPersonCount(addressBook);
     
     NSArray *arrayOfPeople = (__bridge_transfer NSArray*)ABAddressBookCopyArrayOfAllPeople(addressBook);
-    NSLog(@"number of people is: %d",arrayOfPeople.count);
+    
     
     
     for(int i = 0; i < arrayOfPeople.count; i++){
@@ -336,11 +351,8 @@
         
         NSString *email;
         
-        NSString *theName = (__bridge NSString*)ABRecordCopyCompositeName(person);
-        
-        NSLog(@"%@ i equals to %d, total is %d",theName, i,(int)arrayOfPeople.count);
-        
-    
+        //NSString *theName = (__bridge NSString*)ABRecordCopyCompositeName(person);
+
         
         ABMultiValueRef multi = ABRecordCopyValue(person, kABPersonEmailProperty);
 
@@ -764,7 +776,7 @@
 -(void)clearFieldsAndRecipients {
     
     
-    NSLog(@"clearing stuff...");
+    //NSLog(@"clearing stuff...");
     
     [selectedRecipientsList removeAllObjects];
     [recipientsController.selectedContactsList removeAllObjects];
@@ -792,7 +804,7 @@
                         //OK, we have an SMS, but are we sending SMS?
                         if(settingsController.selectSendOption == OPTION_SEND_EMAIL_ONLY_ID) {
                             //we are just sending email, so we need to include it anyway
-                            NSLog(@"We prefere to use SMS service but we´re sending just email so %@ will be added to the addresses list",c.email);
+                            //NSLog(@"We prefere to use SMS service but we´re sending just email so %@ will be added to the addresses list",c.email);
                             [emails addObject:c.email];
                         }
                         //else {//means we are sending either BOTH or just SMS
@@ -802,21 +814,21 @@
                     }
                     else {
                         //contact does not have phone number, so MUST be reached by email, even if not preferered
-                        NSLog(@"We prefere to use SMS service but we don´t have a phone number, just email, so %@ will be added to the addresses list",c.email);
+                        //NSLog(@"We prefere to use SMS service but we don´t have a phone number, just email, so %@ will be added to the addresses list",c.email);
                         [emails addObject:c.email];
                     }
                     
                 }
                 else {
                     //preference is email, so it´s ok to add it
-                    NSLog(@"We prefere to use email service and for that reason %@ will be added to the addresses list",c.email);
+                    //NSLog(@"We prefere to use email service and for that reason %@ will be added to the addresses list",c.email);
                     [emails addObject:c.email];
                 }
                 
             }
             else {
                 //option is OPTION_PREF_SERVICE_ALL_ID , so it´s ok to add it
-                NSLog(@"We prefere to use both services, so %@ will be added to the addresses list",c.email);
+                //NSLog(@"We prefere to use both services, so %@ will be added to the addresses list",c.email);
                 [emails addObject:c.email];
             }
             
@@ -849,12 +861,12 @@
                      if(settingsController.selectSendOption == OPTION_SEND_SMS_ONLY_ID) {
                          //we have choosed just to send SMS, so definetely it was not reached by email before
                          //therefore, we need to add it
-                         NSLog(@"We want to send just SMS, so %@ will be added to the phones list",c.phone);
+                         //NSLog(@"We want to send just SMS, so %@ will be added to the phones list",c.phone);
                          [phones addObject:c.phone]; 
                          
                      }
                      else if(emailSentOK==NO) {//means it was EMAIL AND SMS, OR JUST EMAIL, but failed
-                         NSLog(@"We wanted to send just email or both, but the email delivery has failed, so %@ will be added to the phones list",c.phone);
+                         //NSLog(@"We wanted to send just email or both, but the email delivery has failed, so %@ will be added to the phones list",c.phone);
                          [phones addObject:c.phone];
                          
                      }
@@ -865,21 +877,21 @@
                  }
                  else {
                      //the contact does not have email, so it MUST be reached by SMS, despite the preference
-                     NSLog(@"We prefere to use email service, but we don´t have and address so %@ will be added to the phones list",c.phone);
+                     //NSLog(@"We prefere to use email service, but we don´t have and address so %@ will be added to the phones list",c.phone);
                      [phones addObject:c.phone]; 
                  }
                  
              }
              else {//means settingsController.selectPreferredService == OPTION_PREF_SERVICE_SMS_ID
                  //if the prefereed service is SMS, we can add it
-                 NSLog(@"We prefere to use SMS service, so %@ will be added to the phones list",c.phone);
+                 //NSLog(@"We prefere to use SMS service, so %@ will be added to the phones list",c.phone);
                  [phones addObject:c.phone]; 
              }
              
          }
          else {
             //preference is send both, so it´s ok to add it
-            NSLog(@"We prefere to use both services, so %@ will be added to the phones list",c.phone);
+            //NSLog(@"We prefere to use both services, so %@ will be added to the phones list",c.phone);
             [phones addObject:c.phone]; 
          }
          
@@ -894,6 +906,7 @@
 }
 
 //Callback to detect adressbook changes
+//this sometimes get called multiple times, so we just log and do not show the alert message
 void addressBookChanged(ABAddressBookRef reference,
                         CFDictionaryRef dictionary,
                         void *context)
@@ -904,10 +917,12 @@ void addressBookChanged(ABAddressBookRef reference,
    
     if(_self!=nil) {
         
-        [_self showAlertBox: NSLocalizedString(@"address_book_changed_msg",@"address has changed")];
+        //[_self showAlertBox: NSLocalizedString(@"address_book_changed_msg",@"address has changed")];
+        NSLog(@"address has changed");
         [_self.selectedRecipientsList removeAllObjects];
         [_self loadContactsList:nil];
-        [_self.recipientsController refreshPhonebook:nil];
+        //refresh is already done inside loadContactsList
+        //[_self.recipientsController refreshPhonebook:nil];
       
     }
 }

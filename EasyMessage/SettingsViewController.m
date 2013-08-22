@@ -17,10 +17,10 @@
 @implementation SettingsViewController
 
 @synthesize sendOptions,preferedServiceOptions,socialServicesOptions;
-@synthesize selectPreferredService,selectSendOption,numSelectedSocialNetworks;
+@synthesize selectPreferredService,selectSendOption;
 @synthesize socialOptionsController;
 @synthesize showToast;
-@synthesize initiallySelectedPreferredService,initiallySelectedSendOption,initiallySelectedNumOfSocialNetworks;
+@synthesize initiallySelectedPreferredService,initiallySelectedSendOption;
 @synthesize isFacebookAvailable,isTwitterAvailable;
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -51,8 +51,7 @@
     
     socialServicesOptions = [[NSMutableArray alloc] init];
     
-    initiallySelectedNumOfSocialNetworks = 0;
-    numSelectedSocialNetworks = 0;
+    
     
     
     [self checkSocialServicesAvailability];
@@ -161,9 +160,6 @@
     initiallySelectedSendOption = selectSendOption;
     initiallySelectedPreferredService = selectPreferredService;
     
-    numSelectedSocialNetworks = socialOptionsController.selectedServiceOptions.count;
-    initiallySelectedNumOfSocialNetworks = numSelectedSocialNetworks;
-
 
     [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:NO];
     //add a notification listener to detect account changes

@@ -15,6 +15,7 @@
 @implementation SocialNetworksViewController
 
 @synthesize sendOptions,selectedServiceOptions,previousController,isTwitterAvailable,isFacebookAvailable;
+@synthesize initiallySelectedNumOfSocialNetworks;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -33,7 +34,7 @@
         isFacebookAvailable = [services containsObject:OPTION_SENDTO_FACEBOOK_ONLY];
         isTwitterAvailable = [services containsObject:OPTION_SENDTO_TWITTER_ONLY];
         
-        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done"
+        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"done_button",@"done") 
                                                                        style:UIBarButtonItemStyleDone target:self action:@selector(goBackAfterSelection:)];
         self.navigationItem.rightBarButtonItem = doneButton;
         //self.title = @"Advanced Options";
@@ -44,30 +45,36 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    initiallySelectedNumOfSocialNetworks = 0;
   
 }
 
 //view will appear
 -(void) viewWillAppear:(BOOL)animated {
-    //if(selectedServiceOptions.count>0) {
-    //    [selectedServiceOptions removeAllObjects];
-    //}
+    
+    initiallySelectedNumOfSocialNetworks = selectedServiceOptions.count;
     
 }
 
 //save user preferrences
 -(void) viewWillDisappear:(BOOL)animated {
-    //[self saveSettings];
     
-    if(selectedServiceOptions.count >0) {
-        NSString *msg = NSLocalizedString(@"alert_message_include_social_networks",@"alert_message_include_social_networks");
+    
+    //do we have ore than 0, and is different from the begining??
+    if(selectedServiceOptions.count > 0 ) {
+
+        if(selectedServiceOptions.count!=initiallySelectedNumOfSocialNetworks) {
+            NSString *msg = NSLocalizedString(@"alert_message_include_social_networks",@"alert_message_include_social_networks");
+            [[[[iToast makeText:msg]
+               setGravity:iToastGravityBottom] setDuration:2000] show];
+        }
+        
         
         
         SettingsViewController *settings = (SettingsViewController *) previousController;
         [settings.socialServicesOptions addObjectsFromArray:selectedServiceOptions];
         
-        [[[[iToast makeText:msg]
-           setGravity:iToastGravityBottom] setDuration:2000] show];
+        
     }
     
     

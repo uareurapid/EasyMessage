@@ -57,11 +57,11 @@
 
 @property (assign,nonatomic) NSInteger selectSendOption;
 @property (assign,nonatomic) NSInteger selectPreferredService;
-@property (assign,nonatomic) NSInteger numSelectedSocialNetworks;
+
 
 @property (assign,nonatomic) NSInteger initiallySelectedSendOption;
 @property (assign,nonatomic) NSInteger initiallySelectedPreferredService;
-@property (assign,nonatomic) NSInteger initiallySelectedNumOfSocialNetworks;
+
 
 @property BOOL showToast;
 
