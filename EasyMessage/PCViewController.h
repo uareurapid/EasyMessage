@@ -42,6 +42,8 @@ void addressBookChanged(ABAddressBookRef reference,
 @property (strong, nonatomic) UIImage *image;
 @property (strong, nonatomic) IBOutlet UIPlaceHolderTextView *body;
 
+@property (strong, nonatomic) NSTimer *changeTimer;
+
 
 @property(strong,nonatomic) SettingsViewController* settingsController;
 @property(strong,nonatomic) SelectRecipientsViewController *recipientsController;

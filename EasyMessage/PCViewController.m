@@ -24,6 +24,7 @@
 @synthesize smsSentOK,emailSentOK,sendButton;
 @synthesize labelMessage,labelSubject,labelOnlySocial;
 @synthesize sendToFacebook,sendToTwitter,facebookSentOK,twitterSentOK;
+@synthesize changeTimer;
 
 - (void)viewDidLoad
 {
@@ -177,7 +178,8 @@
         //if we do not have recipients, neither are using social networks show message
         
     }
-    else {
+    else { //we have recipients
+       
         /**
          #define OPTION_ALWAYS_SEND_BOTH   @"Always send both" 0
          #define OPTION_SEND_EMAIL_ONLY    @"Send email only" 1
@@ -200,12 +202,12 @@
          #define ITEM_EMAIL_OTHER_ID 2
          
          **/
-
+       
         @try {
-            if(settingsController.selectSendOption == OPTION_ALWAYS_SEND_BOTH_ID
-               || settingsController.selectSendOption == OPTION_SEND_EMAIL_ONLY_ID) {
+            if(settingsController.selectSendOption == OPTION_ALWAYS_SEND_BOTH_ID || settingsController.selectSendOption == OPTION_SEND_EMAIL_ONLY_ID) {
                 
                 emailSentOK = NO;
+                
                 [self sendEmail:nil];//will send sms on dismiss email
             }
             else if(settingsController.selectSendOption == OPTION_SEND_SMS_ONLY_ID) {
@@ -512,15 +514,30 @@
         [self presentViewController:mc animated:YES completion:NULL];
     }
     else if(settingsController.selectSendOption != OPTION_ALWAYS_SEND_BOTH_ID) {
-        //it means we don´t have email adresses and we´re not sending SMS next either
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"easymessage_send_email_title",@"EasyMessage: Send email")
-                                                        message:NSLocalizedString(@"recipients_least_one_recipient", @"select valid recipient")
-                                                       delegate:self
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
         
-        [alert show];
+        //means is OPTION_SEND_EMAIL_ONLY_ID
+        //it means it´s selected only email... and we don´t have email adresses and we´re not sending SMS next either
+        
+        //but if we have social networks, we don´t care and will post to those only
+        if(sendToFacebook || sendToTwitter) {
+            
+            [self sendToSocialNetworks];
+        }
+        else {
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"easymessage_send_email_title",@"EasyMessage: Send email")
+                                                            message:NSLocalizedString(@"recipients_least_one_recipient", @"select valid recipient")
+                                                           delegate:self
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            
+            [alert show];
+        }
+        
+        
+        
     }
+    
     //#BUGFIX this way was sending SMS 2 times! here and on checkIfSendBoth
     //else {
     //    [self sendSMS:nil];
@@ -740,7 +757,7 @@
  if([MFMessageComposeViewController canSendText]) {
     
     NSMutableArray *recipients = [self getPhoneNumbers];
-    
+
     if(recipients.count>0) {
         
         controller.body = body.text;
@@ -749,17 +766,27 @@
         [self presentViewController:controller animated:YES completion:nil];
     }
     else {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"easymessage_send_sms_title", @"EasyMessage: Send SMS")
-                                                        message: NSLocalizedString(@"recipients_least_one_recipient",@"recipient not valid")
-                                                       delegate:self
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
+        //means we have no available phones
+        //since we´re not sending SMS, social networks will not be on that dismiss, so we need to check if send it now
+      
+        if(sendToTwitter || sendToFacebook) {
+            [self sendToSocialNetworks];
+        }
+        else {
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"easymessage_send_sms_title", @"EasyMessage: Send SMS")
+                                                            message: NSLocalizedString(@"recipients_least_one_recipient",@"recipient not valid")
+                                                           delegate:self
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
         
-        [alert show];
     }
     
  }
  else {
+   
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"easymessage_send_sms_title", @"EasyMessage: Send SMS")
                                                     message:NSLocalizedString(@"no_sms_device_settings",@"can´ send sms")
                                                    delegate:self
@@ -907,6 +934,7 @@
 
 //Callback to detect adressbook changes
 //this sometimes get called multiple times, so we just log and do not show the alert message
+//update we use a timer, to call after it ends only
 void addressBookChanged(ABAddressBookRef reference,
                         CFDictionaryRef dictionary,
                         void *context)
@@ -914,17 +942,34 @@ void addressBookChanged(ABAddressBookRef reference,
     ABAddressBookRegisterExternalChangeCallback(reference,dictionary,context);
     
     PCViewController *_self = (__bridge PCViewController *)context;
-   
-    if(_self!=nil) {
+    
+    if(_self !=nil) {
+    
+        if(_self.changeTimer!=nil) {
+            [_self.changeTimer invalidate];
+        }
+      _self.changeTimer = nil;
+      _self.changeTimer = [NSTimer scheduledTimerWithTimeInterval:3.0
+                                                        target:_self
+                                                      selector:@selector(handleAdressBookExternalCallbackBackground)
+                                                      userInfo:nil
+                                                      repeats:NO];
+    }
+}
+
+
+//this will be called when the timer ends, after an address book changed notification
+-(void) handleAdressBookExternalCallbackBackground {
+    
         
-        //[_self showAlertBox: NSLocalizedString(@"address_book_changed_msg",@"address has changed")];
-        NSLog(@"address has changed");
-        [_self.selectedRecipientsList removeAllObjects];
-        [_self loadContactsList:nil];
+        [self showAlertBox: NSLocalizedString(@"address_book_changed_msg",@"address has changed")];
+        //NSLog(@"address book has changed");
+        [self.selectedRecipientsList removeAllObjects];
+        [self loadContactsList:nil];
         //refresh is already done inside loadContactsList
         //[_self.recipientsController refreshPhonebook:nil];
-      
-    }
+        
+    
 }
 
 /**

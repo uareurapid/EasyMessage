@@ -94,7 +94,7 @@
     }
     
     
-    socialOptionsController = [[SocialNetworksViewController alloc] initWithNibName:@"PreferedItemOrderViewController"
+    socialOptionsController = [[SocialNetworksViewController alloc] initWithNibName:@"SocialNetworksViewController"
                                                                               bundle:nil previousController:self services:services];
 
     showToast = YES;
@@ -472,8 +472,10 @@
 
     
     if(section==0) {
-        selectSendOption = row;
+         
         if(row < 3) {
+          //i do not consider row 3 as a valid option
+          selectSendOption = row;
           [self.tableView reloadData];
         }
         else {
