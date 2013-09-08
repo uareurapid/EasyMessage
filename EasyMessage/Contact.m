@@ -10,7 +10,7 @@
 
 @implementation Contact
 
-@synthesize phone,email,name,lastName,photo;
+@synthesize phone,email,name,lastName,photo,person;
 
 //we just consider the name
 -(BOOL) isEqual:(id)object {
@@ -97,5 +97,17 @@
     
     return NO;
 }
+
+/*
+-(Contact*) copyWithZone {
+    Contact *newOne = [[Contact alloc] init];
+    newOne.name = self.name;
+    newOne.lastName = self.lastName;
+    newOne.phone = self.phone;
+    newOne.email = self.email;
+    newOne.photo = self.photo;
+    return newOne;
+}*/
+
 
 @end

@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PCViewController.h"
 
 @interface CustomMessagesController : UITableViewController
 
+
+@property (strong,nonatomic) NSMutableArray * messagesList;
+@property NSInteger selectedMessage;//the index of the selected message
+
+@property (strong,nonatomic) PCViewController *rootViewController;
+-(id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil rootViewController: (PCViewController *) rootViewController;
 @end

@@ -56,3 +56,11 @@
 "twitter_post_canceled" = "Publier sur Twitter annulé";
 "no_recipients_only_social" = "Vous n'avez pas de destinataires. Le message sera affiché sur les réseaux sociaux seulement";
 "done_button" = "Fait";
+"archive_message" = "Enregistrer dans l´archive?";
+"archive" = "Archive";
+"available_products" = "Produits disponibles";
+"restore" = "Rétablir";
+"buy" = "Acheter";
+"select_custom_message" = "Sélectionnez un message";
+"selected_message" = "Sélectionné message";
+"click_row_product_details" = "Cliquez sur une ligne pour obtenir les détails du produit";

@@ -8,6 +8,7 @@
 
 #import "SelectRecipientsViewController.h"
 #import "PCViewController.h"
+#import "Group.h"
 
 const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
 
@@ -38,12 +39,18 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
         
         UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done"
                                                                            style:UIBarButtonItemStyleDone target:self action:@selector(goBackAfterSelection:)];
-        self.navigationItem.rightBarButtonItem = doneButton;
+        
+        UIBarButtonItem *addToGroupButton = [[UIBarButtonItem alloc] initWithTitle:@"Add to group"
+                                                                             style:UIBarButtonItemStyleDone target:self action:@selector(goBackAfterSelection:)];
+        
+        self.navigationItem.rightBarButtonItems = [[NSArray alloc] initWithObjects:doneButton, addToGroupButton,nil]; //
+        //self.navigationItem.rightBarButtonItem = doneButton;
         
     }
     return self;
 }
 
+//THIS IS THE ONE CALLED
 -(id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil rootViewController: (PCViewController*) viewController{
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if(self) {
@@ -51,11 +58,19 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
         self.selectedContactsList = [[NSMutableArray alloc] init];
         self.rootViewController = viewController;
         
-        
+        NSLog(@"THIS WAS CALLED");
         UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"select_all",nil)
                                                                        style:UIBarButtonItemStyleDone target:self action:@selector(selectAllContacts:)];
+        
+        
+        UIBarButtonItem *addToGroupButton = [[UIBarButtonItem alloc] initWithTitle:@"Add to group"
+                                                                             style:UIBarButtonItemStyleDone target:self action:@selector(addGroupClicked:)];
+        
+        
         self.navigationItem.leftBarButtonItem = doneButton;
         
+        self.navigationItem.rightBarButtonItem = addToGroupButton;
+        [addToGroupButton setEnabled:NO];
  
         NSArray* toolbarItems = [NSArray arrayWithObjects:
                                  [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
@@ -68,6 +83,7 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
         //                                              action:@selector(goBackAfterSelection:)],
         //[toolbarItems makeObjectsPerformSelector:@selector(release)];
         //***************************************************************************************
+        
         
         self.toolbarItems = toolbarItems;
         self.navigationController.toolbarHidden = NO;
@@ -90,6 +106,7 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
                                                                        style:UIBarButtonItemStyleDone target:self action:@selector(goBackAfterSelection:)];
         self.navigationItem.rightBarButtonItem = doneButton;
         self.title = @"Recipients";
+        NSLog(@"What about this?");
         
     }
     return self;
@@ -313,7 +330,9 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
         
         [selectedContactsList removeAllObjects];
         dispatch_async(dispatch_get_main_queue(), ^{
-           self.navigationItem.leftBarButtonItem.title = NSLocalizedString(@"select_all", @"seleccionar tudo"); 
+           self.navigationItem.leftBarButtonItem.title = NSLocalizedString(@"select_all", @"seleccionar tudo");
+            [self.navigationItem.rightBarButtonItem setEnabled:NO];
+
             
         });
         
@@ -548,6 +567,8 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
         });
     }
     
+    [self.navigationItem.rightBarButtonItem setEnabled:(selectedContactsList.count>1)];
+    
 
    [self.tableView reloadData];
 
@@ -612,5 +633,69 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
     }
     return @"";//
 }
+
+//show the input new group dialog
+- (IBAction)addGroupClicked:(id)sender{
+    
+    UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"New Group..." message:@"Enter the group name" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Save",nil];
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    [alert show];
+}
+
+
+//the delegate for the new Album
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    
+    if(buttonIndex==1) { //0 - cancel, 1 - save
+        NSString *groupName = [alertView textFieldAtIndex:0].text;
+        [self createNewGroup:groupName];
+    }
+    
+}
+
+-(void) createNewGroup: (NSString * ) name {
+    @try {
+        
+        BOOL exists = FALSE;
+        for(Contact *existing in contactsList) {
+            if([existing.name isEqual:name] && [existing.lastName isEqual:name] ) {
+                exists = TRUE;
+                break;
+            }
+        }
+        if(!exists) {
+            
+            
+            Group * group = [[Group alloc] initWithContacts:selectedContactsList];
+            group.name = name;
+            group.lastName = name;
+            group.phone = @"0000000";
+            group.email = @"mail@test.com";
+            [contactsList addObject:group];
+            
+            //now add a reference to the selected contacts, wich will be the ones beloging to the group
+            //Is it possible to add the group on real phone contact list
+            [[NSUserDefaults standardUserDefaults] setObject:group forKey:name];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            NSLog(@"Sucessfully added group: %@", name);
+            //need to disable the button at this point
+            [self.navigationItem.rightBarButtonItem setEnabled:NO];
+            
+            
+        }
+        else {
+            NSLog(@"That name already exists, please choose a different one!");
+        }
+        
+    }
+    @catch (NSException *exception) {
+        NSLog(@"Error adding new group %@, %@",name, exception.description);
+    }
+    @finally {
+        [self refreshPhonebook:nil];
+    }
+}
+
 
 @end

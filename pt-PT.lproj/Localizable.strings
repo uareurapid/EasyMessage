@@ -61,4 +61,12 @@
 "twitter_post_canceled" = "Envio para o Twitter cancelado";
 "no_recipients_only_social" = "Não há destinatários seleccionados. A mensagem será enviada apenas para as redes sociais";
 "done_button" = "Feito";
+"archive_message" = "Guardar no arquivo?";
+"archive" = "Arquivo";
+"available_products" = "Produtos Disponíveis";
+"restore" = "Repor";
+"buy" = "Comprar";
+"select_custom_message" = "Seleccione uma mensagem";
+"selected_message" = "Seleccionada mensagem";
+"click_row_product_details" = "Clique na linha para obter mais detalhes";
 

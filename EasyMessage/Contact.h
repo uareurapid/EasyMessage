@@ -19,4 +19,6 @@
 @property (copy,nonatomic) NSString *name;
 @property (copy,nonatomic) NSString *lastName;
 @property (strong,nonatomic) UIImage *photo;
+
+@property ABRecordRef person;//ref to the person
 @end

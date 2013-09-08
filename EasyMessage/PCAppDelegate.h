@@ -11,6 +11,8 @@
 @class PCViewController;
 @class SettingsViewController;
 @class SelectRecipientsViewController;
+@class CustomMessagesController;
+@class IAPMasterViewController;
 
 @interface PCAppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -19,5 +21,9 @@
 @property (strong, nonatomic) PCViewController *viewController;
 @property (strong, nonatomic) SettingsViewController *settingsController;
 @property (strong, nonatomic) SelectRecipientsViewController *recipientsController;
+@property (strong, nonatomic) CustomMessagesController *customMessagesController;
+@property (strong, nonatomic) IAPMasterViewController *inAppPurchasesController;
+
+
 
 @end

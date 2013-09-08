@@ -60,4 +60,12 @@
 "twitter_post_canceled" = "트위터에 게시가 취소";
 "no_recipients_only_social" = "어떤 수신자가 없습니다. 메시지는 소셜 네트워크로 전송됩니다";
 "done_button" = "수행";
+"archive_message" = "아카이브에 저장";
+"archive"= "아카이브";
+"available_products" = "사용 가능한 제품";
+"restore" = "복원";
+"buy" = "사기";
+"select_custom_message" = "메시지를 선택";
+"selected_message" = "선택한 메시지";
+"click_row_product_details" = "제품 세부 정보를 얻을 수있는 행을 클릭합니다";
 

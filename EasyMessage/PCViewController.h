@@ -13,17 +13,22 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import "iToast.h"
 #import <AddressBook/AddressBook.h>
-//#import "SocialNetworksViewController.h"
 
 @class SelectRecipientsViewController;
+@class IAPMasterViewController;
 
 @interface PCViewController : UIViewController <MFMailComposeViewControllerDelegate,MFMessageComposeViewControllerDelegate,UIImagePickerControllerDelegate,UITextViewDelegate,UITextFieldDelegate>
 - (IBAction)sendMessage:(id)sender;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
+- (IBAction)switchSaveMessageValueChanged:(id)sender;
 @property (strong, nonatomic) IBOutlet UIButton *sendButton;
 @property (strong, nonatomic) IBOutlet UILabel *labelMessage;
 @property (strong, nonatomic) IBOutlet UILabel *labelSubject;
 @property (strong, nonatomic) IBOutlet UILabel *labelOnlySocial;
+
+@property (strong, nonatomic) IBOutlet UISwitch *saveMessageSwitch;
+
+
 
 -(IBAction)loadContactsList:(id)sender;
 - (IBAction)showSettings:(id)sender;
@@ -42,11 +47,13 @@ void addressBookChanged(ABAddressBookRef reference,
 @property (strong, nonatomic) UIImage *image;
 @property (strong, nonatomic) IBOutlet UIPlaceHolderTextView *body;
 
+@property (strong, nonatomic) IBOutlet UILabel *labelSaveArchive;
 @property (strong, nonatomic) NSTimer *changeTimer;
 
 
 @property(strong,nonatomic) SettingsViewController* settingsController;
 @property(strong,nonatomic) SelectRecipientsViewController *recipientsController;
+@property(strong,nonatomic) IAPMasterViewController *inAppPurchaseTableController;
 
 
 @property (strong,nonatomic) NSMutableArray *selectedRecipientsList;
@@ -58,6 +65,7 @@ void addressBookChanged(ABAddressBookRef reference,
 @property BOOL twitterSentOK;
 @property BOOL sendToFacebook;
 @property BOOL sendToTwitter;
+@property BOOL saveMessage;
 
 
 @end

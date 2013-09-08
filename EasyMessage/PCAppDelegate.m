@@ -11,6 +11,9 @@
 #import "PCViewController.h"
 #import "SettingsViewController.h"
 #import "SelectRecipientsViewController.h"
+#import "CustomMessagesController.h"
+#import "EasyMessageIAPHelper.h"
+#import "IAPMasterViewController.h"
 
 
 @implementation PCAppDelegate
@@ -26,25 +29,41 @@
     
     self.recipientsController = [[SelectRecipientsViewController alloc] initWithNibName:@"SelectRecipientsViewController" bundle:nil rootViewController:self.viewController];
     
+    self.customMessagesController = [[CustomMessagesController alloc] initWithNibName:@"CustomMessagesController" bundle:nil rootViewController:self.viewController ];
+    
+    self.inAppPurchasesController = [[IAPMasterViewController alloc] initWithNibName:@"IAPMasterViewController" bundle:nil ];
+    
+    
+    
     self.viewController.recipientsController = self.recipientsController;
     
     
-    UINavigationController *navController = [[UINavigationController alloc] init];
-    [navController setViewControllers: [[NSArray alloc]  initWithObjects:self.settingsController, nil]];
+    UINavigationController *navControllerSettings = [[UINavigationController alloc] init];
+    [navControllerSettings setViewControllers: [[NSArray alloc]  initWithObjects:self.settingsController, nil]];
     
     UINavigationController *navControllerRecipients = [[UINavigationController alloc] init];
     [navControllerRecipients setViewControllers: [[NSArray alloc]  initWithObjects:self.recipientsController, nil]];
     
+    UINavigationController *customMessagesControllerNav = [[UINavigationController alloc] init];
+    [customMessagesControllerNav setViewControllers: [[NSArray alloc]  initWithObjects:self.customMessagesController, nil]];
+    
+    UINavigationController *inAppPurchasesControllerNav = [[UINavigationController alloc] init];
+    [inAppPurchasesControllerNav setViewControllers: [[NSArray alloc]  initWithObjects:self.inAppPurchasesController, nil]];
+    
     
     UITabBarController *tabController = [[UITabBarController alloc] init];
-    [tabController setViewControllers: [NSArray arrayWithObjects:self.viewController,navControllerRecipients,navController,nil] ];
+    [tabController setViewControllers: [NSArray arrayWithObjects:self.viewController,navControllerRecipients,navControllerSettings,customMessagesControllerNav, inAppPurchasesControllerNav, nil] ];
    
     //[tabController setSelectedIndex:0];
     
-    
+    [EasyMessageIAPHelper sharedInstance];
     
     self.window.rootViewController = tabController;//navController;
     [self.window makeKeyAndVisible];
+    
+    
+    
+    
     return YES;
 }
 

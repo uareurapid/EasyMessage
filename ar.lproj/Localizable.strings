@@ -59,4 +59,11 @@
 "twitter_post_canceled" = "أضف إلى تويتر إلغاء";
 "no_recipients_only_social" = "مستلمين اختيارها. سيتم إرسال رسالة إلى الشبكات الاجتماعية فقط";
 "done_button" = "فعلت";
-
+"archive_message" = "حفظ في الأرشيف";
+"archive"= "الأرشيف";
+"available_products" = "المنتجات المتاحة";
+"restore" = "استعادة";
+"buy" ="شراء";
+"select_custom_message" ="اختر رسالة";
+"selected_message" = "الرسالة المحددة";
+"click_row_product_details" = "فوق صف للحصول على تفاصيل المنتج";

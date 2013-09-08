@@ -11,6 +11,7 @@
 #import "SelectRecipientsViewController.h"
 #import <UIKit/UIKit.h>
 #import "SocialNetworksViewController.h"
+#import "IAPMasterViewController.h"
 
 
 @interface PCViewController ()
@@ -24,7 +25,8 @@
 @synthesize smsSentOK,emailSentOK,sendButton;
 @synthesize labelMessage,labelSubject,labelOnlySocial;
 @synthesize sendToFacebook,sendToTwitter,facebookSentOK,twitterSentOK;
-@synthesize changeTimer;
+@synthesize changeTimer,saveMessageSwitch,saveMessage,inAppPurchaseTableController;
+@synthesize labelSaveArchive;
 
 - (void)viewDidLoad
 {
@@ -32,6 +34,7 @@
     //settingsController = [[SettingsViewController alloc] initWithNibName:@"SettingsViewController" bundle:nil];
 	// Do any additional setup after loading the view, typically from a nib.
     self.title = NSLocalizedString(@"compose",nil);
+    labelSaveArchive.text = NSLocalizedString(@"archive_message", @"save in archive");
  
     
     smsSentOK = NO;
@@ -40,6 +43,7 @@
     twitterSentOK = NO;
     sendToTwitter = NO;
     sendToFacebook = NO;
+    saveMessage = NO;
 
     labelOnlySocial.text = NSLocalizedString(@"no_recipients_only_social","@only social post, no recipients selected");
     
@@ -53,6 +57,9 @@
     labelSubject.text = NSLocalizedString(@"subject_label",nil);
     labelMessage.text = NSLocalizedString(@"message_label",nil);
     
+    //the table that shows the in app purchases
+    inAppPurchaseTableController = [[IAPMasterViewController alloc] initWithNibName:@"IAPMasterViewController" bundle:nil];
+    
     
     selectedRecipientsList = [[NSMutableArray alloc]init];
     [scrollView flashScrollIndicators];
@@ -61,6 +68,10 @@
     //load the contacts list when the view loads
     [self setupAddressBook];
     self.scrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableViewBackground.png"]];
+    /*saveMessageSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
+    [saveMessageSwitch setCenter:CGPointMake(160.0f,260.0f )];
+    saveMessageSwitch set
+  */
   
 }
 //override
@@ -136,7 +147,11 @@
     [self sendToFacebook:nil];//http://www.visualpharm.com/
 }*/
 
-//load the contacts from device
+
+//- (IBAction)sendMessage:(id)sender {
+    
+//    [self presentViewController:inAppPurchaseTableController animated:YES completion:nil];
+//}
 
 - (IBAction)sendMessage:(id)sender {
     
@@ -330,26 +345,18 @@
 
 -(NSMutableArray *)loadContacts: (ABAddressBookRef) addressBook {
     
-     NSMutableArray *contacts = [[NSMutableArray alloc] init];
-    
-    
-    //ABRecordRef source = ABAddressBookCopyDefaultSource(addressBook);
-
-    
-    //CFArrayRef allPeople = ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(addressBook, source, kABPersonSortByLastName);
-    
-    //CFIndex numberOfPeople = ABAddressBookGetPersonCount(addressBook);
+    NSMutableArray *contacts = [[NSMutableArray alloc] init];
     
     NSArray *arrayOfPeople = (__bridge_transfer NSArray*)ABAddressBookCopyArrayOfAllPeople(addressBook);
-    
-    
     
     for(int i = 0; i < arrayOfPeople.count; i++){
         //NSData  *imgData = (__bridge_transfer NSData *) ABPersonCopyImageDataWithFormat(record, kABPersonImageFormatThumbnail);
         
         Contact *contact = [[Contact alloc] init];
         ABRecordRef person = (__bridge ABRecordRef)[arrayOfPeople objectAtIndex:i];
-        // was ok +- CFArrayGetValueAtIndex( allPeople, i );
+        
+        //save the reference
+        contact.person=person;
         
         NSString *email;
         
@@ -810,6 +817,13 @@
     [recipientsController.tableView reloadData];
     subject.text = @"";
     body.text = @"";
+    
+    if(saveMessage) {
+        //TODO SAVE THE MESSAGE
+    }
+    
+    saveMessage = NO;
+    [saveMessageSwitch setOn:NO];
 }
 
 //get all emails
@@ -1062,4 +1076,7 @@ void addressBookChanged(ABAddressBookRef reference,
                      }];
 }
 
+- (IBAction)switchSaveMessageValueChanged:(id)sender {
+    saveMessage = saveMessageSwitch.on ? YES : NO;
+}
 @end

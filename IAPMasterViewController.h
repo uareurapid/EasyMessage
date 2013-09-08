@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <StoreKit/StoreKit.h>
+#import "PCViewController.h"
 
-@interface IAPMasterViewController : UITableViewController
+@interface IAPMasterViewController : UITableViewController <SKProductsRequestDelegate>
 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil rootViewController: (PCViewController *) rootViewController;
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;
 @end

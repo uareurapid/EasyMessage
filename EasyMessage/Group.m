@@ -10,4 +10,23 @@
 
 @implementation Group
 
+@synthesize contactsList;
+
+-(id) init {
+    self = [super init];
+    if(self ) {
+        contactsList = [[NSMutableArray alloc] init];
+    }
+    return self;
+}
+
+-(id) initWithContacts: (NSArray * ) contacts{
+    self = [super init];
+    if(self ) {
+        contactsList = [[NSMutableArray alloc] initWithArray:contacts];
+    }
+    return self;
+}
+
+
 @end

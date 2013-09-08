@@ -8,6 +8,30 @@
 
 #import "EasyMessageIAPHelper.h"
 
+@interface EasyMessageIAPHelper ()
+
+@end
+
 @implementation EasyMessageIAPHelper
+
+//The sharedInstance method implements the Singleton pattern in Objective-C to return a single,
+//global instance of the RageIAPHelper class. It calls the superclasses initializer to pass in all
+//the product identifiers that you created with iTunes Connect.
+
++ (EasyMessageIAPHelper *)sharedInstance {
+    static dispatch_once_t once;
+    static EasyMessageIAPHelper * sharedInstance;
+    
+    
+    dispatch_once(&once, ^{
+        NSSet * productIdentifiers = [NSSet setWithObjects:
+                                      @"com.pt.pcristo.common.messages",
+                                      @"com.pt.pcristo.groups.support",
+                                      nil];
+        sharedInstance = [[self alloc] initWithProductIdentifiers:productIdentifiers];
+    });
+    
+    return sharedInstance;
+}
 
 @end

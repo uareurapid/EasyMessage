@@ -10,4 +10,6 @@
 
 @interface EasyMessageIAPHelper : IAPHelper
 
++ (EasyMessageIAPHelper *)sharedInstance;
+
 @end
