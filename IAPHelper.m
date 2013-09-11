@@ -7,6 +7,7 @@
 //
 
 #import "IAPHelper.h"
+#import "iToast.h"
 
 // Add to top of file
 NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurchasedNotification";
@@ -75,6 +76,12 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
 - (void)completeTransaction:(SKPaymentTransaction *)transaction {
     NSLog(@"completeTransaction...");
     
+    NSString *msg = NSLocalizedString(@"congratulations_purchase",@"congratulations_purchase");
+    if(msg!=nil) {
+        [[[[iToast makeText:msg]
+           setGravity:iToastGravityBottom] setDuration:2000] show];
+    }
+    
     [self provideContentForProductIdentifier:transaction.payment.productIdentifier];
     [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
 }
@@ -89,6 +96,12 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
 - (void)failedTransaction:(SKPaymentTransaction *)transaction {
     
     NSLog(@"failedTransaction...");
+    NSString *msg = NSLocalizedString(@"failed_purchase",@"failed_purchase");
+    if(msg!=nil) {
+        [[[[iToast makeText:msg]
+           setGravity:iToastGravityBottom] setDuration:2000] show];
+    }
+    
     if (transaction.error.code != SKErrorPaymentCancelled)
     {
         NSLog(@"Transaction error: %@", transaction.error.localizedDescription);
@@ -125,16 +138,16 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
     _productsRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:_productIdentifiers];
     _productsRequest.delegate = self;
     if(_productIdentifiers==nil) {
-        NSLog(@"here 1");
+        NSLog(@"_productIdentifiers is nil");
     }
     if(_productsRequest==nil) {
-        NSLog(@"here 2");
+        NSLog(@"_productsRequest is nil");
     }
     if(_completionHandler==nil) {
-        NSLog(@"here 3");
+        NSLog(@"_completionHandler is nil");
     }
     
-    NSLog(@"start request");
+    //NSLog(@"start request");
     [_productsRequest start];
     
 }
@@ -175,7 +188,7 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
 //buy the product
 - (void)buyProduct:(SKProduct *)product {
     
-    NSLog(@"I am Buying %@...", product.productIdentifier);
+    //NSLog(@"I am Buying %@...", product.productIdentifier);
     
     SKPayment * payment = [SKPayment paymentWithProduct:product];
     [[SKPaymentQueue defaultQueue] addPayment:payment];

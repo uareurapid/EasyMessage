@@ -7,6 +7,7 @@
 //
 
 #import "CustomMessagesController.h"
+#import "EasyMessageIAPHelper.h"
 
 @interface CustomMessagesController ()
 
@@ -14,7 +15,7 @@
 
 @implementation CustomMessagesController
 
-@synthesize messagesList,selectedMessage,rootViewController;
+@synthesize messagesList,selectedMessage,rootViewController,lock,unlock;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -25,7 +26,7 @@
     return self;
 }
 
--(id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil rootViewController: (PCViewController *) rootViewController {
+-(id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil rootViewController: (PCViewController *) rootViewControllerArg {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil ];
     if(self) {
         self.tabBarItem.image = [UIImage imageNamed:@"33-cabinet"];
@@ -33,22 +34,48 @@
         
         UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"done_button",nil)
                                                                        style:UIBarButtonItemStyleDone target:self action:@selector(selectFinished:)];
+        unlock = [UIImage imageNamed:@"Unlock32"];
+        lock = [UIImage imageNamed:@"Lock32"];
         
+        UIBarButtonItem *lockButtonItem = [[UIBarButtonItem alloc]initWithImage:lock style:UIBarButtonItemStyleBordered target:self action:@selector(unlockFeature:)];
       
         
         self.navigationItem.rightBarButtonItem = doneButton;
+        self.navigationItem.leftBarButtonItem = lockButtonItem;
         self.navigationController.toolbarHidden = NO;
         
+        
+        
+        /*
         NSArray* toolbarItems = [NSArray arrayWithObjects:
                                  [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
                                                                                target:self
                                                                                action:@selector(goBackAfterSelection:)],nil];
-        self.toolbarItems = toolbarItems;
+        self.toolbarItems = toolbarItems;*/
         selectedMessage = -1;
-        self.rootViewController = rootViewController;
+        self.rootViewController = rootViewControllerArg;
         
     }
     return  self;
+}
+
+//unlock feature message
+-(IBAction)unlockFeature:(id)sender {
+    //UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"In-App..." message:@"Enter the group name" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    //[alert show];
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    if ([[EasyMessageIAPHelper sharedInstance] productPurchased:PRODUCT_COMMON_MESSAGES]) {
+        self.navigationItem.leftBarButtonItem.image = unlock;
+        [self.navigationItem.rightBarButtonItem setEnabled: YES];
+    }
+    else {
+        self.navigationItem.leftBarButtonItem.image = lock;
+        [self.navigationItem.rightBarButtonItem setEnabled: NO];
+    }
+    
+    
 }
 
 - (void)viewDidLoad
@@ -123,6 +150,7 @@
             cell.accessoryType = UITableViewCellAccessoryNone;
         }
     }
+    
     
     return cell;
 }

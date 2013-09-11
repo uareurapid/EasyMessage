@@ -64,4 +64,6 @@
 "select_custom_message" = "Seleccione un mensaje";
 "selected_message" = "Seleccionado mensaje";
 "click_row_product_details" = "Haga clic en una fila para obtener los detalles del producto";
+"congratulations_purchase" = "Enhorabuena! Compra completa.";
+"failed_purchase" = "Error! Compra fracasada.";
 

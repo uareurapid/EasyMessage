@@ -77,6 +77,11 @@
     } else {
         // Warn the user that purchases are disabled.
         NSLog(@"no payments available");
+        NSString *msg = @"No payments available. In-App products will be disabled";
+        if(msg!=nil) {
+            [[[[iToast makeText:msg]
+               setGravity:iToastGravityBottom] setDuration:2000] show];
+        }
     }
     
     
@@ -103,7 +108,6 @@
     _products = nil;
     [self.tableView reloadData];
     [[EasyMessageIAPHelper sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
-        NSLog(@"PRODUCTS ARE %d",products.count);
         if (success) {
             _products = products;
             [self.tableView reloadData];
@@ -159,6 +163,7 @@
         if ([[EasyMessageIAPHelper sharedInstance] productPurchased:product.productIdentifier]) {
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
             cell.accessoryView = nil;
+            cell.imageView.image = [UIImage imageNamed:@"Unlock32"];
         } else {
             
             
@@ -170,12 +175,15 @@
           
             //label1.text = [_priceFormatter stringFromNumber:product.price];
             //cell.accessoryView = container;
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            //cell.accessoryType = UITableViewCellAccessoryNone;//UITableViewCellAccessoryDisclosureIndicator;
             
+            cell.imageView.image = [UIImage imageNamed:@"Lock32"];
             
-            UIButton *buyButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-            buyButton.frame = CGRectMake(0, 0, 60, 37);
-            [buyButton setTitle:NSLocalizedString(@"buy",@"buy") forState:UIControlStateNormal];
+            UIImage *buyImage = [UIImage imageNamed:@"buy48"];
+            UIButton *buyButton = [UIButton buttonWithType:UIButtonTypeContactAdd];
+            buyButton.frame = CGRectMake(0, 0, 48, 48);
+            [buyButton setBackgroundImage:buyImage forState:UIControlStateNormal];
+            //[buyButton setTitle:NSLocalizedString(@"buy",@"buy") forState:UIControlStateNormal];
             buyButton.tag = indexPath.row;
             [buyButton addTarget:self action:@selector(buyButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
              

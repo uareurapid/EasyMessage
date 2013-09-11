@@ -18,6 +18,8 @@ typedef void (^RequestProductsCompletionHandler)(BOOL success, NSArray * product
 - (id)initWithProductIdentifiers:(NSSet *)productIdentifiers;
 - (void)requestProductsWithCompletionHandler:(RequestProductsCompletionHandler)completionHandler;
 
+#define PRODUCT_COMMON_MESSAGES @"com.pt.pcristo.common.messages"
+#define PRODUCT_GROUP_SUPPORT @"com.pt.pcristo.groups.support"
 
 // Add two new method declarations
 - (void)buyProduct:(SKProduct *)product;

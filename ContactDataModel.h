@@ -14,16 +14,16 @@
 @interface ContactDataModel : NSManagedObject
 
 @property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) UNKNOWN_TYPE phone;
+@property (nonatomic, retain) NSString * phone;
 @property (nonatomic, retain) NSString * email;
-@property (nonatomic, retain) NSSet *belongsTo;
+@property (nonatomic, retain) NSSet *group;
 @end
 
 @interface ContactDataModel (CoreDataGeneratedAccessors)
 
-- (void)addBelongsToObject:(GroupDataModel *)value;
-- (void)removeBelongsToObject:(GroupDataModel *)value;
-- (void)addBelongsTo:(NSSet *)values;
-- (void)removeBelongsTo:(NSSet *)values;
+- (void)addGroupObject:(GroupDataModel *)value;
+- (void)removeGroupObject:(GroupDataModel *)value;
+- (void)addGroup:(NSSet *)values;
+- (void)removeGroup:(NSSet *)values;
 
 @end

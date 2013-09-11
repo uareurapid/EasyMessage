@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreData/CoreData.h>
 
 @class PCViewController;
 @class SettingsViewController;
@@ -23,6 +24,11 @@
 @property (strong, nonatomic) SelectRecipientsViewController *recipientsController;
 @property (strong, nonatomic) CustomMessagesController *customMessagesController;
 @property (strong, nonatomic) IAPMasterViewController *inAppPurchasesController;
+
+//CORE DATA
+@property (nonatomic, retain, readonly) NSManagedObjectModel *managedObjectModel;
+@property (nonatomic, retain, readonly) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, retain, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
 
 

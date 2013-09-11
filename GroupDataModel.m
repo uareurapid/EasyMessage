@@ -12,6 +12,6 @@
 @implementation GroupDataModel
 
 @dynamic name;
-@dynamic contains;
+@dynamic contacts;
 
 @end

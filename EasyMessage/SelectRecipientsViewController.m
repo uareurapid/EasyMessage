@@ -9,6 +9,11 @@
 #import "SelectRecipientsViewController.h"
 #import "PCViewController.h"
 #import "Group.h"
+#import "EasyMessageIAPHelper.h"
+#import "PCAppDelegate.h"
+#import "GroupDataModel.h"
+#import "ContactDataModel.h"
+
 
 const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
 
@@ -20,7 +25,8 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
 
 @synthesize contactsList,selectedContactsList,rootViewController;
 @synthesize initialSelectedContacts,contactsByLastNameInitial;
-@synthesize sortedKeys;
+@synthesize sortedKeys,groupLocked,databaseRecords;
+@synthesize groupsList;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -31,6 +37,7 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
     return self;
 }
 
+/*
 -(id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil contacts: (NSMutableArray *) contacts{
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if(self) {
@@ -41,24 +48,26 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
                                                                            style:UIBarButtonItemStyleDone target:self action:@selector(goBackAfterSelection:)];
         
         UIBarButtonItem *addToGroupButton = [[UIBarButtonItem alloc] initWithTitle:@"Add to group"
-                                                                             style:UIBarButtonItemStyleDone target:self action:@selector(goBackAfterSelection:)];
+                                                                             style:UIBarButtonItemStyleDone target:self action:@selector(addToGroup:)];
         
         self.navigationItem.rightBarButtonItems = [[NSArray alloc] initWithObjects:doneButton, addToGroupButton,nil]; //
         //self.navigationItem.rightBarButtonItem = doneButton;
         
     }
     return self;
-}
+}*/
 
-//THIS IS THE ONE CALLED
+//THIS IS THE METHOD THAT IS CALLED FROM APPDELEGATE
 -(id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil rootViewController: (PCViewController*) viewController{
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if(self) {
         self.contactsList = [[NSMutableArray alloc] init];
+        self.groupsList = [[NSMutableArray alloc] init];
+        
         self.selectedContactsList = [[NSMutableArray alloc] init];
+        self.databaseRecords = [[NSMutableArray alloc] init];
         self.rootViewController = viewController;
         
-        NSLog(@"THIS WAS CALLED");
         UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"select_all",nil)
                                                                        style:UIBarButtonItemStyleDone target:self action:@selector(selectAllContacts:)];
         
@@ -71,18 +80,12 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
         
         self.navigationItem.rightBarButtonItem = addToGroupButton;
         [addToGroupButton setEnabled:NO];
+        groupLocked = YES;
  
         NSArray* toolbarItems = [NSArray arrayWithObjects:
                                  [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
                                                                                target:self
                                                                                action:@selector(goBackAfterSelection:)],nil];
-        
-        //***************************************************************************************
-        //[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch
-        //                                              target:self
-        //                                              action:@selector(goBackAfterSelection:)],
-        //[toolbarItems makeObjectsPerformSelector:@selector(release)];
-        //***************************************************************************************
         
         
         self.toolbarItems = toolbarItems;
@@ -377,6 +380,9 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
 -(void) viewWillAppear:(BOOL)animated {
     
     initialSelectedContacts = selectedContactsList.count;
+    groupLocked = ![[EasyMessageIAPHelper sharedInstance] productPurchased:PRODUCT_GROUP_SUPPORT];
+    [self.navigationItem.rightBarButtonItem setEnabled:groupLocked];
+     
 }
 
 -(void) viewWillDisappear:(BOOL)animated {
@@ -398,6 +404,151 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
     
    
 }
+
+/**
+ *checks if the group with this name exists
+ */
+-(BOOL) checkIfGroupExists: (NSString *) name {
+    
+    
+    for(id contact in contactsList) {
+        if([contact isKindOfClass:Group.class]) {
+            Group *gr = (Group *)contact;
+            if([gr.name isEqualToString:name]) {
+                return YES;
+            }
+        }
+    }
+    return NO;
+}
+#pragma groups stuff
+//
+//check if group available or not
+-(void) CheckIfGroupExistWithName:(NSString*)groupName {
+    
+    
+    /**
+    BOOL hasGroup = NO;
+    //checks to see if the group is created ad creats group for HiBye contacts
+    ABAddressBookRef addressBook = ABAddressBookCreate();
+    CFIndex groupCount = ABAddressBookGetGroupCount(addressBook);
+    CFArrayRef groupLists= ABAddressBookCopyArrayOfAllGroups(addressBook);
+    
+    for (int i=0; i<groupCount; i++) {
+        ABRecordRef currentCheckedGroup = CFArrayGetValueAtIndex(groupLists, i);
+        NSString *currentGroupName = (__bridge NSString *)ABRecordCopyCompositeName(currentCheckedGroup);
+        
+        if ([currentGroupName isEqualToString:groupName]){
+            //!!! important - save groupID for later use
+            self.groupId = ABRecordGetRecordID(currentCheckedGroup);
+            NSLog(@"Group %@ already exists",groupName);
+            hasGroup=YES;
+        }
+    }
+    
+    if (hasGroup==NO){
+        //id the group does not exist you can create one
+        [self createNewGroup:groupName];
+    }
+    
+    //CFRelease(currentCheckedGroup);
+    CFRelease(groupLists);
+    CFRelease(addressBook);
+    
+    for(Contact *contact in selectedContactsList) {
+        NSLog(@"Trying to add person with name %@",contact.name);
+        [self addPersonToGroup:contact.person];
+    }*/
+    
+    
+}
+
+//create the new group with name group name
+-(void) createNewGroup:(NSString*)groupName {
+    
+    NSLog(@"Group %@ doesn´t exist... creating it!",groupName);
+    
+    CFErrorRef *error = NULL;
+    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, error);
+    ABRecordRef newGroup = ABGroupCreate();
+    ABRecordSetValue(newGroup, kABGroupNameProperty,(__bridge CFTypeRef)(groupName), nil);
+    ABAddressBookAddRecord(addressBook, newGroup, nil);
+    ABAddressBookSave(addressBook, nil);
+    CFRelease(addressBook);
+    
+    //!!! important - save groupID for later use
+    self.groupId = ABRecordGetRecordID(newGroup);
+    NSLog(@"Group id is %d",self.groupId);
+    CFRelease(newGroup);
+}
+
+-(void) addPersonToGroup: (ABRecordRef ) person {
+    
+    CFErrorRef *error = NULL;
+    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, error);
+    
+    NSArray *arrayOfPeople = (__bridge_transfer NSArray*)ABAddressBookCopyArrayOfAllPeople(addressBook);
+    NSLog(@"NUM OF PEOPLE IN THIS ADDRESSBOOK: %d ",arrayOfPeople.count);
+    
+    //Use the Group ID you stored.
+    ABRecordRef theGroup = ABAddressBookGetGroupWithRecordID(addressBook, self.groupId);
+    BOOL didAdd = ABGroupAddMember(theGroup,person,error);
+    
+    if (!didAdd) {
+        // Update to handle the error appropriately.
+        if(error==NULL) {
+            NSLog(@"IS NULL");
+        }
+        else 
+        NSLog(@"Unresolved error while adding person to group %d %@", self.groupId,CFErrorCopyDescription(&error));
+      
+    }
+    
+    BOOL didSave = ABAddressBookSave(addressBook, error);
+    
+    if (!didSave) {
+        // Update to handle the error appropriately.
+        NSLog(@"Unresolved error while saving address book %d", self.groupId);
+       
+    }
+}
+
+//
+//check if group available or not
+
+- (BOOL) checkIfGroupExists1s:(NSString*) groupNameParam
+{
+    BOOL isFound = NO;
+    
+    CFErrorRef *error = NULL;
+    //address book object to interact with iPhone contacts.
+    ABAddressBookRef addressbook = ABAddressBookCreateWithOptions(NULL, error);
+    //get groups count
+    CFIndex groupsCount          = ABAddressBookGetGroupCount(addressbook);
+    //get all available groups as array
+    CFArrayRef allGroups         = ABAddressBookCopyArrayOfAllGroups(addressbook);
+    
+    NSString *groupName;
+    for (int i = 0; i<groupsCount; i++) {
+        //get group of index=i from groups array
+        ABRecordRef group = CFArrayGetValueAtIndex(allGroups, i);
+        //get group name, I use __bridge_transfer to transfer from C to objective-c.
+        groupName = (__bridge_transfer NSString*)ABRecordCopyCompositeName(group);
+        //compare groups names
+        if ([groupName isEqualToString:groupNameParam]) {
+            isFound = YES;
+        }
+        
+    }
+    
+    //don't forget releases a Core Foundation object
+    CFRelease(allGroups);
+    CFRelease(addressbook);
+    return isFound;
+    
+}
+
+
 
 #pragma mark - Table view data source
 
@@ -438,6 +589,7 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
     
     NSMutableArray *array = (NSMutableArray *) [contactsByLastNameInitial objectForKey:key];
     
+    BOOL isGroup = NO;
     
     Contact *contact = [array objectAtIndex:row];
     if(contact.name!=nil) {
@@ -453,37 +605,62 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
         cell.textLabel.text = contact.phone;
     }
     
-    
-    BOOL hasPhone = contact.phone!=nil;
-    BOOL hasEmail = contact.email!=nil;
-    
-    if(hasEmail && hasPhone) {
-        cell.detailTextLabel.text =  [NSString stringWithFormat:@"Email + %@", NSLocalizedString(@"phone_label",@"Phone") ];
-    }
-    else if(hasEmail) {
-        cell.detailTextLabel.text = @"Email";
+    if([contact isKindOfClass:Group.class]) {
+        Group *thisOne = (Group *) contact;
+        cell.detailTextLabel.text = [NSString stringWithFormat: @"Group (%d members)",thisOne.contactsList.count ];
+        isGroup = YES;
     }
     else {
-        //only phone
-        cell.detailTextLabel.text = NSLocalizedString(@"phone_label",@"Phone");
+        
+        BOOL hasPhone = contact.phone!=nil;
+        BOOL hasEmail = contact.email!=nil;
+        
+        if(hasEmail && hasPhone) {
+            cell.detailTextLabel.text =  [NSString stringWithFormat:@"Email + %@", NSLocalizedString(@"phone_label",@"Phone") ];
+        }
+        else if(hasEmail) {
+            cell.detailTextLabel.text = @"Email";
+        }
+        else {
+            //only phone
+            cell.detailTextLabel.text = NSLocalizedString(@"phone_label",@"Phone");
+        }
     }
+    
     
    // if(contact.photo!=nil) {
      //   cell.imageView.image = contact.photo;
     //}
     
+    
     if([selectedContactsList containsObject:contact]) {
-       // NSLog(@"already contains: %@",contact.name);
+    
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }
     else {
-        cell.accessoryType = UITableViewCellAccessoryNone;
+        if(isGroup) {
+            //and not selected
+            cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+        }
+        else {
+            cell.accessoryType = UITableViewCellAccessoryNone;
+        }
+        
     }
     
   
     
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"Called button of row at index %d",indexPath.row);
+    
+    Group *group = (Group*)[contactsList objectAtIndex:indexPath.row];
+    for(Contact *c in group.contactsList) {
+        NSLog(@"Group contact details for: %@",c.name);
+    }
 }
 
 /*
@@ -567,7 +744,7 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
         });
     }
     
-    [self.navigationItem.rightBarButtonItem setEnabled:(selectedContactsList.count>1)];
+    [self.navigationItem.rightBarButtonItem setEnabled: ( (selectedContactsList.count>1) && !groupLocked ) ];
     
 
    [self.tableView reloadData];
@@ -643,16 +820,67 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
 }
 
 
-//the delegate for the new Album
+//the delegate for the new Group
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     
     if(buttonIndex==1) { //0 - cancel, 1 - save
         NSString *groupName = [alertView textFieldAtIndex:0].text;
-        [self createNewGroup:groupName];
+        
+        if([self checkIfGroupExists:groupName]==NO) {
+            NSLog(@"Adding the group %@",groupName);
+            [self saveGroup: groupName];
+        }
+        else {
+            NSLog(@"already exists that group");
+        }
     }
     
 }
 
+//save the location record
+-(void)saveGroup:(NSString*)name {
+    
+    NSLog(@"trying to save stuff...");
+    
+    NSManagedObjectContext *managedObjectContext = [(PCAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
+    GroupDataModel *group = (GroupDataModel *)[NSEntityDescription insertNewObjectForEntityForName:@"GroupDataModel" inManagedObjectContext:managedObjectContext];
+    
+    
+    group.name = name;
+    
+    NSMutableSet *set = [[NSMutableSet alloc] initWithCapacity:selectedContactsList.count];
+    
+    for(Contact *selected in selectedContactsList) {
+        ContactDataModel *contact = (ContactDataModel *)[NSEntityDescription insertNewObjectForEntityForName:@"ContactDataModel" inManagedObjectContext:managedObjectContext];
+        contact.name = selected.name;
+        contact.phone = selected.phone;
+        contact.email = selected.email;
+        
+        [group addContactsObject:contact];
+        [contact addGroupObject:group];
+     
+    }
+   
+    
+    
+        
+    BOOL OK = YES;
+    NSError *error;
+    if(![managedObjectContext save:&error]){
+        NSLog(@"Unable to save object error is: %@",error.description);
+        OK= NO;
+        //This is a serious error saying the record
+        //could not be saved. Advise the user to
+        //try again or restart the application.
+    }
+    else {
+        NSLog(@"saved ok...");
+    }
+    
+   
+}
+
+/*
 -(void) createNewGroup: (NSString * ) name {
     @try {
         
@@ -695,7 +923,7 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
     @finally {
         [self refreshPhonebook:nil];
     }
-}
+}*/
 
 
 @end

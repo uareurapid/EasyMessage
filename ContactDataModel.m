@@ -15,6 +15,6 @@
 @dynamic name;
 @dynamic phone;
 @dynamic email;
-@dynamic belongsTo;
+@dynamic group;
 
 @end

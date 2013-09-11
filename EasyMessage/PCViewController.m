@@ -8,11 +8,14 @@
 
 #import "PCViewController.h"
 #import "Contact.h"
+#import "Group.h"
 #import "SelectRecipientsViewController.h"
 #import <UIKit/UIKit.h>
 #import "SocialNetworksViewController.h"
 #import "IAPMasterViewController.h"
-
+#import "EasyMessageIAPHelper.h"
+#import "CoreDataUtils.h"
+#import "ContactDataModel.h"
 
 @interface PCViewController ()
 
@@ -26,7 +29,8 @@
 @synthesize labelMessage,labelSubject,labelOnlySocial;
 @synthesize sendToFacebook,sendToTwitter,facebookSentOK,twitterSentOK;
 @synthesize changeTimer,saveMessageSwitch,saveMessage,inAppPurchaseTableController;
-@synthesize labelSaveArchive;
+@synthesize labelSaveArchive,lockImage;
+//@synthesize addressBook;
 
 - (void)viewDidLoad
 {
@@ -88,6 +92,9 @@
 -(void) viewWillAppear:(BOOL)animated {
     
     [self showHideSocialOnlyLabel];
+    [lockImage setHidden:[[EasyMessageIAPHelper sharedInstance] productPurchased:PRODUCT_COMMON_MESSAGES]];
+        
+    
 }
 
 //-(void) viewWillDisappear:(BOOL)animated {
@@ -299,6 +306,7 @@
     
     
     CFErrorRef * error = NULL;
+    //ABAddressBookRef 
     ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, error);
     NSMutableArray __block *contacts;
     
@@ -315,6 +323,8 @@
             [recipientsController.contactsList removeAllObjects];
             [recipientsController.contactsList addObjectsFromArray:contacts];
             
+            
+            
             [recipientsController.selectedContactsList removeAllObjects];
             [recipientsController.selectedContactsList addObjectsFromArray:selectedRecipientsList];
  
@@ -325,8 +335,21 @@
         // The user has previously given access, add the contact
         contacts = [self loadContacts: addressBook];
         
+        //load the groups from addressbook (if they have contacts)
+        //NSMutableArray *groupsFromAB = [self loadGroups:addressBook];
+        
+        
         [recipientsController.contactsList removeAllObjects];
         [recipientsController.contactsList addObjectsFromArray:contacts];
+        //[recipientsController.contactsList addObjectsFromArray:groupsFromAB];
+        
+        NSMutableArray *groupsFromDB = [self fetchGroupRecords];
+        
+        [recipientsController.contactsList addObjectsFromArray:groupsFromDB];
+        
+        [recipientsController.groupsList removeAllObjects];
+        //[recipientsController.groupsList addObjectsFromArray:groupsFromAB];
+        //[recipientsController.groupsList addObjectsFromArray:groupsFromDB];
         
         [recipientsController.selectedContactsList removeAllObjects];
         [recipientsController.selectedContactsList addObjectsFromArray:selectedRecipientsList];
@@ -338,111 +361,212 @@
         
     }
     [recipientsController refreshPhonebook:nil];
-     
-    //SEND BUTTON linkware http://www.fasticon.com/
+ 
+    CFRelease(addressBook);
     
 }
 
+//get all the records from db
+- (NSMutableArray*) fetchGroupRecords{
+    
+    NSMutableArray *records = [[NSMutableArray alloc] init];
+    NSMutableArray *databaseRecords = [CoreDataUtils fetchGroupRecordsFromDatabase];
+    NSLog(@"Fetched %d groups from database....",databaseRecords.count);
+    for(GroupDataModel *model in databaseRecords) {
+        
+       
+        NSLog(@"Loaded group named %@",model.name);
+        NSLog(@"which has %d contacts",model.contacts.count);
+        
+        Group *group = [[Group alloc] init];
+        group.name = model.name;
+        
+        for(ContactDataModel *contact in model.contacts) {
+            
+            Contact *c = [[Contact alloc] init];
+            c.name = contact.name;
+            c.phone = contact.phone;
+            c.email = contact.email;
+            
+            [group.contactsList addObject:c];
+            
+        }
+        [records addObject:group];
+
+       
+    }
+    return records;
+    
+}
+
+
+//load the groups from the address book
+-(NSMutableArray *)loadGroups: (ABAddressBookRef) addressBook {
+    
+    NSMutableArray *groupsArray = [[NSMutableArray alloc] init];
+    
+    CFArrayRef groups = ABAddressBookCopyArrayOfAllGroups(addressBook);
+    CFIndex numGroups = CFArrayGetCount(groups);
+    NSLog(@"Num groups is %d",numGroups);
+    for(CFIndex idx=0; idx<numGroups; ++idx) {
+        
+        ABRecordRef groupItem = CFArrayGetValueAtIndex(groups, idx);
+        
+        NSString *groupName = (__bridge_transfer NSString*)ABRecordCopyCompositeName(groupItem);
+        NSLog(@"Loaded group named %@",groupName);
+        
+        //create the group object
+        Group *group = [[Group alloc] init];
+        group.email=@"mail@mail.com";
+        group.name = groupName;
+        group.lastName = groupName;
+        group.person = nil;
+        
+        
+        CFArrayRef members = ABGroupCopyArrayOfAllMembers(groupItem);
+        if(members) {
+            NSUInteger count = CFArrayGetCount(members);
+            
+            //if(count>0) {
+                //only add if has contacts
+                //add the group to the array
+                [groupsArray addObject:group];
+            //}
+            
+            for(NSUInteger idx=0; idx<count; ++idx) {
+                ABRecordRef person = CFArrayGetValueAtIndex(members, idx);
+                NSString *name = (__bridge NSString*)ABRecordCopyCompositeName(person);
+                NSLog(@"group person: %@",name);
+                // your code
+            }
+            CFRelease(members);
+        }
+        else {
+            NSLog(@"No members in this group");
+        }
+    }
+    
+    return groupsArray;
+}
+//Load the contacts list from the address book
 -(NSMutableArray *)loadContacts: (ABAddressBookRef) addressBook {
     
     NSMutableArray *contacts = [[NSMutableArray alloc] init];
     
-    NSArray *arrayOfPeople = (__bridge_transfer NSArray*)ABAddressBookCopyArrayOfAllPeople(addressBook);
     
-    for(int i = 0; i < arrayOfPeople.count; i++){
-        //NSData  *imgData = (__bridge_transfer NSData *) ABPersonCopyImageDataWithFormat(record, kABPersonImageFormatThumbnail);
+       //*****
         
-        Contact *contact = [[Contact alloc] init];
-        ABRecordRef person = (__bridge ABRecordRef)[arrayOfPeople objectAtIndex:i];
+        NSArray *arrayOfPeople = (__bridge_transfer NSArray*)ABAddressBookCopyArrayOfAllPeople(addressBook);
         
-        //save the reference
-        contact.person=person;
-        
-        NSString *email;
-        
-        //NSString *theName = (__bridge NSString*)ABRecordCopyCompositeName(person);
-
-        
-        ABMultiValueRef multi = ABRecordCopyValue(person, kABPersonEmailProperty);
-
+        for(int i = 0; i < arrayOfPeople.count; i++){
+            
+            
+            
+            Contact *contact = [[Contact alloc] init];
+            ABRecordRef person = (__bridge ABRecordRef)[arrayOfPeople objectAtIndex:i];
+            
+            
+            NSString *name = (__bridge NSString*)ABRecordCopyCompositeName(person);
+            NSString *lastName =  (__bridge NSString*)ABRecordCopyValue(person, kABPersonLastNameProperty);
+            
+            
+            //save the reference
+            contact.person=person;
+            
+            NSString *email;
+            
+            //NSString *theName = (__bridge NSString*)ABRecordCopyCompositeName(person);
+            
+            
+            ABMultiValueRef multi = ABRecordCopyValue(person, kABPersonEmailProperty);
+            
 #pragma GET EMAIL ADDRESS
-        
-        
-        int count = ABMultiValueGetCount(multi);
-        
-        //do we have more than 1?
-        if(count > 0) {   
-            email = [self getPreferredEmail: multi forLabel:kABHomeLabel count: count];  
-        }
-        //else, we don´t have email
-        
-        //add it if we have it
-        if(email!=nil) {
-            contact.email = email;
-        }
-          
-        
+            
+            
+            int count = ABMultiValueGetCount(multi);
+            
+            //do we have more than 1?
+            if(count > 0) {
+                email = [self getPreferredEmail: multi forLabel:kABHomeLabel count: count];
+            }
+            //else, we don´t have email
+            
+            //add it if we have it
+            if(email!=nil) {
+                contact.email = email;
+            }
+            
+            
 #pragma GET PHONE NUMBER
-        
-        NSString *phone;
-        
-        ABMultiValueRef phoneMulti = ABRecordCopyValue(person, kABPersonPhoneProperty);
-        int countPhones = ABMultiValueGetCount(phoneMulti);
-        
-        if(countPhones>0) {
-            phone = [self getPreferredPhone: phoneMulti forLabel:kABPersonPhoneMobileLabel count: countPhones];
             
-        }
-    
-      //add the phone number
-      if(phone!=nil) {
-        contact.phone = phone;
-      }
-    
-    
-        //ABMultiValueRef nameMulti = ABRecordCopyValue(person, kABPersonCompositeNameFormatLastNameFirst);
-        NSString *name = (__bridge NSString*)ABRecordCopyCompositeName(person);
-        NSString *lastName =  (__bridge NSString*)ABRecordCopyValue(person, kABPersonLastNameProperty);
-        
-        
-        //i must have some sort of contact info
-        if(phone!=nil || email!=nil) {
+            NSString *phone;
             
-            if(name!=nil) {
-                contact.name = name;
-            }
-            if(lastName!=nil) {
-                contact.lastName = lastName;
-            }
+            ABMultiValueRef phoneMulti = ABRecordCopyValue(person, kABPersonPhoneProperty);
+            int countPhones = ABMultiValueGetCount(phoneMulti);
             
-            //try to get the photo if available
-            @try {
-                NSData  *imgData = (__bridge NSData *)ABPersonCopyImageData(person);
-                if(imgData!=nil) {
-                    UIImage  *img = [UIImage imageWithData:imgData];
-                    contact.photo = img;
-                }
-                else {
-                    UIImage  *img = [UIImage imageNamed:@"111-user"];
-                    contact.photo = img;
-                }
+            if(countPhones>0) {
+                phone = [self getPreferredPhone: phoneMulti forLabel:kABPersonPhoneMobileLabel count: countPhones];
                 
             }
-            @catch (NSException *exception) {
-                NSLog(@"Unable to get contact photo, %@",[exception description]);
-            }
-            @finally {
-                ;
+            
+            //add the phone number
+            if(phone!=nil) {
+                contact.phone = phone;
             }
             
-            [contacts addObject:contact];
-          
-        }
+            
+            //ABMultiValueRef nameMulti = ABRecordCopyValue(person, kABPersonCompositeNameFormatLastNameFirst);
+            //NSString *name = (__bridge NSString*)ABRecordCopyCompositeName(person);
+            //NSString *lastName =  (__bridge NSString*)ABRecordCopyValue(person, kABPersonLastNameProperty);
+            
+            
+            //i must have some sort of contact info
+            if(phone!=nil || email!=nil) {
+                
+                if(name!=nil) {
+                    contact.name = name;
+                }
+                if(lastName!=nil) {
+                    contact.lastName = lastName;
+                }
+                
+                //try to get the photo if available
+                @try {
+                    NSData  *imgData = (__bridge NSData *)ABPersonCopyImageData(person);
+                    if(imgData!=nil) {
+                        UIImage  *img = [UIImage imageWithData:imgData];
+                        contact.photo = img;
+                    }
+                    else {
+                        UIImage  *img = [UIImage imageNamed:@"111-user"];
+                        contact.photo = img;
+                    }
+                    
+                }
+                @catch (NSException *exception) {
+                    NSLog(@"Unable to get contact photo, %@",[exception description]);
+                }
+                @finally {
+                    ;
+                }
+                
+                [contacts addObject:contact];
+                
+            }
+            
+            
+        }//end for loop
+
+       //****
     
-     
-    }//end for loop
+        
+   return contacts;
     
-    return contacts;
+    
+    
+    
+        
+    
 }
 
 //get the preferred email address to use

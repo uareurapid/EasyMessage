@@ -1,73 +1,68 @@
-/* 
-  Localizable.strings
-  EasyMessage
-
-  Created by Paulo Cristo on 7/3/13.
-  Copyright (c) 2013 Paulo Cristo. All rights reserved.
-*/
-
-"subject_label" = "Subject:";
-"message_label" = "Message:";
-"placeholder_your_message" = "Your Message (*)";
-"placeholder_subject" = "Subject";
-"send_message" = "Send Message";
-"compose" = "Compose";
-"recipients" = "Recipients";
-"settings" = "Settings";
-"select_all" = "Select all";
-"unselect_all" = "Unselect all";
-"choose_your_recipients" = "Choose your recipients:";
-"selected_%@_recipients" = "Selected %@ recipients";
-"header_message_send_options" = "Message - Send Options";
-"option_send_both" = "Always send both";
-"option_send_email_only" = "Send email only";
-"option_send_sms_only" = "Send SMS only";
-"option_send_facebook_only" = "Post to Facebook";
-"option_send_twitter_only" = "Post to Twitter";
-"option_send_include_social_network" = "Include social networks...";
-"footer_select_service" = "Select the service(s) to send the message";
-"header_preferred_service" = "Preferred Service";
-"preferred_email_service" = "Email service";
-"preferred_sms_service"= "SMS service";
-"preferred_use_both_services" = "Use both services";
-"footer_preferred_service" = "Select the preferred service, in case contact has both entries and you don´t want him to receive both email and SMS";
-"footer_social_networks" = "Posts to social networks work on a per message basis, which means your choices are not persisted between different messages";
-"phone_label" = "Phone";
-//alert box
-"alert_message_include_social_networks" = "Settings have been updated.\r\nWill include social networks!";
-"alert_message_both_empty" = "Subject and message body cannot be empty!";
-"alert_message_body_empty" = "The message body cannot be empty!";
-"alert_message_select_least_one" = "You need to select at least one recipient!";
-"alert_message_settings_updated_both" = "Settings have been updated.\r\nWill send both SMS and email!";
-"alert_message_settings_updated_email" = "Settings have been updated.\r\nWill send email only!";
-"alert_message_settings_updated_sms" ="Settings have been updated.\r\nWill send SMS only!";
-//contacts
-"unable_load_contacts_error_%@" = "Unable to load contacts from address book: %@";
-
-"message_mail_canceled" = "Mail cancelled";
-"message_mail_saved" = "Mail saved";
-"message_mail_sent" = "Mail sent";
-"message_mail_sent_failure_%@" = "Mail sent failure: %@";
-"message_sms_canceled" = "SMS cancelled";
-"message_sms_unable_compose" = "Unable to compose SMS";
-"message_sms_sent" = "SMS sent";
-"recipients_least_one_recipient" = "You need to select at least one valid recipient or adjust your settings!";
-"easymessage_send_email_title" = "EasyMessage: Send email";
-"easymessage_send_sms_title" = "EasyMessage: Send SMS";
-"no_sms_device_settings" = "It´s not possible to send the SMS, please check your device settings!";
-"address_book_changed_msg" = "Your Address book has changed! Refreshing data...";
-"facebook_post_ok" = "Post to Facebook Successful";
-"twitter_post_ok" = "Post to Twitter Successful";
-"facebook_post_canceled" = "Post to Facebook canceled";
-"twitter_post_canceled" = "Post to Twitter canceled";
-"no_recipients_only_social" = "You don´t have any recipients selected. The message will be post to social networks only";
-"done_button" = "Done";
-"archive_message" = "Save in archive?";
-"archive" = "Archive";
-"available_products" = "Available Products";
-"restore" = "Restore";
-"buy" = "Buy";
-"select_custom_message" = "Select a message";
-"selected_message" = "Selected message";
-"click_row_product_details" = "Click a row to get product details";
-
+/* Localizable.strings
+ EasyMessage
+ 
+ Created by Paulo Cristo on 7/3/13.
+ Copyright (c) 2013 Paulo Cristo. All rights reserved. */
+"subject_label" = "主题：";
+"message_label" = "消息：";
+"placeholder_your_message" = "您的留言（*）";
+"placeholder_subject" = "主题";
+"send_message" = "送信";
+"compose" = "构成";
+"recipients" = "收件人";
+"settings" = "设置";
+"select_all" = "全选";
+"unselect_all" = "取消选择所有";
+"choose_your_recipients" = "选择您的收件人：";
+"selected_%@_recipients" = "%@受助";
+"header_message_send_options" = "- 发送消息的选项";
+"option_send_both" = "请务必同时发送";
+"option_send_email_only" = "仅发送电子邮件";
+"option_send_sms_only" = "仅发送短信";
+"option_send_facebook_only" = "发布到Facebook";
+"option_send_twitter_only" = "发布到Twitter";
+"option_send_include_social_network" = "包括社交网络......";
+"footer_select_service" = "选择服务发送消息";
+"header_preferred_service" = "首选服务";
+"preferred_email_service" = "电子邮件服务";
+"preferred_sms_service" = "短信服务";
+"preferred_use_both_services" = "使用这两种服务";
+"footer_preferred_service" = "选择首选的服务接触的情况下，有两个条目，你不想让他能够同时接收电子邮件和短信";
+"footer_social_networks" = "社交网络的工作职位上的每一个消息的基础上，这意味着你的选择是不同的消息之间不存在";
+"phone_label" = "电话";
+"alert_message_include_social_networks" = "设置已更新。将包括社交网络！";
+"alert_message_both_empty" = "主题和邮件正文不能为空！";
+"alert_message_body_empty" = "消息体不能为空！";
+"alert_message_select_least_one" = "您需要选择至少一个收件人！";
+"alert_message_settings_updated_both" = "设置已更新。将发送短信和电子邮件！";
+"alert_message_settings_updated_email" = "设置已更新。将只发送电子邮件！";
+"alert_message_settings_updated_sms" = "设置已更新。将只发送短信！";
+"unable_load_contacts_error_%@" = "无法加载联系人从地址簿： %@";
+"message_mail_canceled" = "邮件取消";
+"message_mail_saved" = "邮件保存";
+"message_mail_sent" = "发送的邮件";
+"message_mail_sent_failure_%@" = "邮件发送失败： %@";
+"message_sms_canceled" = "短信取消";
+"message_sms_unable_compose" = "无法撰写短信";
+"message_sms_sent" = "短信发送";
+"recipients_least_one_recipient" = "您需要选择至少一个有效的收件人，或调整你的设置！";
+"easymessage_send_email_title" = "EasyMessage：发送电子邮件";
+"easymessage_send_sms_title" = "EasyMessage：发送短信";
+"no_sms_device_settings" = "这是不可能的，发送短信，请检查您的设备设置！";
+"address_book_changed_msg" = "你的地址簿中已经改变了！刷新数据...";
+"facebook_post_ok" = "发布到Facebook成功";
+"twitter_post_ok" = "发布到Twitter成功";
+"facebook_post_canceled" = "发布到Facebook取消";
+"twitter_post_canceled" = "发布到Twitter取消";
+"no_recipients_only_social" = "你没有选择任何收件人。该消息将被邮寄到社交网络";
+"done_button" = "完成";
+"archive_message" = "保存在归档？";
+"archive" = "存档";
+"available_products" = "提供的产品";
+"restore" = "恢复";
+"buy" = "购买";
+"select_custom_message" = "选择一条消息";
+"selected_message" = "选定的消息";
+"click_row_product_details" = "点击一排，以获得产品的详细信息";
+"congratulations_purchase" = "恭喜！购买完成";
+"failed_purchase" = "错误！购买失败";

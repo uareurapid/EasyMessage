@@ -28,6 +28,7 @@
 
 @property (strong, nonatomic) IBOutlet UISwitch *saveMessageSwitch;
 
+@property ABAddressBookRef addressBook;
 
 
 -(IBAction)loadContactsList:(id)sender;
@@ -46,6 +47,7 @@ void addressBookChanged(ABAddressBookRef reference,
 @property (strong, nonatomic) IBOutlet UITextField *subject;
 @property (strong, nonatomic) UIImage *image;
 @property (strong, nonatomic) IBOutlet UIPlaceHolderTextView *body;
+@property (strong, nonatomic) IBOutlet UIImageView *lockImage;
 
 @property (strong, nonatomic) IBOutlet UILabel *labelSaveArchive;
 @property (strong, nonatomic) NSTimer *changeTimer;

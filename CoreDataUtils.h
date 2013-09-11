@@ -7,7 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "GroupDataModel.h"
+#import "PCAppDelegate.h"
 
 @interface CoreDataUtils : NSObject
 
++ (NSMutableArray *)fetchGroupRecordsFromDatabase;
 @end

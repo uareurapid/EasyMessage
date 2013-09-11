@@ -54,7 +54,7 @@
 "easymessage_send_email_title" = "EasyMessage: Enviar email";
 "easymessage_send_sms_title" = "EasyMessage: Enviar SMS";
 "no_sms_device_settings" = "Não é possível enviar SMS, por favor verifique as definições do aparelho!";
-"address_book_changed_msg" = "A sua lista de contactos sofreu alterções! A actualizar...";
+"address_book_changed_msg" = "A sua lista de contactos sofreu alterações! A actualizar...";
 "facebook_post_ok" = "Mensagem enviada para o Facebook";
 "twitter_post_ok" = "Mensagem enviada para o Twitter";
 "facebook_post_canceled" = "Envio para o Facebook cancelado";
@@ -69,4 +69,5 @@
 "select_custom_message" = "Seleccione uma mensagem";
 "selected_message" = "Seleccionada mensagem";
 "click_row_product_details" = "Clique na linha para obter mais detalhes";
-
+"congratulations_purchase" = "Parabéns! Compra efectuada.";
+"failed_purchase" = "Erro! A compra falhou";

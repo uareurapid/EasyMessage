@@ -68,4 +68,6 @@
 "select_custom_message" = "메시지를 선택";
 "selected_message" = "선택한 메시지";
 "click_row_product_details" = "제품 세부 정보를 얻을 수있는 행을 클릭합니다";
+"congratulations_purchase" = "축하합니다! 완전한 구입할 수 있습니다.";
+"failed_purchase" = "오류! 구매에 실패했습니다.";
 

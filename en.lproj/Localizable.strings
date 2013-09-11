@@ -56,8 +56,8 @@
 "easymessage_send_sms_title" = "EasyMessage: Send SMS";
 "no_sms_device_settings" = "It´s not possible to send the SMS, please check your device settings!";
 "address_book_changed_msg" = "Your Address book has changed! Refreshing data...";
-"facebook_post_ok" = "Post to Facebook Sucessful";
-"twitter_post_ok" = "Post to Twitter Sucessful";
+"facebook_post_ok" = "Post to Facebook Successful";
+"twitter_post_ok" = "Post to Twitter Successful";
 "facebook_post_canceled" = "Post to Facebook canceled";
 "twitter_post_canceled" = "Post to Twitter canceled";
 "no_recipients_only_social" = "You don´t have any recipients selected. The message will be post to social networks only";
@@ -70,4 +70,6 @@
 "select_custom_message" = "Select a message";
 "selected_message" = "Selected message";
 "click_row_product_details" = "Click a row to get product details";
+"congratulations_purchase" = "Congratulations! Purchase complete.";
+"failed_purchase" = "Error! Purchase failed";
 

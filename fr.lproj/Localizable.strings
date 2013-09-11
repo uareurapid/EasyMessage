@@ -64,3 +64,5 @@
 "select_custom_message" = "Sélectionnez un message";
 "selected_message" = "Sélectionné message";
 "click_row_product_details" = "Cliquez sur une ligne pour obtenir les détails du produit";
+"congratulations_purchase" = "Félicitations! Achetez complète.";
+"failed_purchase" = "Erreur! Achat échoué.";

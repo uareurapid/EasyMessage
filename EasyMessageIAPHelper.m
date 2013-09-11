@@ -25,8 +25,8 @@
     
     dispatch_once(&once, ^{
         NSSet * productIdentifiers = [NSSet setWithObjects:
-                                      @"com.pt.pcristo.common.messages",
-                                      @"com.pt.pcristo.groups.support",
+                                      PRODUCT_COMMON_MESSAGES,
+                                      PRODUCT_GROUP_SUPPORT,
                                       nil];
         sharedInstance = [[self alloc] initWithProductIdentifiers:productIdentifiers];
     });

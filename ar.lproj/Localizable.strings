@@ -67,3 +67,5 @@
 "select_custom_message" ="اختر رسالة";
 "selected_message" = "الرسالة المحددة";
 "click_row_product_details" = "فوق صف للحصول على تفاصيل المنتج";
+"congratulations_purchase" = "تهانينا! شراء كاملة.";
+"failed_purchase" = "خطأ! شراء فشلت.";

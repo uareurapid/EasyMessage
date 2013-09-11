@@ -25,17 +25,21 @@
 -(IBAction)refreshPhonebook:(id)sender;
 
 @property (strong,nonatomic) NSMutableArray *contactsList;
+@property (strong,nonatomic) NSMutableArray *groupsList;
 
 @property (strong,nonatomic) NSMutableArray *selectedContactsList;
-
+@property (strong,nonatomic) NSMutableArray * databaseRecords;
 @property (strong,nonatomic) PCViewController *rootViewController;
 
 @property (strong,nonatomic) NSMutableDictionary *contactsByLastNameInitial;
 
 @property (strong,nonatomic) NSMutableArray *sortedKeys;
 
+@property ABRecordID groupId;
+
 
 //will hold a list of contacts per each letter
 
 @property NSInteger initialSelectedContacts;
+@property BOOL groupLocked;
 @end
