@@ -13,4 +13,5 @@
 @interface CoreDataUtils : NSObject
 
 + (NSMutableArray *)fetchGroupRecordsFromDatabase;
++ (NSMutableArray *)fetchMessageRecordsFromDatabase;
 @end

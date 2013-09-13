@@ -42,6 +42,8 @@
 		726235F217D9358600DC0CED /* Group.m in Sources */ = {isa = PBXBuildFile; fileRef = 726235F117D9358600DC0CED /* Group.m */; };
 		7263E07017C435160065E538 /* mail-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 7263E06F17C435160065E538 /* mail-2.png */; };
 		7264F87F17E115F0000D656C /* CoreDataUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 7264F87E17E115F0000D656C /* CoreDataUtils.m */; };
+		72674E7417E26722001275AB /* GroupDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 72674E7217E26722001275AB /* GroupDetailsViewController.m */; };
+		72674E7517E26722001275AB /* GroupDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 72674E7317E26722001275AB /* GroupDetailsViewController.xib */; };
 		72682BFD17C5184400A3318F /* world.png in Resources */ = {isa = PBXBuildFile; fileRef = 72682BFC17C5184400A3318F /* world.png */; };
 		72682C0017C519DD00A3318F /* world3.png in Resources */ = {isa = PBXBuildFile; fileRef = 72682BFE17C519DD00A3318F /* world3.png */; };
 		72682C0117C519DD00A3318F /* world2.png in Resources */ = {isa = PBXBuildFile; fileRef = 72682BFF17C519DD00A3318F /* world2.png */; };
@@ -55,6 +57,7 @@
 		727A765417DFDF090032EFF8 /* CoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 727A765217DFDF090032EFF8 /* CoreDataModel.xcdatamodeld */; };
 		727A765717DFE1100032EFF8 /* GroupDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 727A765617DFE1100032EFF8 /* GroupDataModel.m */; };
 		727A765A17DFE1100032EFF8 /* ContactDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 727A765917DFE1100032EFF8 /* ContactDataModel.m */; };
+		727C8F0E17E37C8900BDABA1 /* MessageDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 727C8F0D17E37C8900BDABA1 /* MessageDataModel.m */; };
 		7285A6AB177CACFA006137B8 /* concrete_wall.png in Resources */ = {isa = PBXBuildFile; fileRef = 7285A6A9177CACFA006137B8 /* concrete_wall.png */; };
 		7285A6AC177CACFA006137B8 /* concrete_wall@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 7285A6AA177CACFA006137B8 /* concrete_wall@2X.png */; };
 		7285A6AF177CB0A3006137B8 /* tableViewBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7285A6AD177CB0A3006137B8 /* tableViewBackground@2x.png */; };
@@ -141,6 +144,9 @@
 		7264F87E17E115F0000D656C /* CoreDataUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataUtils.m; sourceTree = "<group>"; };
 		7265EB2217848A90003F5FE3 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7265EB2417848A90003F5FE3 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		72674E7117E26722001275AB /* GroupDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupDetailsViewController.h; sourceTree = "<group>"; };
+		72674E7217E26722001275AB /* GroupDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupDetailsViewController.m; sourceTree = "<group>"; };
+		72674E7317E26722001275AB /* GroupDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GroupDetailsViewController.xib; sourceTree = "<group>"; };
 		72682BFC17C5184400A3318F /* world.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = world.png; sourceTree = "<group>"; };
 		72682BFE17C519DD00A3318F /* world3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = world3.png; sourceTree = "<group>"; };
 		72682BFF17C519DD00A3318F /* world2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = world2.png; sourceTree = "<group>"; };
@@ -164,6 +170,8 @@
 		727A765617DFE1100032EFF8 /* GroupDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupDataModel.m; sourceTree = "<group>"; };
 		727A765817DFE1100032EFF8 /* ContactDataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactDataModel.h; sourceTree = "<group>"; };
 		727A765917DFE1100032EFF8 /* ContactDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactDataModel.m; sourceTree = "<group>"; };
+		727C8F0C17E37C8900BDABA1 /* MessageDataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageDataModel.h; sourceTree = "<group>"; };
+		727C8F0D17E37C8900BDABA1 /* MessageDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageDataModel.m; sourceTree = "<group>"; };
 		7285A6A9177CACFA006137B8 /* concrete_wall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = concrete_wall.png; sourceTree = "<group>"; };
 		7285A6AA177CACFA006137B8 /* concrete_wall@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "concrete_wall@2X.png"; sourceTree = "<group>"; };
 		7285A6AD177CB0A3006137B8 /* tableViewBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tableViewBackground@2x.png"; sourceTree = "<group>"; };
@@ -239,6 +247,8 @@
 			isa = PBXGroup;
 			children = (
 				727A765217DFDF090032EFF8 /* CoreDataModel.xcdatamodeld */,
+				727C8F0C17E37C8900BDABA1 /* MessageDataModel.h */,
+				727C8F0D17E37C8900BDABA1 /* MessageDataModel.m */,
 				727A765817DFE1100032EFF8 /* ContactDataModel.h */,
 				7264F87D17E115F0000D656C /* CoreDataUtils.h */,
 				7264F87E17E115F0000D656C /* CoreDataUtils.m */,
@@ -384,6 +394,9 @@
 				72611B08177216940043E508 /* SelectRecipientsViewController.h */,
 				72611B09177216940043E508 /* SelectRecipientsViewController.m */,
 				72611B0A177216940043E508 /* SelectRecipientsViewController.xib */,
+				72674E7117E26722001275AB /* GroupDetailsViewController.h */,
+				72674E7217E26722001275AB /* GroupDetailsViewController.m */,
+				72674E7317E26722001275AB /* GroupDetailsViewController.xib */,
 			);
 			name = Recipients;
 			sourceTree = "<group>";
@@ -532,6 +545,7 @@
 				7298EC0517DDEEEA002C30AE /* buy48.png in Resources */,
 				7298EC0717DE0F2D002C30AE /* Lock32.png in Resources */,
 				7298EC0A17DE1937002C30AE /* Unlock32.png in Resources */,
+				72674E7517E26722001275AB /* GroupDetailsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -561,6 +575,8 @@
 				727A765717DFE1100032EFF8 /* GroupDataModel.m in Sources */,
 				727A765A17DFE1100032EFF8 /* ContactDataModel.m in Sources */,
 				7264F87F17E115F0000D656C /* CoreDataUtils.m in Sources */,
+				72674E7417E26722001275AB /* GroupDetailsViewController.m in Sources */,
+				727C8F0E17E37C8900BDABA1 /* MessageDataModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

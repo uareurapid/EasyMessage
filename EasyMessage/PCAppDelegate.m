@@ -22,6 +22,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    //CHECK WICH VIEWS TO LOAD
+    //self.viewController = [[ViewController alloc] initWithNibName:IS_IPAD?@"ViewController~iPad":@"ViewController" bundle:nil];
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.viewController = [[PCViewController alloc] initWithNibName:@"PCViewController" bundle:nil];
@@ -34,7 +37,6 @@
     self.customMessagesController = [[CustomMessagesController alloc] initWithNibName:@"CustomMessagesController" bundle:nil rootViewController:self.viewController ];
     
     self.inAppPurchasesController = [[IAPMasterViewController alloc] initWithNibName:@"IAPMasterViewController" bundle:nil ];
-    
     
     
     self.viewController.recipientsController = self.recipientsController;

@@ -66,3 +66,22 @@
 "click_row_product_details" = "Cliquez sur une ligne pour obtenir les détails du produit";
 "congratulations_purchase" = "Félicitations! Achetez complète.";
 "failed_purchase" = "Erreur! Achat échoué.";
+"group_created" = "Groupe créé!";
+"invalid_name" = "Nom invalide";
+"group_already_exists" = "Ce groupe existe déjà!";
+"new_group" = "Nouveau groupe";
+"enter_group_name" = "Entrez le nom du groupe";
+"cancel" = "Annuler";
+"save" = "Sauver";
+"custom_msg_christmas" ="Joyeux Noël!";
+"custom_msg_birthday" = "Joyeux anniversaire!";
+"custom_msg_whereareyou" ="Où êtes-vous?";
+"custom_msg_whataredoing"= "Que faites-vous?";
+"custom_msg_callback" = "Rappelez-moi s'il vous plaît";
+"custom_msg_busy" ="Occupé. Appellez plus tard s'il vous plaît";
+"custom_msg_meeting" ="Désolé, j'ai une réunion maintenant";
+"custom_msg_callsoon" ="Appelez bientôt";
+"custom_msg_noworry" = "Ne vous inquiétez pas. Je suis bien";
+"custom_msg_wayhome" ="Sur mon chemin pour la maison maintenant";
+"custom_msg_arrivesoon" = "Je vais bientôt arriver";
+

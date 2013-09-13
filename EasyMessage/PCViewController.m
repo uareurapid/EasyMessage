@@ -16,6 +16,8 @@
 #import "EasyMessageIAPHelper.h"
 #import "CoreDataUtils.h"
 #import "ContactDataModel.h"
+#import "MessageDataModel.h"
+#import "CustomMessagesController.h"
 
 @interface PCViewController ()
 
@@ -30,7 +32,9 @@
 @synthesize sendToFacebook,sendToTwitter,facebookSentOK,twitterSentOK;
 @synthesize changeTimer,saveMessageSwitch,saveMessage,inAppPurchaseTableController;
 @synthesize labelSaveArchive,lockImage;
-//@synthesize addressBook;
+@synthesize customMessagesController;
+@synthesize imageLock,imageUnlock;
+
 
 - (void)viewDidLoad
 {
@@ -64,6 +68,9 @@
     //the table that shows the in app purchases
     inAppPurchaseTableController = [[IAPMasterViewController alloc] initWithNibName:@"IAPMasterViewController" bundle:nil];
     
+    //set the images
+    imageLock = [UIImage imageNamed:@"Lock32"];
+    imageUnlock = [UIImage imageNamed:@"Unlock32"];
     
     selectedRecipientsList = [[NSMutableArray alloc]init];
     [scrollView flashScrollIndicators];
@@ -72,10 +79,7 @@
     //load the contacts list when the view loads
     [self setupAddressBook];
     self.scrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableViewBackground.png"]];
-    /*saveMessageSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
-    [saveMessageSwitch setCenter:CGPointMake(160.0f,260.0f )];
-    saveMessageSwitch set
-  */
+ 
   
 }
 //override
@@ -92,9 +96,18 @@
 -(void) viewWillAppear:(BOOL)animated {
     
     [self showHideSocialOnlyLabel];
-    [lockImage setHidden:[[EasyMessageIAPHelper sharedInstance] productPurchased:PRODUCT_COMMON_MESSAGES]];
-        
+    BOOL purchasedCommonMessages = [[EasyMessageIAPHelper sharedInstance] productPurchased:PRODUCT_COMMON_MESSAGES];
     
+    if(purchasedCommonMessages) {
+        lockImage.image = imageUnlock;
+    }
+    else {
+        lockImage.image = imageLock;
+    }
+    
+    [saveMessageSwitch setEnabled:purchasedCommonMessages];
+    
+   
 }
 
 //-(void) viewWillDisappear:(BOOL)animated {
@@ -371,12 +384,10 @@
     
     NSMutableArray *records = [[NSMutableArray alloc] init];
     NSMutableArray *databaseRecords = [CoreDataUtils fetchGroupRecordsFromDatabase];
-    NSLog(@"Fetched %d groups from database....",databaseRecords.count);
+
     for(GroupDataModel *model in databaseRecords) {
-        
-       
-        NSLog(@"Loaded group named %@",model.name);
-        NSLog(@"which has %d contacts",model.contacts.count);
+               
+        NSLog(@"Loaded group %@ which has %d contacts",model.name,model.contacts.count);
         
         Group *group = [[Group alloc] init];
         group.name = model.name;
@@ -387,6 +398,7 @@
             c.name = contact.name;
             c.phone = contact.phone;
             c.email = contact.email;
+            c.lastName = contact.lastname;
             
             [group.contactsList addObject:c];
             
@@ -939,15 +951,63 @@
     [selectedRecipientsList removeAllObjects];
     [recipientsController.selectedContactsList removeAllObjects];
     [recipientsController.tableView reloadData];
-    subject.text = @"";
-    body.text = @"";
+    
     
     if(saveMessage) {
         //TODO SAVE THE MESSAGE
+        [self saveMessageInArchive];
     }
     
+    subject.text = @"";
+    body.text = @"";
+    
+    //the default action on beginning is also NOT save
     saveMessage = NO;
     [saveMessageSwitch setOn:NO];
+    
+    customMessagesController.selectedMessageIndex=-1;
+    customMessagesController.selectedMessage = nil;
+    
+    
+}
+
+//save the message in archive, core data
+-(void)saveMessageInArchive {
+    
+    
+    NSManagedObjectContext *managedObjectContext = [(PCAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
+  
+    
+    NSString *msg = body.text;
+    //get all the records and see if we have already this one
+    NSMutableArray *allRecords = [CoreDataUtils fetchMessageRecordsFromDatabase];
+    [allRecords addObjectsFromArray:customMessagesController.messagesList];
+    
+    BOOL exists = NO;
+    for(MessageDataModel *model in allRecords) {
+        if([model.msg isEqualToString:msg]) {
+            exists=YES;
+            break;
+        }
+    }
+    if(!exists) {
+        MessageDataModel *message = (MessageDataModel *)[NSEntityDescription insertNewObjectForEntityForName:@"MessageDataModel" inManagedObjectContext:managedObjectContext];
+        message.msg = body.text;
+
+        //BOOL OK = NO;
+        NSError *error;
+        if(![managedObjectContext save:&error]){
+            NSLog(@"Unable to save object, error is: %@",error.description);
+        }
+    }
+    
+    //else {
+    //    OK = YES;
+    //    [[[[iToast makeText:NSLocalizedString(@"group_created",@"group_created")]
+    //       setGravity:iToastGravityBottom] setDuration:2000] show];
+    //}
+   
+    
 }
 
 //get all emails

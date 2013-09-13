@@ -13,10 +13,12 @@
 
 
 @property (strong,nonatomic) NSMutableArray * messagesList;
-@property NSInteger selectedMessage;//the index of the selected message
+@property NSInteger selectedMessageIndex;//the index of the selected message
+@property NSString *selectedMessage;//the index of the selected message
 @property (strong,nonatomic) UIImage *lock;
 @property (strong,nonatomic) UIImage *unlock;
 
 @property (strong,nonatomic) PCViewController *rootViewController;
 -(id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil rootViewController: (PCViewController *) rootViewController;
+-(NSString * ) getSelectedMessage;
 @end

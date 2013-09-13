@@ -10,6 +10,10 @@
 
 @interface GroupDetailsViewController ()
 
+{
+    Group *group;
+}
+
 @end
 
 @implementation GroupDetailsViewController
@@ -19,6 +23,16 @@
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
+        group = [[Group alloc] init];
+    }
+    return self;
+}
+
+-(id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil group: (Group*) groupToShow {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if(self) {
+        group = groupToShow;
+        self.title = group.name;
     }
     return self;
 }
@@ -46,14 +60,14 @@
 {
 #warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 #warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return group.contactsList.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -61,14 +75,52 @@
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
     
-    // Configure the cell...
+    NSInteger row = indexPath.row;
+    if(row < group.contactsList.count) {
+        
+        Contact *contact = [group.contactsList objectAtIndex:row];
+        // Configure the cell...
+        BOOL hasPhone = contact.phone!=nil;
+        BOOL hasEmail = contact.email!=nil;
+        
+        if(contact.name!=nil) {
+            cell.textLabel.text = contact.name;
+        }
+        else if(contact.lastName!=nil) {
+            cell.textLabel.text = contact.lastName;
+        }
+        else if(contact.email!=nil) {
+            cell.textLabel.text = contact.email;
+        }
+        else if(contact.phone!=nil) {
+            cell.textLabel.text = contact.phone;
+        }
+        
+        if(hasEmail && hasPhone) {
+            //has both
+            cell.detailTextLabel.text =  [NSString stringWithFormat:@"Email + %@", NSLocalizedString(@"phone_label",@"Phone") ];
+        }
+        else if(hasEmail) {
+            //only email
+            cell.detailTextLabel.text = @"Email";
+        }
+        else {
+            //only phone
+            cell.detailTextLabel.text = NSLocalizedString(@"phone_label",@"Phone");
+        }
+    }
+    
+    
     
     return cell;
 }
 
+-(NSString *) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return group.name;
+}
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath

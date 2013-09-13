@@ -58,6 +58,12 @@
 - (void)viewWillAppear:(BOOL)animated {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productPurchased:) name:IAPHelperProductPurchasedNotification object:nil];
     _lastSelectedProduct = nil;
+    
+    //BOOL purchasedMessages = [[EasyMessageIAPHelper sharedInstance] productPurchased:PRODUCT_COMMON_MESSAGES];
+    //BOOL purchasedGroups = [[EasyMessageIAPHelper sharedInstance] productPurchased:PRODUCT_GROUP_SUPPORT];
+    //self.navigationItem.rightBarButtonItem setEnabled:<#(BOOL)#>
+    
+    
 }
 //unregister from notifications
 -(void)viewWillDisappear:(BOOL)animated {

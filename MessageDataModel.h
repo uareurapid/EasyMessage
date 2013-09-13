@@ -10,4 +10,6 @@
 
 @interface MessageDataModel : NSManagedObject
 
+@property (nonatomic, retain) NSString *msg;
+
 @end

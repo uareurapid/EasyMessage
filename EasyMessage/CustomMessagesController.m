@@ -8,6 +8,8 @@
 
 #import "CustomMessagesController.h"
 #import "EasyMessageIAPHelper.h"
+#import "MessageDataModel.h"
+#import "CoreDataUtils.h"
 
 @interface CustomMessagesController ()
 
@@ -15,7 +17,7 @@
 
 @implementation CustomMessagesController
 
-@synthesize messagesList,selectedMessage,rootViewController,lock,unlock;
+@synthesize messagesList,selectedMessage, selectedMessageIndex, rootViewController,lock,unlock;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -44,62 +46,84 @@
         self.navigationItem.leftBarButtonItem = lockButtonItem;
         self.navigationController.toolbarHidden = NO;
         
-        
-        
-        /*
-        NSArray* toolbarItems = [NSArray arrayWithObjects:
-                                 [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
-                                                                               target:self
-                                                                               action:@selector(goBackAfterSelection:)],nil];
-        self.toolbarItems = toolbarItems;*/
-        selectedMessage = -1;
+        selectedMessageIndex = -1;
+        selectedMessage = nil;
         self.rootViewController = rootViewControllerArg;
         
     }
     return  self;
 }
 
-//unlock feature message
--(IBAction)unlockFeature:(id)sender {
-    //UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"In-App..." message:@"Enter the group name" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    //[alert show];
-}
+
 
 -(void)viewWillAppear:(BOOL)animated {
     if ([[EasyMessageIAPHelper sharedInstance] productPurchased:PRODUCT_COMMON_MESSAGES]) {
         self.navigationItem.leftBarButtonItem.image = unlock;
         [self.navigationItem.rightBarButtonItem setEnabled: YES];
+        [self.tableView setAllowsSelection:YES];
     }
     else {
         self.navigationItem.leftBarButtonItem.image = lock;
         [self.navigationItem.rightBarButtonItem setEnabled: NO];
+        [self.tableView setAllowsSelection:NO];
     }
-    
-    
+    [self addRecordsFromDatabase];
+     
 }
+
+
+
+//returns the selected message
+-(NSString * ) getSelectedMessageIfAny {
+    if(selectedMessageIndex>-1 && selectedMessage!=nil && selectedMessageIndex < messagesList.count) {
+        return [messagesList objectAtIndex:selectedMessageIndex];
+    }
+    return @"";
+}
+
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    selectedMessage = -1;
-    messagesList = [[ NSMutableArray alloc]initWithObjects:@"Merry Christmas",@"Happy Birthday",
-                    @"Where are you?",
-                    @"What are you doing?",
-                    @"Call back. Please",
-                    @"Busy now. Call later, please",
-                    @"Sorry, i have a meeting now",
-                    @"Call you soon",
-                    @"Don´t worry. i´m fine",
-                    @"On my way home now",
-                    @"Arrive soon",
-                    @"Be there or be square!",
-                    nil];
+    selectedMessageIndex = -1;
+    selectedMessage = nil;
+    
+    messagesList = [[ NSMutableArray alloc]initWithObjects:NSLocalizedString(@"custom_msg_christmas",@"Merry Christmas"),
+                    NSLocalizedString(@"custom_msg_birthday",@"Happy Birthday"),
+                    NSLocalizedString(@"custom_msg_whereareyou",@"Where are you?"),
+                    NSLocalizedString(@"custom_msg_whataredoing",@"What are you doing?"),
+                    NSLocalizedString(@"custom_msg_callback",@"Call back. Please"),
+                    NSLocalizedString(@"custom_msg_busy",@"Busy now. Call later please"),
+                    NSLocalizedString(@"custom_msg_meeting",@"Sorry, i have a meeting now"),
+                    NSLocalizedString(@"custom_msg_callsoon",@"Call you soon"),
+                    NSLocalizedString(@"custom_msg_noworry",@"Don´t worry. I´m fine"),
+                    NSLocalizedString(@"custom_msg_wayhome",@"On my way home now"),
+                    NSLocalizedString(@"custom_msg_arrivesoon",@"I´ll Arrive soon"),nil];
+    
+    [self addRecordsFromDatabase];
 
     // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+    //self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+-(void) addRecordsFromDatabase {
+    
+    NSMutableArray *databaseRecords = [CoreDataUtils fetchMessageRecordsFromDatabase];
+    
+    BOOL add = NO;
+    for(MessageDataModel *model in databaseRecords) {
+        if(![messagesList containsObject:model.msg]) {
+           [messagesList addObject:model.msg];
+            add = YES;
+        }
+        
+    }
+    if(add) {
+        [self.tableView reloadData];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -141,9 +165,9 @@
         //paranoid check
         cell.textLabel.text = [messagesList objectAtIndex:row];
         cell.detailTextLabel.text = [NSString stringWithFormat:@"%d",row];
-        NSLog(@"row is %d and selected message is %d",row,selectedMessage);
+        NSLog(@"row is %d and selected message is %@",row,selectedMessage);
         
-        if(row == selectedMessage) {
+        if(row == selectedMessageIndex) {
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
         }
         else {
@@ -155,44 +179,6 @@
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark - Table view delegate
 
@@ -201,16 +187,15 @@
     
     NSInteger row =  indexPath.row;
     
-    if(row==selectedMessage) {
-        selectedMessage = -1;
+    if(row==selectedMessageIndex) {
+        selectedMessageIndex = -1;
+        selectedMessage = nil;
     }
     else {
-       selectedMessage = indexPath.row; 
+        selectedMessageIndex = row;
+        selectedMessage = [messagesList objectAtIndex:selectedMessageIndex];
     }
     
-    
-    
-    NSLog(@"CALLED %d", selectedMessage);
     
     [self.tableView reloadData];
     // Navigation logic may go here. Create and push another view controller.
@@ -230,9 +215,9 @@
 }
 
 - (NSString *) tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
-    if(section==0 && selectedMessage!=-1) {
+    if(section==0 && selectedMessageIndex!=-1) {
         
-        return [NSString stringWithFormat: @"%@ %d",NSLocalizedString(@"selected_message",@"Selected message"),selectedMessage];
+        return [NSString stringWithFormat: @"%@ %d",NSLocalizedString(@"selected_message",@"Selected message"),selectedMessageIndex];
     }
     return @"";
 }
@@ -240,6 +225,11 @@
 //done with the message selection
 -(IBAction)selectFinished:(id)sender {
     //go back to compose
+    
+    if(selectedMessageIndex!=-1 && selectedMessage!=nil) {
+       self.rootViewController.body.text = selectedMessage;
+    }
+    
     [self.tabBarController setSelectedIndex:0];
 }
 

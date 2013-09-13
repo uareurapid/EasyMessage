@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Group.h"
 
 @interface GroupDetailsViewController : UITableViewController
 
+-(id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil group: (Group*) groupToShow;
 @end

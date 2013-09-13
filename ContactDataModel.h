@@ -15,6 +15,7 @@
 
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * phone;
+@property (nonatomic, retain) NSString * lastname;
 @property (nonatomic, retain) NSString * email;
 @property (nonatomic, retain) NSSet *group;
 @end

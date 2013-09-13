@@ -10,4 +10,6 @@
 
 @implementation MessageDataModel
 
+@dynamic msg;
+
 @end

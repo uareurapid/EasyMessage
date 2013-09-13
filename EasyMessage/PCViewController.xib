@@ -50,6 +50,7 @@
 								<int key="NSvFlags">290</int>
 								<string key="NSFrame">{{22, 42}, {283, 30}}</string>
 								<reference key="NSSuperview" ref="143327201"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="556172506"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -88,6 +89,7 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{21, 20}, {86, 21}}</string>
 								<reference key="NSSuperview" ref="143327201"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="714050587"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -119,6 +121,7 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{20, 85}, {109, 21}}</string>
 								<reference key="NSSuperview" ref="143327201"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="319972731"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -139,6 +142,7 @@
 								<int key="NSvFlags">293</int>
 								<string key="NSFrame">{{112, 271}, {102, 102}}</string>
 								<reference key="NSSuperview" ref="143327201"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="393865202"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -177,6 +181,7 @@
 								<int key="NSvFlags">290</int>
 								<string key="NSFrame">{{22, 114}, {283, 152}}</string>
 								<reference key="NSSuperview" ref="143327201"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="993922403"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor">
@@ -204,6 +209,7 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{17, 398}, {283, 66}}</string>
 								<reference key="NSSuperview" ref="143327201"/>
+								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -230,8 +236,9 @@
 							<object class="IBUILabel" id="993922403">
 								<reference key="NSNextResponder" ref="143327201"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{17, 371}, {166, 21}}</string>
+								<string key="NSFrame">{{10, 371}, {166, 21}}</string>
 								<reference key="NSSuperview" ref="143327201"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="634690447"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -250,8 +257,9 @@
 							<object class="IBUISwitch" id="290268734">
 								<reference key="NSNextResponder" ref="143327201"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{205, 366}, {94, 27}}</string>
+								<string key="NSFrame">{{177, 366}, {94, 27}}</string>
 								<reference key="NSSuperview" ref="143327201"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="382854094"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -262,8 +270,9 @@
 							<object class="IBUIImageView" id="393865202">
 								<reference key="NSNextResponder" ref="143327201"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{180, 361}, {32, 32}}</string>
+								<string key="NSFrame">{{281, 361}, {32, 32}}</string>
 								<reference key="NSSuperview" ref="143327201"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="290268734"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
@@ -276,6 +285,7 @@
 						</array>
 						<string key="NSFrameSize">{333, 548}</string>
 						<reference key="NSSuperview" ref="774585933"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="384484918"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
@@ -4681,6 +4691,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 				</array>
 				<string key="NSFrame">{{0, 20}, {320, 548}}</string>
 				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="143327201"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">1</int>
@@ -4873,8 +4884,8 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 							<reference ref="634690447"/>
 							<reference ref="382854094"/>
 							<reference ref="993922403"/>
-							<reference ref="290268734"/>
 							<reference ref="393865202"/>
+							<reference ref="290268734"/>
 						</array>
 						<reference key="parent" ref="774585933"/>
 					</object>
@@ -4953,7 +4964,129 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 			<nil key="sourceID"/>
 			<int key="maxID">462</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes"/>
+		<object class="IBClassDescriber" key="IBDocument.Classes">
+			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<object class="IBPartialClassDescription">
+					<string key="className">PCViewController</string>
+					<string key="superclassName">UIViewController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="loadContactsList:">id</string>
+						<string key="presentMediaPicker:">id</string>
+						<string key="sendEmail:">id</string>
+						<string key="sendMessage:">id</string>
+						<string key="sendSMS:">id</string>
+						<string key="sendToFacebook:">id</string>
+						<string key="sendToTwitter:">id</string>
+						<string key="showSettings:">id</string>
+						<string key="switchSaveMessageValueChanged:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="loadContactsList:">
+							<string key="name">loadContactsList:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="presentMediaPicker:">
+							<string key="name">presentMediaPicker:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="sendEmail:">
+							<string key="name">sendEmail:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="sendMessage:">
+							<string key="name">sendMessage:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="sendSMS:">
+							<string key="name">sendSMS:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="sendToFacebook:">
+							<string key="name">sendToFacebook:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="sendToTwitter:">
+							<string key="name">sendToTwitter:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="showSettings:">
+							<string key="name">showSettings:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="switchSaveMessageValueChanged:">
+							<string key="name">switchSaveMessageValueChanged:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="body">UIPlaceHolderTextView</string>
+						<string key="labelMessage">UILabel</string>
+						<string key="labelOnlySocial">UILabel</string>
+						<string key="labelSaveArchive">UILabel</string>
+						<string key="labelSubject">UILabel</string>
+						<string key="lockImage">UIImageView</string>
+						<string key="saveMessageSwitch">UISwitch</string>
+						<string key="scrollView">UIScrollView</string>
+						<string key="sendButton">UIButton</string>
+						<string key="subject">UITextField</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="body">
+							<string key="name">body</string>
+							<string key="candidateClassName">UIPlaceHolderTextView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="labelMessage">
+							<string key="name">labelMessage</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="labelOnlySocial">
+							<string key="name">labelOnlySocial</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="labelSaveArchive">
+							<string key="name">labelSaveArchive</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="labelSubject">
+							<string key="name">labelSubject</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="lockImage">
+							<string key="name">lockImage</string>
+							<string key="candidateClassName">UIImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="saveMessageSwitch">
+							<string key="name">saveMessageSwitch</string>
+							<string key="candidateClassName">UISwitch</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="scrollView">
+							<string key="name">scrollView</string>
+							<string key="candidateClassName">UIScrollView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="sendButton">
+							<string key="name">sendButton</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="subject">
+							<string key="name">subject</string>
+							<string key="candidateClassName">UITextField</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/PCViewController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">UIPlaceHolderTextView</string>
+					<string key="superclassName">UITextView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/UIPlaceHolderTextView.h</string>
+					</object>
+				</object>
+			</array>
+		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>

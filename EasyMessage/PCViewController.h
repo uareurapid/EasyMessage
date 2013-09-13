@@ -16,6 +16,7 @@
 
 @class SelectRecipientsViewController;
 @class IAPMasterViewController;
+@class CustomMessagesController;
 
 @interface PCViewController : UIViewController <MFMailComposeViewControllerDelegate,MFMessageComposeViewControllerDelegate,UIImagePickerControllerDelegate,UITextViewDelegate,UITextFieldDelegate>
 - (IBAction)sendMessage:(id)sender;
@@ -49,6 +50,9 @@ void addressBookChanged(ABAddressBookRef reference,
 @property (strong, nonatomic) IBOutlet UIPlaceHolderTextView *body;
 @property (strong, nonatomic) IBOutlet UIImageView *lockImage;
 
+@property (strong, nonatomic) UIImage *imageLock;
+@property (strong, nonatomic) UIImage *imageUnlock;
+
 @property (strong, nonatomic) IBOutlet UILabel *labelSaveArchive;
 @property (strong, nonatomic) NSTimer *changeTimer;
 
@@ -56,6 +60,7 @@ void addressBookChanged(ABAddressBookRef reference,
 @property(strong,nonatomic) SettingsViewController* settingsController;
 @property(strong,nonatomic) SelectRecipientsViewController *recipientsController;
 @property(strong,nonatomic) IAPMasterViewController *inAppPurchaseTableController;
+@property (strong, nonatomic) CustomMessagesController *customMessagesController;
 
 
 @property (strong,nonatomic) NSMutableArray *selectedRecipientsList;
