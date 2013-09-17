@@ -88,3 +88,7 @@
 "custom_msg_noworry" = "걱정하지 마십시오. 난 괜찮아";
 "custom_msg_wayhome" ="집에가는 길 이제";
 "custom_msg_arrivesoon" = "곧 도착할거야";
+"add_to_group" = "그룹을 만들";
+"clear" = "비우다";
+"delete" = "지우다";
+"deleted" = "삭제!";

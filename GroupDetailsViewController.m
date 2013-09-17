@@ -7,6 +7,7 @@
 //
 
 #import "GroupDetailsViewController.h"
+#import "SelectRecipientsViewController.h"
 
 @interface GroupDetailsViewController ()
 
@@ -33,6 +34,10 @@
     if(self) {
         group = groupToShow;
         self.title = group.name;
+        UIBarButtonItem *deteleGroupButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"delete",@"delete")
+                                                                             style:UIBarButtonItemStyleDone target:self action:@selector(deleteGroupClicked:)];
+        
+        self.navigationItem.rightBarButtonItem = deteleGroupButton;
     }
     return self;
 }
@@ -120,6 +125,34 @@
 
 -(NSString *) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     return group.name;
+}
+
+//delete the group and update the previous table
+//it needs to be deleted from table and also from core data database
+-(IBAction) deleteGroupClicked:(id)sender {
+    
+    //@property(nonatomic, copy) NSArray *viewControllers
+    
+//Discussion: The root view controller is at index 0 in the array, the back view controller is at index n-2, and the top controller is at index n-1, where n is the number of items in the array.
+    
+    SelectRecipientsViewController *root;
+    for(UIViewController *controller in self.navigationController.viewControllers) {
+        
+        if([controller isKindOfClass: SelectRecipientsViewController.class]) {
+            root = (SelectRecipientsViewController*)controller;
+            break;
+        }
+    }
+    if(root!=nil) {
+        
+        [root deleteGroup:group];
+        
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
+    else {
+       [self.navigationController popToRootViewControllerAnimated:YES]; //normal dismiss
+    }
+    //-[NSManagedObjectContext deleteObject:]
 }
 /*
 // Override to support conditional editing of the table view.

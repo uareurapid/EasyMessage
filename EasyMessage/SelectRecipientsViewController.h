@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Contact.h"
+#import "Group.h"
 
 
 @class PCViewController;
@@ -23,6 +24,8 @@
 -(id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil rootViewController: (PCViewController*) viewController;
 
 -(IBAction)refreshPhonebook:(id)sender;
+
+-(void) deleteGroup:(Group *)group;
 
 @property (strong,nonatomic) NSMutableArray *contactsList;
 @property (strong,nonatomic) NSMutableArray *groupsList;

@@ -84,3 +84,7 @@
 "custom_msg_noworry" = "不要担心。我没事";
 "custom_msg_wayhome" ="现在在回家的路上";
 "custom_msg_arrivesoon" = "我会到来";
+"add_to_group" = "创建组";
+"clear" = "清洗";
+"delete" = "删除";
+"deleted" = "删除！";

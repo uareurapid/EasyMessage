@@ -17,7 +17,9 @@
 
 @implementation CustomMessagesController
 
-@synthesize messagesList,selectedMessage, selectedMessageIndex, rootViewController,lock,unlock;
+@synthesize messagesList,selectedMessage, selectedMessageIndex, rootViewController;
+//lock,unlock;
+//,headerView;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -36,49 +38,144 @@
         
         UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"done_button",nil)
                                                                        style:UIBarButtonItemStyleDone target:self action:@selector(selectFinished:)];
-        unlock = [UIImage imageNamed:@"Unlock32"];
-        lock = [UIImage imageNamed:@"Lock32"];
+        //unlock = [UIImage imageNamed:@"Unlock32"];
+        //lock = [UIImage imageNamed:@"Lock32"];
         
-        UIBarButtonItem *lockButtonItem = [[UIBarButtonItem alloc]initWithImage:lock style:UIBarButtonItemStyleBordered target:self action:@selector(unlockFeature:)];
+        UIBarButtonItem *deleteButtonItem = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"delete",@"delete") style:UIBarButtonItemStyleDone target:self action:@selector(deleteMessageClicked:)];
       
+        [doneButton setEnabled:NO];
+        [deleteButtonItem setEnabled:NO];
         
         self.navigationItem.rightBarButtonItem = doneButton;
-        self.navigationItem.leftBarButtonItem = lockButtonItem;
+        self.navigationItem.leftBarButtonItem = deleteButtonItem;
         self.navigationController.toolbarHidden = NO;
         
         selectedMessageIndex = -1;
         selectedMessage = nil;
         self.rootViewController = rootViewControllerArg;
         
+        //[self prepareCustomHeaderView];
+        
     }
     return  self;
 }
+/**
+-(void)prepareCustomHeaderView {
+    
+    headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0, self.tableView.frame.size.width,38)];
+    
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10,0, self.tableView.frame.size.width-40,38)];
+    [label setText: NSLocalizedString(@"select_custom_message",@"select a message") ];
+ 
+    [headerView addSubview:label];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(label.frame.size.width + 2,0, 32,32)];
 
+    [headerView addSubview:imageView];
+    [headerView setAlpha:0.9];
+    imageView ad
+    
+    if ([[EasyMessageIAPHelper sharedInstance] productPurchased:PRODUCT_COMMON_MESSAGES]) {
+        imageView.image=unlock;
+    }
+    else {
+        imageView.image=lock;
+    }
 
+}
+
+-(UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    
+    
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0, tableView.frame.size.width,38)];
+    
+                                                                  
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(5,0, tableView.frame.size.width-40,40)];
+    [label setText: NSLocalizedString(@"select_custom_message",@"select a message") ];
+                                                                  
+    
+    [headerView addSubview:label];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(label.frame.size.width + 2,0, 32,32)];
+    
+    [headerView addSubview:imageView];
+    //[headerView setAlpha:0];
+    
+    if ([[EasyMessageIAPHelper sharedInstance] productPurchased:PRODUCT_COMMON_MESSAGES]) {
+        imageView.image=unlock;
+    }
+    else {
+        imageView.image=lock;
+    }
+    headerView.backgroundColor = [UIColor colorWithRed:0.0 green:0.7 blue:0.8 alpha:0.75];
+    
+    UIImageView *imageView = (UIImageView *)[headerView.subviews objectAtIndex:headerView.subviews.count -1];
+    
+    if ([[EasyMessageIAPHelper sharedInstance] productPurchased:PRODUCT_COMMON_MESSAGES]) {
+        
+        imageView.image=unlock;
+    }
+    else {
+        imageView.image=lock;
+    }
+    
+    return headerView;
+    
+}*/
+
+//the header height
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 38;
+}
 
 -(void)viewWillAppear:(BOOL)animated {
     if ([[EasyMessageIAPHelper sharedInstance] productPurchased:PRODUCT_COMMON_MESSAGES]) {
-        self.navigationItem.leftBarButtonItem.image = unlock;
-        [self.navigationItem.rightBarButtonItem setEnabled: YES];
+        [self.navigationItem.leftBarButtonItem setEnabled:[self getSelectedMessageIfAny]!=nil ];
+        [self.navigationItem.rightBarButtonItem setEnabled: [self getSelectedMessageIfAny]!=nil];
         [self.tableView setAllowsSelection:YES];
+       
     }
     else {
-        self.navigationItem.leftBarButtonItem.image = lock;
+        [self.navigationItem.leftBarButtonItem setEnabled:NO];
         [self.navigationItem.rightBarButtonItem setEnabled: NO];
         [self.tableView setAllowsSelection:NO];
     }
     [self addRecordsFromDatabase];
+    [self.navigationItem.rightBarButtonItem setEnabled:selectedMessageIndex!=-1];
      
 }
 
+-(IBAction)deleteMessageClicked:(id)sender {
+    
+    
+    NSString *msg = [self getSelectedMessageIfAny];
+    if(msg!=nil) {
+        
+        [messagesList removeObject:msg];
+        
+        BOOL deleted = [CoreDataUtils deleteMessageDataModelByMsg:msg];
+        if(deleted) {
+            
+            //clear stuff
+            selectedMessage = nil;
+            selectedMessageIndex = -1;
+            self.rootViewController.body.text = @"";
+            
+            [self.tableView reloadData];
+            [self.navigationItem.leftBarButtonItem setEnabled:NO];
+            
+            [[[[iToast makeText:NSLocalizedString(@"deleted", @"deleted")]
+               setGravity:iToastGravityBottom] setDuration:2000] show];
 
+        }
+    }
+}
 
 //returns the selected message
 -(NSString * ) getSelectedMessageIfAny {
     if(selectedMessageIndex>-1 && selectedMessage!=nil && selectedMessageIndex < messagesList.count) {
         return [messagesList objectAtIndex:selectedMessageIndex];
     }
-    return @"";
+    return nil;
 }
 
 
@@ -165,7 +262,6 @@
         //paranoid check
         cell.textLabel.text = [messagesList objectAtIndex:row];
         cell.detailTextLabel.text = [NSString stringWithFormat:@"%d",row];
-        NSLog(@"row is %d and selected message is %@",row,selectedMessage);
         
         if(row == selectedMessageIndex) {
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
@@ -190,10 +286,15 @@
     if(row==selectedMessageIndex) {
         selectedMessageIndex = -1;
         selectedMessage = nil;
+        [self.navigationItem.rightBarButtonItem setEnabled:NO];//no save
+        [self.navigationItem.leftBarButtonItem setEnabled:NO];//no delete
+        //NOTE if the item is not purchased selection is not even possible
     }
     else {
         selectedMessageIndex = row;
         selectedMessage = [messagesList objectAtIndex:selectedMessageIndex];
+        [self.navigationItem.rightBarButtonItem setEnabled:YES];//can save
+        [self.navigationItem.leftBarButtonItem setEnabled:YES];//can delete
     }
     
     

@@ -140,7 +140,7 @@
 							<object class="IBUIButton" id="634690447">
 								<reference key="NSNextResponder" ref="143327201"/>
 								<int key="NSvFlags">293</int>
-								<string key="NSFrame">{{112, 271}, {102, 102}}</string>
+								<string key="NSFrame">{{112, 239}, {102, 102}}</string>
 								<reference key="NSSuperview" ref="143327201"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="393865202"/>
@@ -179,7 +179,7 @@
 							<object class="IBUITextView" id="319972731">
 								<reference key="NSNextResponder" ref="143327201"/>
 								<int key="NSvFlags">290</int>
-								<string key="NSFrame">{{22, 114}, {283, 152}}</string>
+								<string key="NSFrame">{{22, 114}, {283, 121}}</string>
 								<reference key="NSSuperview" ref="143327201"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="993922403"/>
@@ -207,7 +207,7 @@
 							<object class="IBUILabel" id="382854094">
 								<reference key="NSNextResponder" ref="143327201"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{17, 398}, {283, 66}}</string>
+								<string key="NSFrame">{{17, 366}, {283, 66}}</string>
 								<reference key="NSSuperview" ref="143327201"/>
 								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -236,7 +236,7 @@
 							<object class="IBUILabel" id="993922403">
 								<reference key="NSNextResponder" ref="143327201"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{10, 371}, {166, 21}}</string>
+								<string key="NSFrame">{{10, 339}, {166, 21}}</string>
 								<reference key="NSSuperview" ref="143327201"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="634690447"/>
@@ -257,7 +257,7 @@
 							<object class="IBUISwitch" id="290268734">
 								<reference key="NSNextResponder" ref="143327201"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{177, 366}, {94, 27}}</string>
+								<string key="NSFrame">{{177, 334}, {94, 27}}</string>
 								<reference key="NSSuperview" ref="143327201"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="382854094"/>
@@ -270,7 +270,7 @@
 							<object class="IBUIImageView" id="393865202">
 								<reference key="NSNextResponder" ref="143327201"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{281, 361}, {32, 32}}</string>
+								<string key="NSFrame">{{281, 329}, {32, 32}}</string>
 								<reference key="NSSuperview" ref="143327201"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="290268734"/>
@@ -4970,6 +4970,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 					<string key="className">PCViewController</string>
 					<string key="superclassName">UIViewController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="clearClicked:">id</string>
 						<string key="loadContactsList:">id</string>
 						<string key="presentMediaPicker:">id</string>
 						<string key="sendEmail:">id</string>
@@ -4981,6 +4982,10 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 						<string key="switchSaveMessageValueChanged:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="clearClicked:">
+							<string key="name">clearClicked:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="loadContactsList:">
 							<string key="name">loadContactsList:</string>
 							<string key="candidateClassName">id</string>

@@ -41,7 +41,7 @@
     [super viewDidLoad];
     //settingsController = [[SettingsViewController alloc] initWithNibName:@"SettingsViewController" bundle:nil];
 	// Do any additional setup after loading the view, typically from a nib.
-    self.title = NSLocalizedString(@"compose",nil);
+    self.title = @"EasyMessage";//NSLocalizedString(@"compose",nil);
     labelSaveArchive.text = NSLocalizedString(@"archive_message", @"save in archive");
  
     
@@ -87,6 +87,11 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if(self) {
         self.tabBarItem.image = [UIImage imageNamed:@"email"];
+        self.tabBarItem.title = NSLocalizedString(@"compose",nil);
+        
+        UIBarButtonItem *clearButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"clear",@"clear")
+                                                                       style:UIBarButtonItemStyleDone target:self action:@selector(clearClicked:)];
+        self.navigationItem.rightBarButtonItem = clearButton;
         
     }
     return  self;
@@ -106,13 +111,18 @@
     }
     
     [saveMessageSwitch setEnabled:purchasedCommonMessages];
+    [self.navigationItem.rightBarButtonItem setEnabled: (subject.text.length > 0 || body.text.length>0) ];
+    
     
    
 }
 
-//-(void) viewWillDisappear:(BOOL)animated {
-//    [self showHideSocialOnlyLabel];
-//}
+//clear stuff
+
+-(IBAction)clearClicked:(id)sender
+{
+    [self clearInputFields];
+}
 
 -(void) showHideSocialOnlyLabel {
     
@@ -146,6 +156,22 @@
     }
 
     return YES;
+}
+
+//text view delegate to enable/disable the clear button
+-(void)textViewDidChange:(UITextView *)textView {
+   
+
+    BOOL isEnabled = [self.navigationItem.rightBarButtonItem isEnabled];
+    NSInteger lengthBody = textView.text.length;
+    
+    if(lengthBody>=1 && !isEnabled) {
+        [self.navigationItem.rightBarButtonItem setEnabled:YES];
+    }
+    else if(lengthBody==0 && isEnabled) {
+        [self.navigationItem.rightBarButtonItem setEnabled:NO];
+    }
+    
 }
 
 //delegate for the body uitextview
@@ -387,7 +413,7 @@
 
     for(GroupDataModel *model in databaseRecords) {
                
-        NSLog(@"Loaded group %@ which has %d contacts",model.name,model.contacts.count);
+        //NSLog(@"Loaded group %@ which has %d contacts",model.name,model.contacts.count);
         
         Group *group = [[Group alloc] init];
         group.name = model.name;
@@ -958,8 +984,7 @@
         [self saveMessageInArchive];
     }
     
-    subject.text = @"";
-    body.text = @"";
+    [self clearInputFields];
     
     //the default action on beginning is also NOT save
     saveMessage = NO;
@@ -969,6 +994,11 @@
     customMessagesController.selectedMessage = nil;
     
     
+}
+-(void) clearInputFields{
+    subject.text = @"";
+    body.text = @"";
+    [self.navigationItem.rightBarButtonItem setEnabled:NO];
 }
 
 //save the message in archive, core data
@@ -1016,8 +1046,26 @@
     NSMutableArray *emails = [[NSMutableArray alloc] init];
     for(Contact *c in selectedRecipientsList) {
         
+        if([c isKindOfClass:Group.class]) {
+            
+            Group *group = (Group *)c;
+            for(Contact *other in group.contactsList) {
+                NSString *emailAddress = [self extractEmailAddress:other];
+                if(emailAddress!=nil) {
+                    [emails addObject:emailAddress];
+                }
+            }  
+         }
+        else {
+            NSString *emailAddress = [self extractEmailAddress:c];
+            if(emailAddress!=nil) {
+                [emails addObject:emailAddress];
+            }
+        }
+        
+        
         //first check is see if we have an email address
-        if(c.email!=nil) {
+        /**if(c.email!=nil) {
             
             //if there is a preference other than ALL??
             if(settingsController.selectPreferredService!= OPTION_PREF_SERVICE_ALL_ID) {
@@ -1060,9 +1108,58 @@
             
             
             
-        }
+        }*/
     }
     return emails;
+}
+
+-(NSString *) extractEmailAddress: (Contact *)c {
+    
+    
+    
+    //first check is see if we have an email address
+    if(c.email!=nil) {
+        
+        //if there is a preference other than ALL??
+        if(settingsController.selectPreferredService!= OPTION_PREF_SERVICE_ALL_ID) {
+            
+            if(settingsController.selectPreferredService == OPTION_PREF_SERVICE_SMS_ID) {
+                //the preferred method is SMS
+                if(c.phone!=nil) {
+                    
+                    //OK, we have an SMS, but are we sending SMS?
+                    if(settingsController.selectSendOption == OPTION_SEND_EMAIL_ONLY_ID) {
+                        //we are just sending email, so we need to include it anyway
+                        //NSLog(@"We prefere to use SMS service but we´re sending just email so %@ will be added to the addresses list",c.email);
+                        return c.email;
+                    }
+                    //else {//means we are sending either BOTH or just SMS
+                    //so we skip it, cause it will inlcuded in the SMS check
+                    //}
+                    
+                }
+                else {
+                    //contact does not have phone number, so MUST be reached by email, even if not preferered
+                    //NSLog(@"We prefere to use SMS service but we don´t have a phone number, just email, so %@ will be added to the addresses list",c.email);
+                    return c.email;
+                }
+                
+            }
+            else {
+                //preference is email, so it´s ok to add it
+                //NSLog(@"We prefere to use email service and for that reason %@ will be added to the addresses list",c.email);
+                return c.email;
+            }
+            
+        }
+        else {
+            //option is OPTION_PREF_SERVICE_ALL_ID , so it´s ok to add it
+            //NSLog(@"We prefere to use both services, so %@ will be added to the addresses list",c.email);
+            return c.email;
+        }
+    }
+    
+    return nil;
 }
 
 //get all phones
@@ -1071,9 +1168,24 @@
     NSMutableArray *phones = [[NSMutableArray alloc] init];
     for(Contact *c in selectedRecipientsList) {
         
-        
+        if([c isKindOfClass:Group.class]) {
             
-     if(c.phone!=nil) { //first thing we need is a phone number, otherwise we don´t even consider it
+            Group *group = (Group *)c;
+            for(Contact *other in group.contactsList) {
+                NSString *phoneNumber = [self extractPhoneNumber:other];
+                if(phoneNumber!=nil) {
+                    [phones addObject:phoneNumber];
+                }
+            }
+        }
+        else {
+            NSString *phoneNumber = [self extractPhoneNumber:c];
+            if(phoneNumber!=nil) {
+                [phones addObject:phoneNumber];
+            }
+        }
+    }
+     /**if(c.phone!=nil) { //first thing we need is a phone number, otherwise we don´t even consider it
          
          //if there is a preference other than ALL??
          if(settingsController.selectPreferredService!= OPTION_PREF_SERVICE_ALL_ID) {
@@ -1126,8 +1238,68 @@
         
         
     }//end if phone!=nil
-    
+    */
     return phones;
+}
+
+-(NSString *) extractPhoneNumber: (Contact *)c {
+    
+    if(c.phone!=nil) { //first thing we need is a phone number, otherwise we don´t even consider it
+        
+        //if there is a preference other than ALL??
+        if(settingsController.selectPreferredService!= OPTION_PREF_SERVICE_ALL_ID) {
+            
+            if(settingsController.selectPreferredService == OPTION_PREF_SERVICE_EMAIL_ID) {
+                //if the prefereed service is email, and this one has it, we skip it
+                if(c.email!=nil) {
+                    //ok the contact has email, and this is the preferred service
+                    //but did we send the email already??
+                    if(settingsController.selectSendOption == OPTION_SEND_SMS_ONLY_ID) {
+                        //we have choosed just to send SMS, so definetely it was not reached by email before
+                        //therefore, we need to add it
+                        //NSLog(@"We want to send just SMS, so %@ will be added to the phones list",c.phone);
+                        //[phones addObject:c.phone];
+                        return c.phone;
+                        
+                    }
+                    else if(emailSentOK==NO) {//means it was EMAIL AND SMS, OR JUST EMAIL, but failed
+                        //NSLog(@"We wanted to send just email or both, but the email delivery has failed, so %@ will be added to the phones list",c.phone);
+                        //[phones addObject:c.phone];
+                        return c.phone;
+                        
+                    }
+                    //else {
+                    //do nothing, cause the email was already sent for sure, and with success
+                    //skip it
+                    //}
+                }
+                else {
+                    //the contact does not have email, so it MUST be reached by SMS, despite the preference
+                    //NSLog(@"We prefere to use email service, but we don´t have and address so %@ will be added to the phones list",c.phone);
+                    //[phones addObject:c.phone];
+                    return c.phone;
+                }
+                
+            }
+            else {//means settingsController.selectPreferredService == OPTION_PREF_SERVICE_SMS_ID
+                //if the prefereed service is SMS, we can add it
+                //NSLog(@"We prefere to use SMS service, so %@ will be added to the phones list",c.phone);
+                //[phones addObject:c.phone];
+                return c.phone;
+            }
+            
+        }
+        else {
+            //preference is send both, so it´s ok to add it
+            //NSLog(@"We prefere to use both services, so %@ will be added to the phones list",c.phone);
+            //[phones addObject:c.phone];
+            return c.phone;
+        }
+        
+    
+  }//end if phone!=nil
+
+ return nil;
 }
 
 //Callback to detect adressbook changes

@@ -41,6 +41,8 @@
     
     self.viewController.recipientsController = self.recipientsController;
     
+    UINavigationController *easyMessageController = [[UINavigationController alloc] init];
+    [easyMessageController setViewControllers: [[NSArray alloc]  initWithObjects:self.viewController, nil]];
     
     UINavigationController *navControllerSettings = [[UINavigationController alloc] init];
     [navControllerSettings setViewControllers: [[NSArray alloc]  initWithObjects:self.settingsController, nil]];
@@ -56,7 +58,7 @@
     
     
     UITabBarController *tabController = [[UITabBarController alloc] init];
-    [tabController setViewControllers: [NSArray arrayWithObjects:self.viewController,navControllerRecipients,navControllerSettings,customMessagesControllerNav, inAppPurchasesControllerNav, nil] ];
+    [tabController setViewControllers: [NSArray arrayWithObjects:easyMessageController,navControllerRecipients,navControllerSettings,customMessagesControllerNav, inAppPurchasesControllerNav, nil] ];
    
     //[tabController setSelectedIndex:0];
     

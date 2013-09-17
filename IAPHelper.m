@@ -40,10 +40,8 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
             BOOL productPurchased = [[NSUserDefaults standardUserDefaults] boolForKey:productIdentifier];
             if (productPurchased) {
                 [_purchasedProductIdentifiers addObject:productIdentifier];
-                NSLog(@"Previously purchased: %@", productIdentifier);
-            } else {
-                NSLog(@"Not purchased: %@", productIdentifier);
             }
+ 
         }
         //add and observer for checking the payment transactions
         [[SKPaymentQueue defaultQueue] addTransactionObserver:self];

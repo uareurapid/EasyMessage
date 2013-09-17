@@ -8,10 +8,16 @@
 
 #import <Foundation/Foundation.h>
 #import "GroupDataModel.h"
+#import "ContactDataModel.h"
+#import "MessageDataModel.h"
 #import "PCAppDelegate.h"
 
 @interface CoreDataUtils : NSObject
 
 + (NSMutableArray *)fetchGroupRecordsFromDatabase;
 + (NSMutableArray *)fetchMessageRecordsFromDatabase;
++(ContactDataModel *) fetchContactDataModelByName: (NSString *) message;
++(GroupDataModel *) fetchGroupDataModelByName: (NSString *) groupName;
++(BOOL) deleteGroupDataModelByName: (NSString *) groupName;
++(BOOL) deleteMessageDataModelByMsg: (NSString *) msg;
 @end

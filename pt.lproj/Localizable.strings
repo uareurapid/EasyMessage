@@ -89,4 +89,8 @@
 "custom_msg_noworry" = "Não te preocupes. Estou bem";
 "custom_msg_wayhome" ="Estou a ir para casa agora";
 "custom_msg_arrivesoon" = "Estou a chegar";
+"add_to_group" = "Criar grupo";
+"clear" = "Limpar";
+"delete" = "Eliminar";
+"deleted" = "Eliminado";
 

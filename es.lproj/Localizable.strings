@@ -84,4 +84,7 @@
 "custom_msg_noworry" = "No se preocupe. Estoy bien";
 "custom_msg_wayhome" ="En mi camino a casa ahora";
 "custom_msg_arrivesoon" = "Voy a llegar pronto";
-;
+"add_to_group" = "Crear grupo";
+"clear" = "Limpiar";
+"delete" = "Borrar";
+"deleted" = "Borrado!";

@@ -16,6 +16,9 @@
 
 @implementation UIPlaceHolderTextView
 
+//@synthesize textLength;
+
+
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -58,6 +61,9 @@
 
 - (void)textChanged:(NSNotification *)notification
 {
+    
+    //textLength = self.text.length;
+    
     if([[self placeholder] length] == 0)
     {
         return;

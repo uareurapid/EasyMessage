@@ -87,3 +87,7 @@
 "custom_msg_noworry" = "لا تقلق. أنا بخير";
 "custom_msg_wayhome" ="في طريقي إلى المنزل الآن";
 "custom_msg_arrivesoon" = "سوف يصل قريبا";
+"add_to_group" = "إنشاء مجموعة";
+"clear" = "نظف";
+"delete" = "حذف";
+"deleted" = "حذف!";

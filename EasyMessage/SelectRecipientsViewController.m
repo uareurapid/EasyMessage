@@ -8,12 +8,12 @@
 
 #import "SelectRecipientsViewController.h"
 #import "PCViewController.h"
-#import "Group.h"
 #import "EasyMessageIAPHelper.h"
 #import "PCAppDelegate.h"
 #import "GroupDataModel.h"
 #import "ContactDataModel.h"
 #import "GroupDetailsViewController.h"
+#import "CoreDataUtils.h"
 
 
 const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
@@ -56,7 +56,7 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
         self.navigationItem.leftBarButtonItem = doneButton;
         
         
-        UIBarButtonItem *addToGroupButton = [[UIBarButtonItem alloc] initWithTitle:@"Add to group"
+        UIBarButtonItem *addToGroupButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"add_to_group",@"add_to_group")
                                                                              style:UIBarButtonItemStyleDone target:self action:@selector(addGroupClicked:)];
         
         //[addToGroupButton setCustomView:[self setupGroupButton]];
@@ -92,7 +92,7 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
                                                                        style:UIBarButtonItemStyleDone target:self action:@selector(goBackAfterSelection:)];
         self.navigationItem.rightBarButtonItem = doneButton;
         self.title = @"Recipients";
-        NSLog(@"What about this?");
+      
         
     }
     return self;
@@ -225,6 +225,24 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
         }
     }
         
+}
+
+//delete a group
+-(void) deleteGroup:(Group *)group{
+    
+    BOOL deleted = [CoreDataUtils deleteGroupDataModelByName:group.name];
+    if(deleted) {
+        NSLog(@"deleted on db, group: %@",group.name);
+        [group.contactsList removeAllObjects];
+        [contactsList removeObject:group];
+        
+        [[[[iToast makeText:NSLocalizedString(@"deleted", @"deleted")]
+           setGravity:iToastGravityBottom] setDuration:2000] show];
+        
+        [self refreshPhonebook:nil];
+    }
+
+    
 }
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     
@@ -555,7 +573,6 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
 }
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"Called button of row at index %d",indexPath.row);
     
     NSString *key = [sortedKeys objectAtIndex:indexPath.section];
     NSMutableArray *array = (NSMutableArray *) [contactsByLastNameInitial objectForKey:key];
@@ -753,14 +770,14 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
 //save the location record
 -(void)saveGroup:(NSString*)name {
     
-    NSInteger numContacts = 0 ; //min is 2
+    //NSInteger numContacts = 0 ; //min is 2
     
-    for(Contact *selected in selectedContactsList) {
-       if([selected isKindOfClass:Contact.class] && ![selected isKindOfClass:Group.class]) {
-           numContacts++;
-       }
-    }
-    if(numContacts>=2) { //min 2 contacts
+    //for(Contact *selected in selectedContactsList) {
+    //   if([selected isKindOfClass:Contact.class] && ![selected isKindOfClass:Group.class]) {
+    //       numContacts++;
+    //   }
+    //}
+    //if(numContacts>=2) { //min 2 contacts
         
         NSManagedObjectContext *managedObjectContext = [(PCAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
         GroupDataModel *groupModel = (GroupDataModel *)[NSEntityDescription insertNewObjectForEntityForName:@"GroupDataModel" inManagedObjectContext:managedObjectContext];
@@ -774,18 +791,43 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
         for(Contact *selected in selectedContactsList) {
             
             if([selected isKindOfClass:Group.class]) {
-                NSLog(@"ignoring %@",selected.name);
+                
+                //cast contact to group
+                Group *theSelected = (Group *) selected;
+                
+                //now get the real contacts on this group
+                for(Contact *contact in theSelected.contactsList) {
+                    
+                    //add to core data
+                    ContactDataModel *contactModel = [self prepareModelFromContact: managedObjectContext :contact];
+                    
+                    /**(ContactDataModel *)[NSEntityDescription insertNewObjectForEntityForName:@"ContactDataModel" inManagedObjectContext:managedObjectContext];
+                    
+                    contactModel.name = contact.name;
+                    contactModel.phone = contact.phone;
+                    contactModel.email = contact.email;
+                    contactModel.lastname = contact.lastName;*/
+                    
+                    [groupModel addContactsObject:contactModel];
+                    [contactModel addGroupObject:groupModel];
+                    
+                    [group.contactsList addObject:contact];
+                }
+                
             }
             else {
-                ContactDataModel *contact = (ContactDataModel *)[NSEntityDescription insertNewObjectForEntityForName:@"ContactDataModel" inManagedObjectContext:managedObjectContext];
+                //single contact
+                ContactDataModel *contactModel = [self prepareModelFromContact: managedObjectContext :selected];
                 
-                contact.name = selected.name;
-                contact.phone = selected.phone;
-                contact.email = selected.email;
-                contact.lastname = selected.lastName;
+                /**(ContactDataModel *)[NSEntityDescription insertNewObjectForEntityForName:@"ContactDataModel" inManagedObjectContext:managedObjectContext];
                 
-                [groupModel addContactsObject:contact];
-                [contact addGroupObject:groupModel];
+                contactModel.name = selected.name;
+                contactModel.phone = selected.phone;
+                contactModel.email = selected.email;
+                contactModel.lastname = selected.lastName;*/
+                
+                [groupModel addContactsObject:contactModel];
+                [contactModel addGroupObject:groupModel];
                 
                 [group.contactsList addObject:selected];
             }
@@ -810,16 +852,32 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
         
         if(OK) {
             [contactsList addObject:group];
+            //if just added a group i clear the selection
+            [selectedContactsList removeAllObjects];
+            //refresh the view
             [self refreshPhonebook:nil];
+            
+            
+            
         }
-    }
-    else {
-        NSLog(@"Need at least 2 contacts in group");
-    }
+    //}
+    //else {
+    //    NSLog(@"Need at least 2 contacts in group");
+    //}
     
     
     
 }
-
+//set the data needed
+-(ContactDataModel *) prepareModelFromContact: (NSManagedObjectContext *) managedObjectContext: (Contact *)contact {
+    
+    ContactDataModel *contactModel = (ContactDataModel *)[NSEntityDescription insertNewObjectForEntityForName:@"ContactDataModel" inManagedObjectContext:managedObjectContext];
+    contactModel.name = contact.name;
+    contactModel.phone = contact.phone;
+    contactModel.email = contact.email;
+    contactModel.lastname = contact.lastName;
+    
+    return contactModel;
+}
 
 @end

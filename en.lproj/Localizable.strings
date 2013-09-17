@@ -90,5 +90,9 @@
 "custom_msg_noworry" = "Don´t worry. I´m fine";
 "custom_msg_wayhome" ="On my way home now";
 "custom_msg_arrivesoon" = "I´ll arrive soon";
+"add_to_group" = "Create group";
+"clear" = "Clear";
+"delete" = "Delete";
+"deleted" = "Deleted!";
 
 
