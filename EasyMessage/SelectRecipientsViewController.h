@@ -40,8 +40,8 @@
 
 @property ABRecordID groupId;
 
-@property (strong, nonatomic) UIImage *imageLock;
-@property (strong, nonatomic) UIImage *imageUnlock;
+//@property (strong, nonatomic) UIImage *imageLock;
+//@property (strong, nonatomic) UIImage *imageUnlock;
 
 
 //will hold a list of contacts per each letter

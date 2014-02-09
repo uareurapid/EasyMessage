@@ -33,7 +33,8 @@
 @synthesize changeTimer,saveMessageSwitch,saveMessage,inAppPurchaseTableController;
 @synthesize labelSaveArchive,lockImage;
 @synthesize customMessagesController;
-@synthesize imageLock,imageUnlock;
+//@synthesize imageLock,imageUnlock;
+@synthesize adBannerView;
 
 
 - (void)viewDidLoad
@@ -69,8 +70,8 @@
     inAppPurchaseTableController = [[IAPMasterViewController alloc] initWithNibName:@"IAPMasterViewController" bundle:nil];
     
     //set the images
-    imageLock = [UIImage imageNamed:@"Lock32"];
-    imageUnlock = [UIImage imageNamed:@"Unlock32"];
+    //imageLock = [UIImage imageNamed:@"Lock32"];
+    //imageUnlock = [UIImage imageNamed:@"Unlock32"];
     
     selectedRecipientsList = [[NSMutableArray alloc]init];
     [scrollView flashScrollIndicators];
@@ -79,6 +80,9 @@
     //load the contacts list when the view loads
     [self setupAddressBook];
     self.scrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableViewBackground.png"]];
+    
+    [self createAdBannerView];
+    [self.view addSubview:self.adBannerView];
  
   
 }
@@ -97,20 +101,94 @@
     return  self;
 }
 
+/**
+ *Create the banner view
+ */
+- (void) createAdBannerView
+{
+    adBannerView = [[ADBannerView alloc] initWithFrame:CGRectZero];
+    CGRect bannerFrame = self.adBannerView.frame;
+    bannerFrame.origin.y = self.view.frame.size.height;
+    self.adBannerView.frame = bannerFrame;
+    
+    self.adBannerView.delegate = self;
+    self.adBannerView.requiredContentSizeIdentifiers = [NSSet setWithObjects:ADBannerContentSizeIdentifierPortrait, ADBannerContentSizeIdentifierLandscape, nil];
+}
+
+#pragma mark - ADBannerViewDelegate
+
+- (void)bannerViewDidLoadAd:(ADBannerView *)banner {
+    NSLog(@"iAd finished loading");
+    [self adjustBannerView];
+}
+
+- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
+    NSLog(@"Failed to receive an ad");
+    [self adjustBannerView];
+}
+
+- (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave {
+    //user clicked on the banner
+    return YES;
+}
+
+- (void)bannerViewActionDidFinish:(ADBannerView *)banner {
+}
+
+/**
+ *Adjust banner view stuff
+ */
+- (void) adjustBannerView {
+    CGRect contentViewFrame = self.view.bounds;
+    CGRect adBannerFrame = self.adBannerView.frame;
+    
+    if([self.adBannerView isBannerLoaded])
+    {
+        CGSize bannerSize = [ADBannerView sizeFromBannerContentSizeIdentifier:self.adBannerView.currentContentSizeIdentifier];
+        contentViewFrame.size.height = contentViewFrame.size.height - bannerSize.height;
+        adBannerFrame.origin.y = contentViewFrame.size.height;
+    }
+    else
+    {
+        adBannerFrame.origin.y = contentViewFrame.size.height;
+    }
+    [UIView animateWithDuration:0.5 animations:^{
+        self.adBannerView.frame = adBannerFrame;
+        self.view.frame = contentViewFrame;
+    }];
+}
+
 //appear/disappear logic
 -(void) viewWillAppear:(BOOL)animated {
     
     [self showHideSocialOnlyLabel];
-    BOOL purchasedCommonMessages = [[EasyMessageIAPHelper sharedInstance] productPurchased:PRODUCT_COMMON_MESSAGES];
+    //BOOL purchasedCommonMessages = [[EasyMessageIAPHelper sharedInstance] productPurchased:PRODUCT_COMMON_MESSAGES];
     
-    if(purchasedCommonMessages) {
-        lockImage.image = imageUnlock;
+    //if(purchasedCommonMessages) {
+    //    lockImage.image = imageUnlock;
+    //}
+    //else {
+    //    lockImage.image = imageLock;
+    //}
+    
+    BOOL purchasedAdsFree = [[EasyMessageIAPHelper sharedInstance] productPurchased:PRODUCT_ADS_FREE];
+    [adBannerView setHidden:purchasedAdsFree];
+    
+    //subject is disabled for SMS only or social posts
+    [self checkIfPostToSocial];
+    if( (sendToFacebook || sendToTwitter) && selectedRecipientsList.count==0 ) {
+        [subject setEnabled:false];
+    }
+    else if(settingsController.selectSendOption == OPTION_SEND_SMS_ONLY_ID) {
+          [subject setEnabled:false];
     }
     else {
-        lockImage.image = imageLock;
+          [subject setEnabled:true];
     }
     
-    [saveMessageSwitch setEnabled:purchasedCommonMessages];
+    //always ON
+    //[saveMessageSwitch setEnabled:purchasedCommonMessages];
+    [saveMessageSwitch setEnabled:true];
     [self.navigationItem.rightBarButtonItem setEnabled: (subject.text.length > 0 || body.text.length>0) ];
     
     
@@ -194,14 +272,11 @@
 }*/
 
 
-//- (IBAction)sendMessage:(id)sender {
-    
-//    [self presentViewController:inAppPurchaseTableController animated:YES completion:nil];
-//}
 
-- (IBAction)sendMessage:(id)sender {
-    
-    
+/**
+ * Checks if post to social is active
+ */
+- (void) checkIfPostToSocial {
     BOOL isFacebookAvailable = settingsController.socialOptionsController.isFacebookAvailable;
     BOOL isTwitterAvailable = settingsController.socialOptionsController.isTwitterAvailable;
     BOOL isFacebookSelected = NO;
@@ -216,6 +291,12 @@
     
     sendToFacebook = isFacebookSelected;
     sendToTwitter = isTwitterSelected;
+}
+
+- (IBAction)sendMessage:(id)sender {
+    
+    
+    [self checkIfPostToSocial];
     
     if(subject.text.length==0 && body.text.length==0) {
         
@@ -1400,6 +1481,13 @@ void addressBookChanged(ABAddressBookRef reference,
 
 #pragma rotation stuff
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    
+    //adjust the banner view to the current orientation
+    if(UIInterfaceOrientationIsPortrait(interfaceOrientation))
+        self.adBannerView.currentContentSizeIdentifier = ADBannerContentSizeIdentifierPortrait;
+    else
+        self.adBannerView.currentContentSizeIdentifier = ADBannerContentSizeIdentifierLandscape;
+    
     
     return (interfaceOrientation == UIInterfaceOrientationLandscapeRight) || (interfaceOrientation == UIInterfaceOrientationLandscapeLeft)
     || (interfaceOrientation == UIInterfaceOrientationPortrait);

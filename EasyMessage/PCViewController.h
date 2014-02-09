@@ -13,6 +13,7 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import "iToast.h"
 #import <AddressBook/AddressBook.h>
+#import <iAd/iAd.h>
 
 @class SelectRecipientsViewController;
 @class IAPMasterViewController;
@@ -30,6 +31,8 @@
 @property (strong, nonatomic) IBOutlet UISwitch *saveMessageSwitch;
 
 @property ABAddressBookRef addressBook;
+@property (strong, nonatomic) IBOutlet ADBannerView *adBannerView;
+
 
 
 -(IBAction)loadContactsList:(id)sender;
@@ -50,8 +53,8 @@ void addressBookChanged(ABAddressBookRef reference,
 @property (strong, nonatomic) IBOutlet UIPlaceHolderTextView *body;
 @property (strong, nonatomic) IBOutlet UIImageView *lockImage;
 
-@property (strong, nonatomic) UIImage *imageLock;
-@property (strong, nonatomic) UIImage *imageUnlock;
+//@property (strong, nonatomic) UIImage *imageLock;
+//@property (strong, nonatomic) UIImage *imageUnlock;
 
 @property (strong, nonatomic) IBOutlet UILabel *labelSaveArchive;
 @property (strong, nonatomic) NSTimer *changeTimer;

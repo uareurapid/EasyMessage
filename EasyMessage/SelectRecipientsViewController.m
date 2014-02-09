@@ -27,7 +27,7 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
 @synthesize contactsList,selectedContactsList,rootViewController;
 @synthesize initialSelectedContacts,contactsByLastNameInitial;
 @synthesize sortedKeys,groupLocked,databaseRecords;
-@synthesize groupsList,imageLock,imageUnlock;
+//@synthesize groupsList,imageLock,imageUnlock;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -181,8 +181,8 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
     self.tableView.sectionFooterHeight = 2.0;
 
     //set the images
-    imageLock = [UIImage imageNamed:@"Lock32"];
-    imageUnlock = [UIImage imageNamed:@"Unlock32"];
+    //imageLock = [UIImage imageNamed:@"Lock32"];
+    //imageUnlock = [UIImage imageNamed:@"Unlock32"];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -394,7 +394,8 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
 -(void) viewWillAppear:(BOOL)animated {
     
     initialSelectedContacts = selectedContactsList.count;
-    groupLocked = ![[EasyMessageIAPHelper sharedInstance] productPurchased:PRODUCT_GROUP_SUPPORT];
+    groupLocked = false;
+    //groupLocked =![[EasyMessageIAPHelper sharedInstance] productPurchased:PRODUCT_GROUP_SUPPORT];
     //if(groupLocked) {
     //    self.navigationItem.rightBarButtonItem.image = imageLock;
     //}
@@ -408,7 +409,7 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
 -(UIButton *)setupGroupButton {
     
     UIButton *group = [UIButton buttonWithType:UIButtonTypeCustom];
-    [group setBackgroundImage:(groupLocked ? imageLock : imageUnlock) forState:UIControlStateNormal];
+    //[group setBackgroundImage:(groupLocked ? imageLock : imageUnlock) forState:UIControlStateNormal];
     [group setTitle:@"Add to group" forState:UIControlStateNormal];
     group.frame = (CGRect) {
         .size.width = 100,

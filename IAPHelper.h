@@ -20,6 +20,7 @@ typedef void (^RequestProductsCompletionHandler)(BOOL success, NSArray * product
 
 #define PRODUCT_COMMON_MESSAGES @"com.pt.pcristo.common.messages"
 #define PRODUCT_GROUP_SUPPORT @"com.pt.pcristo.groups.support"
+#define PRODUCT_ADS_FREE @"com.pt.pcristo.ads.free"
 
 // Add two new method declarations
 - (void)buyProduct:(SKProduct *)product;

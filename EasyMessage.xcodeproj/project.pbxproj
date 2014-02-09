@@ -21,6 +21,7 @@
 		722415551771148800989C3B /* PCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 722415541771148800989C3B /* PCViewController.m */; };
 		72241560177114DC00989C3B /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7224155E177114DC00989C3B /* AddressBook.framework */; };
 		72241561177114DC00989C3B /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7224155F177114DC00989C3B /* AddressBookUI.framework */; };
+		7260848518A6AC0900985842 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7260848418A6AC0900985842 /* iAd.framework */; };
 		72611AFC1771E88B0043E508 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 72611AFA1771E88B0043E508 /* SettingsViewController.m */; };
 		72611AFD1771E88B0043E508 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 72611AFB1771E88B0043E508 /* SettingsViewController.xib */; };
 		72611B0017720F740043E508 /* Contact.m in Sources */ = {isa = PBXBuildFile; fileRef = 72611AFF17720F740043E508 /* Contact.m */; };
@@ -115,6 +116,7 @@
 		722415541771148800989C3B /* PCViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PCViewController.m; sourceTree = "<group>"; };
 		7224155E177114DC00989C3B /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		7224155F177114DC00989C3B /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
+		7260848418A6AC0900985842 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		72611AF91771E88B0043E508 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsViewController.h; path = EasyMessage/SettingsViewController.h; sourceTree = "<group>"; };
 		72611AFA1771E88B0043E508 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsViewController.m; path = EasyMessage/SettingsViewController.m; sourceTree = "<group>"; };
 		72611AFB1771E88B0043E508 /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SettingsViewController.xib; path = EasyMessage/SettingsViewController.xib; sourceTree = "<group>"; };
@@ -226,6 +228,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7260848518A6AC0900985842 /* iAd.framework in Frameworks */,
 				7298EC0C17DE4D35002C30AE /* CoreData.framework in Frameworks */,
 				727906DD17DB61F20076F0FE /* StoreKit.framework in Frameworks */,
 				72137A8F17A7161300C90511 /* Social.framework in Frameworks */,
@@ -255,7 +258,6 @@
 				727A765917DFE1100032EFF8 /* ContactDataModel.m */,
 				727A765517DFE1100032EFF8 /* GroupDataModel.h */,
 				727A765617DFE1100032EFF8 /* GroupDataModel.m */,
-				7298EC0B17DE4D35002C30AE /* CoreData.framework */,
 				727906E117DB62540076F0FE /* InAppPurchase */,
 				727906E417DB62DF0076F0FE /* Settings */,
 				727906E217DB626F0076F0FE /* Recipients */,
@@ -308,6 +310,8 @@
 		7224153A1771148800989C3B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7298EC0B17DE4D35002C30AE /* CoreData.framework */,
+				7260848418A6AC0900985842 /* iAd.framework */,
 				727906DC17DB61F20076F0FE /* StoreKit.framework */,
 				72B38F4A17A80F11004A0CD7 /* Accounts.framework */,
 				72137A8E17A7161300C90511 /* Social.framework */,
@@ -627,7 +631,7 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Paulo Cristo (VAZ5V665BS)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Paulo Cristo (9HCXF72293)";
 				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = NO;
@@ -644,8 +648,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2AB70F18-ECFD-4BB6-80EF-FE69A75B4B59";
+				PROVISIONING_PROFILE = "D17E1FB2-8A31-4BC8-92A7-E3C5AA1816C7";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D17E1FB2-8A31-4BC8-92A7-E3C5AA1816C7";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -662,8 +666,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Paulo Cristo (VAZ5V665BS)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Paulo Cristo (VAZ5V665BS)";
 				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -673,8 +677,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "D17E1FB2-8A31-4BC8-92A7-E3C5AA1816C7";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D17E1FB2-8A31-4BC8-92A7-E3C5AA1816C7";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
