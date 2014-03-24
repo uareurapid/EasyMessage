@@ -18,6 +18,7 @@
 
 #define OPTION_SENDTO_FACEBOOK_ONLY    @"Send to Facebook only"
 #define OPTION_SENDTO_TWITTER_ONLY      @"Send to Twitter only"
+#define OPTION_SENDTO_LINKEDIN_ONLY      @"Send to Linkedin only"
 
 
 

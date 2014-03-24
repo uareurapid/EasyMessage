@@ -91,6 +91,8 @@
         if(isTwitterAvailable ) {
             [services addObject:OPTION_SENDTO_TWITTER_ONLY];
         }
+        
+        [services addObject:OPTION_SENDTO_LINKEDIN_ONLY];
     }
     
     

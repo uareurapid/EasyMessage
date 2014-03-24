@@ -464,6 +464,11 @@
 				CLASSPREFIX = PC;
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Paulo Cristo";
+				TargetAttributes = {
+					722415371771148800989C3B = {
+						DevelopmentTeam = VAZ5V665BS;
+					};
+				};
 			};
 			buildConfigurationList = 722415331771148700989C3B /* Build configuration list for PBXProject "EasyMessage" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -687,12 +692,15 @@
 		7224155C1771148800989C3B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EasyMessage/EasyMessage-Prefix.pch";
 				INFOPLIST_FILE = "EasyMessage/EasyMessage-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -701,12 +709,15 @@
 		7224155D1771148800989C3B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EasyMessage/EasyMessage-Prefix.pch";
 				INFOPLIST_FILE = "EasyMessage/EasyMessage-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
