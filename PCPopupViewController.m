@@ -10,9 +10,14 @@
 
 @interface PCPopupViewController ()
 
+
 @end
 
+
 @implementation PCPopupViewController
+
+@synthesize imageView;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -26,6 +31,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    //self.view.alpha=0;
+    
+    //self.view.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.frame),400);
+    
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -34,5 +43,23 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+//-(void) viewDidLayoutSubviews {
+    //self.view.frame = CGRectMake(0, 0, 257, CGRectGetHeight(self.view.frame));
+  //  self.view.alpha=0.5;
+//}
+
+-(void) viewWillAppear:(BOOL)animated{
+    self.view.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
+    imageView.alpha=1;
+}
+
+- (IBAction)closeClicked:(id)sender {
+    [self.view removeFromSuperview];
+}
+
+
+
+
 
 @end

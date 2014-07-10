@@ -24,6 +24,7 @@
 "option_send_sms_only" = "إرسال الرسائل القصيرة فقط";
 "option_send_facebook_only" = "أضف إلى الفيسبوك";
 "option_send_twitter_only" = "أضف إلى تويتر";
+"option_send_linkedin_only" = "إرسال إلى ينكدين";
 "option_send_include_social_network" = "وتشمل الشبكات الاجتماعية ...";
 "footer_select_service" = "حدد الخدمة (ق) لإرسال رسالة";
 "header_preferred_service" = "خدمة المفضل";
@@ -57,6 +58,8 @@
 "twitter_post_ok" = "أضف إلى تويتر سوسسفول";
 "facebook_post_canceled" = "أضف إلى الفيسبوك إلغاء";
 "twitter_post_canceled" = "أضف إلى تويتر إلغاء";
+"linkedin_post_ok" = "رسالة بعث بها إلى ينكدين";
+"linkedin_post_canceled" = "إرسال إلى إلغاء ينكدين";
 "no_recipients_only_social" = "مستلمين اختيارها. سيتم إرسال رسالة إلى الشبكات الاجتماعية فقط";
 "done_button" = "فعلت";
 "archive_message" = "حفظ في الأرشيف";
@@ -91,3 +94,6 @@
 "clear" = "نظف";
 "delete" = "حذف";
 "deleted" = "حذف!";
+"added" = "وأضاف";
+"removed" = "منزوع";
+"share" = "شارك";

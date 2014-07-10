@@ -128,17 +128,17 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated {
-    if ([[EasyMessageIAPHelper sharedInstance] productPurchased:PRODUCT_COMMON_MESSAGES]) {
+    //if ([[EasyMessageIAPHelper sharedInstance] productPurchased:PRODUCT_COMMON_MESSAGES]) {
         [self.navigationItem.leftBarButtonItem setEnabled:[self getSelectedMessageIfAny]!=nil ];
         [self.navigationItem.rightBarButtonItem setEnabled: [self getSelectedMessageIfAny]!=nil];
         [self.tableView setAllowsSelection:YES];
        
-    }
-    else {
-        [self.navigationItem.leftBarButtonItem setEnabled:NO];
-        [self.navigationItem.rightBarButtonItem setEnabled: NO];
-        [self.tableView setAllowsSelection:NO];
-    }
+    //}
+    //else {
+    //    [self.navigationItem.leftBarButtonItem setEnabled:NO];
+    //    [self.navigationItem.rightBarButtonItem setEnabled: NO];
+    //    [self.tableView setAllowsSelection:NO];
+    //}
     [self addRecordsFromDatabase];
     [self.navigationItem.rightBarButtonItem setEnabled:selectedMessageIndex!=-1];
      

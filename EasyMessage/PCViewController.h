@@ -11,15 +11,31 @@
 #import <MessageUI/MessageUI.h> 
 #import "UIPlaceHolderTextView.h"
 #import <MediaPlayer/MediaPlayer.h>
+#import "EasyMessageIAPHelper.h"
 #import "iToast.h"
-#import <AddressBook/AddressBook.h>
 #import <iAd/iAd.h>
+#import "MPAdView.h"
+#import <AddressBook/AddressBook.h>
+#import "AFHTTPRequestOperation.h"
+#import "LIALinkedInHttpClient.h"
+#import "LIALinkedInApplication.h"
+#import "PCPopupViewController.h"
+#import <StoreKit/StoreKit.h>
 
 @class SelectRecipientsViewController;
 @class IAPMasterViewController;
 @class CustomMessagesController;
 
-@interface PCViewController : UIViewController <MFMailComposeViewControllerDelegate,MFMessageComposeViewControllerDelegate,UIImagePickerControllerDelegate,UITextViewDelegate,UITextFieldDelegate>
+#define IS_IPHONE5 (([[UIScreen mainScreen] bounds].size.height-568)?NO:YES)
+#define IS_OS_5_OR_LATER    ([[[UIDevice currentDevice] systemVersion] floatValue] >= 5.0)
+#define IS_OS_6_OR_LATER    ([[[UIDevice currentDevice] systemVersion] floatValue] >= 6.0)
+#define IS_OS_7_OR_LATER    ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
+
+#define PROMO_SHOW_COUNTER @"promo_show_counter"
+
+
+@interface PCViewController : UIViewController <MFMailComposeViewControllerDelegate,MFMessageComposeViewControllerDelegate,UIImagePickerControllerDelegate,UITextViewDelegate,
+UITextFieldDelegate, NSURLConnectionDelegate,SKStoreProductViewControllerDelegate,MPAdViewDelegate>
 - (IBAction)sendMessage:(id)sender;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 - (IBAction)switchSaveMessageValueChanged:(id)sender;
@@ -31,9 +47,20 @@
 @property (strong, nonatomic) IBOutlet UISwitch *saveMessageSwitch;
 
 @property ABAddressBookRef addressBook;
-@property (strong, nonatomic) IBOutlet ADBannerView *adBannerView;
+//@property (strong, nonatomic) IBOutlet ADBannerView *adBannerView;
 
+@property (strong, nonatomic) IBOutlet UIImageView *attachImageView;
+@property (nonatomic, retain) MPAdView *adView;
 
+@property (strong, nonatomic) IBOutlet UIImage *attachImage;
+//@property (strong, nonatomic) IBOutlet UIImage *previewImage;
+
+//for the linkdin request
+@property NSMutableData *responseData;
+
+@property (strong, nonatomic) LIALinkedInHttpClient *_client;
+
+@property (strong, nonatomic) PCPopupViewController  *popupView;
 
 -(IBAction)loadContactsList:(id)sender;
 - (IBAction)showSettings:(id)sender;
@@ -49,11 +76,16 @@ void addressBookChanged(ABAddressBookRef reference,
 -(void)setupAddressBook;
 
 @property (strong, nonatomic) IBOutlet UITextField *subject;
+
+//attach image
 @property (strong, nonatomic) UIImage *image;
+@property (strong, nonatomic) NSString *imageName;
+
+
 @property (strong, nonatomic) IBOutlet UIPlaceHolderTextView *body;
 @property (strong, nonatomic) IBOutlet UIImageView *lockImage;
 
-//@property (strong, nonatomic) UIImage *imageLock;
+//@property (strong, nonatomic) UIImage *attachImage;
 //@property (strong, nonatomic) UIImage *imageUnlock;
 
 @property (strong, nonatomic) IBOutlet UILabel *labelSaveArchive;
@@ -67,14 +99,18 @@ void addressBookChanged(ABAddressBookRef reference,
 
 
 @property (strong,nonatomic) NSMutableArray *selectedRecipientsList;
+//to open flappy
+@property SKStoreProductViewController *storeController;
 
 @property BOOL emailSentOK;
 @property BOOL smsSentOK;
-
+@property BOOL showAds;
 @property BOOL facebookSentOK;
 @property BOOL twitterSentOK;
 @property BOOL sendToFacebook;
 @property BOOL sendToTwitter;
+@property BOOL sendToLinkedin;
+@property BOOL timeToShowPromoPopup;
 @property BOOL saveMessage;
 
 

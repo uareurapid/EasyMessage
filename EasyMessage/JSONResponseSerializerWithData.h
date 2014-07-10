@@ -6,8 +6,11 @@
 //  Copyright (c) 2014 Paulo Cristo. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "AFURLResponseSerialization.h"
 
-@interface JSONResponseSerializerWithData : NSObject
+/// NSError userInfo key that will contain response data
+static NSString * const JSONResponseSerializerWithDataKey = @"JSONResponseSerializerWithDataKey";
+
+@interface JSONResponseSerializerWithData : AFJSONResponseSerializer
 
 @end

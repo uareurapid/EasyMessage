@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface PCPopupViewController : UIViewController
+@property (strong, nonatomic) IBOutlet UIImageView *imageView;
+- (IBAction)closeClicked:(id)sender;
+
 
 @end

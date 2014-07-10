@@ -28,8 +28,9 @@
 
 #define OPTION_INCLUDE_SOCIAL_SERVICES_ID       3
 
-#define OPTION_SENDTO_FACEBOOK_ONLY_ID      0
+#define OPTION_SENDTO_FACEBOOK_ONLY_ID     0
 #define OPTION_SENDTO_TWITTER_ONLY_ID      1
+#define OPTION_SENDTO_LINKEDINR_ONLY_ID    2
 
 #define OPTION_PREF_SERVICE_ALL    @"Use both services"
 #define OPTION_PREF_SERVICE_EMAIL  @"Email service"
@@ -68,6 +69,7 @@
 
 @property BOOL isFacebookAvailable;
 @property BOOL isTwitterAvailable;
+@property BOOL isLinkedinAvailable;
 
 @property (strong,nonatomic) SocialNetworksViewController *socialOptionsController;
 -(void) resetSocialNetworks;

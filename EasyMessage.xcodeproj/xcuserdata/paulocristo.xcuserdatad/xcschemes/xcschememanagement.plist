@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>EasyMessage copy.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 		<key>EasyMessage.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -13,6 +18,11 @@
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>722415371771148800989C3B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>72BCE4D018E1DBB800514A96</key>
 		<dict>
 			<key>primary</key>
 			<true/>

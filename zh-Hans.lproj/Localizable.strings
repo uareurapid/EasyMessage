@@ -21,6 +21,7 @@
 "option_send_sms_only" = "仅发送短信";
 "option_send_facebook_only" = "发布到Facebook";
 "option_send_twitter_only" = "发布到Twitter";
+"option_send_twitter_only" = "发布到Linkedin";
 "option_send_include_social_network" = "包括社交网络......";
 "footer_select_service" = "选择服务发送消息";
 "header_preferred_service" = "首选服务";
@@ -54,6 +55,8 @@
 "twitter_post_ok" = "发布到Twitter成功";
 "facebook_post_canceled" = "发布到Facebook取消";
 "twitter_post_canceled" = "发布到Twitter取消";
+"linkedin_post_ok" = "发布到LinkedIn成功";
+"linkedin_post_canceled" = "发布到LinkedIn取消";
 "no_recipients_only_social" = "你没有选择任何收件人。该消息将被邮寄到社交网络";
 "done_button" = "完成";
 "archive_message" = "保存在归档？";
@@ -88,3 +91,6 @@
 "clear" = "清洗";
 "delete" = "删除";
 "deleted" = "删除！";
+"added" = "更多的";
+"removed" = "移除";
+"share" = "分享";

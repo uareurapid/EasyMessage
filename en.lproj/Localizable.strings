@@ -24,6 +24,7 @@
 "option_send_sms_only" = "Send SMS only";
 "option_send_facebook_only" = "Post to Facebook";
 "option_send_twitter_only" = "Post to Twitter";
+"option_send_linkedin_only" = "Post to Linkedin";
 "option_send_include_social_network" = "Include social networks...";
 "footer_select_service" = "Select the service(s) to send the message";
 "header_preferred_service" = "Preferred Service";
@@ -60,6 +61,7 @@
 "twitter_post_ok" = "Post to Twitter Successful";
 "facebook_post_canceled" = "Post to Facebook canceled";
 "twitter_post_canceled" = "Post to Twitter canceled";
+"linkedin_post_ok" = "Post to Linkedin Successful";
 "linkedin_post_canceled" = "Post to Linkedin canceled";
 "no_recipients_only_social" = "You don´t have any recipients selected. The message will be post to social networks only";
 "done_button" = "Done";
@@ -95,5 +97,8 @@
 "clear" = "Clear";
 "delete" = "Delete";
 "deleted" = "Deleted!";
+"added" = "Added";
+"removed" = "Removed";
+"share" = "Share";
 
 

@@ -14,7 +14,7 @@
 
 @implementation SocialNetworksViewController
 
-@synthesize sendOptions,selectedServiceOptions,previousController,isTwitterAvailable,isFacebookAvailable;
+@synthesize sendOptions,selectedServiceOptions,previousController,isTwitterAvailable,isFacebookAvailable,isLinkedinAvailable;
 @synthesize initiallySelectedNumOfSocialNetworks;
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -33,6 +33,7 @@
         previousController = previous;
         isFacebookAvailable = [services containsObject:OPTION_SENDTO_FACEBOOK_ONLY];
         isTwitterAvailable = [services containsObject:OPTION_SENDTO_TWITTER_ONLY];
+        isLinkedinAvailable = [services containsObject:OPTION_SENDTO_LINKEDIN_ONLY];
         
         UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"done_button",@"done") 
                                                                        style:UIBarButtonItemStyleDone target:self action:@selector(goBackAfterSelection:)];
@@ -144,15 +145,23 @@
          cell.textLabel.text = NSLocalizedString(@"option_send_twitter_only",@"send only to twitter");
          cell.imageView.image = [UIImage imageNamed:@"twitter"];
      }
+     else if(!isTwitterAvailable && !isFacebookAvailable && isLinkedinAvailable) {
+         cell.textLabel.text = NSLocalizedString(@"option_send_linkedin_only",@"send only to linkedin");
+         cell.imageView.image = [UIImage imageNamed:@"linkedin"];
+     }
      else {
     //both available
          if(rowIndex==0) {
             cell.textLabel.text = NSLocalizedString(@"option_send_facebook_only",@"send only to facebook");
             cell.imageView.image = [UIImage imageNamed:@"facebook"];
          }
-         else {
+         else if(rowIndex==1) {
             cell.textLabel.text = NSLocalizedString(@"option_send_twitter_only",@"send only to twitter");
             cell.imageView.image = [UIImage imageNamed:@"twitter"];
+         }
+         else {
+             cell.textLabel.text = NSLocalizedString(@"option_send_linkedin_only",@"send only to linkedin");
+             cell.imageView.image = [UIImage imageNamed:@"linkedin"];
          }
      }
     return cell;

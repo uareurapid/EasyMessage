@@ -21,7 +21,7 @@
 @synthesize socialOptionsController;
 @synthesize showToast;
 @synthesize initiallySelectedPreferredService,initiallySelectedSendOption;
-@synthesize isFacebookAvailable,isTwitterAvailable;
+@synthesize isFacebookAvailable,isTwitterAvailable,isLinkedinAvailable;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -91,8 +91,10 @@
         if(isTwitterAvailable ) {
             [services addObject:OPTION_SENDTO_TWITTER_ONLY];
         }
+        if(isLinkedinAvailable) {
+           [services addObject:OPTION_SENDTO_LINKEDIN_ONLY];
+        }
         
-        [services addObject:OPTION_SENDTO_LINKEDIN_ONLY];
     }
     
     
@@ -108,6 +110,8 @@
 //check if the facebook and twitter services are available/configured
 //and add/remove them accordingly
 -(void) checkSocialServicesAvailability {
+    
+    isLinkedinAvailable = true;
     //facebook
     if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
         isFacebookAvailable=YES;
@@ -125,14 +129,14 @@
         isTwitterAvailable = NO;
     }
     
-    if(isTwitterAvailable || isFacebookAvailable) {
+    if(isTwitterAvailable || isFacebookAvailable || isLinkedinAvailable) {
         if(![sendOptions containsObject:OPTION_INCLUDE_SOCIAL_SERVICES]) {
         //add it
            [sendOptions addObject:OPTION_INCLUDE_SOCIAL_SERVICES]; 
         }
         
     }
-    else if(!isTwitterAvailable && !isFacebookAvailable && [sendOptions containsObject:OPTION_INCLUDE_SOCIAL_SERVICES]) {
+    else if(!isTwitterAvailable &&!isLinkedinAvailable && !isFacebookAvailable && [sendOptions containsObject:OPTION_INCLUDE_SOCIAL_SERVICES]) {
         //remove it
         [sendOptions removeObject:OPTION_INCLUDE_SOCIAL_SERVICES];
     }

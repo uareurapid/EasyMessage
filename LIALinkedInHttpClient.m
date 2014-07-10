@@ -23,9 +23,7 @@
 #import "LIALinkedInAuthorizationViewController.h"
 #import "NSString+LIAEncode.h"
 
-#define LINKEDIN_TOKEN_KEY          @"linkedin_token"
-#define LINKEDIN_EXPIRATION_KEY     @"linkedin_expiration"
-#define LINKEDIN_CREATION_KEY       @"linkedin_token_created_at"
+
 
 @interface LIALinkedInHttpClient ()
 @property(nonatomic, strong) LIALinkedInApplication *application;

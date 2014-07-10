@@ -136,8 +136,22 @@ BOOL handlingRedirectURL;
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    if (!handlingRedirectURL)
-        self.failureCallback(error);
+    
+    // 102 == WebKitErrorFrameLoadInterruptedByPolicyChange
+    if (!([error.domain isEqualToString:@"WebKitErrorDomain"] && error.code == 102))
+    {
+        if (!(([error.domain isEqualToString:@"NSURLErrorDomain"] && error.code == -999) ||
+              ([error.domain isEqualToString:@"WebKitErrorDomain"] && error.code == 102)))
+        {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }
+    }
+    else {
+        if (!handlingRedirectURL)
+            self.failureCallback(error);
+    }
+    
+    
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
@@ -158,5 +172,75 @@ BOOL handlingRedirectURL;
 		[webView stringByEvaluatingJavaScriptFromString: js];
 	}
 }
+
+/**
+ - (void)viewDidLoad
+ {
+ [super viewDidLoad];
+ [self.myWebView setDelegate:self];
+ self.indicator = [[CustomActivityViewer alloc] initWithView:self.view];
+ 
+ NSString *authUrl = [NSString stringWithFormat:@"https://www.linkedin.com/uas/oauth2/authorization?response_type=code&client_id=%@&scope=%@&state=%@&redirect_uri=%@" ,
+ API_KEY ,
+ @"r_fullprofile rw_nus r_emailaddress r_network w_messages",
+ SCOPE_CODE
+ REDIRECT_URI
+ ];
+ authUrl = [authUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+ [self.myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:authUrl]]];
+ }
+ 
+ -(void)webViewDidStartLoad:(UIWebView *)webView
+ {
+ [self.indicator startAnimating];
+ }
+ 
+ - (void)webViewDidFinishLoad:(UIWebView *)webView
+ {
+ [self.indicator stopAnimating];
+ }
+ - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+ {
+ [self.indicator stopAnimating];
+ }
+ 
+ - (BOOL) webView: (UIWebView *) webView shouldStartLoadWithRequest: (NSURLRequest *) request navigationType: (UIWebViewNavigationType) navigationType
+ {
+ NSURL *url = request.URL;
+ NSLog(@"%@", url.absoluteString);
+ 
+ if ( [url.host isEqualToString:HOST])
+ {
+ URLParser *parser = [[URLParser alloc] initWithURLString:url.absoluteString];
+ NSString *code = [parser valueForVariable:@"code"];
+ 
+ if (code != nil)
+ {
+ NSString *authUrl = [NSString stringWithFormat:@"https://www.linkedin.com/uas/oauth2/accessToken?grant_type=authorization_code&code=%@&redirect_uri=%@&client_id=%@&client_secret=%@",
+ code,
+ REDIRECT_URI_OAUTH,
+ API_KEY,
+ SECRET_KEY];
+ 
+ NSLog(@"%@" , authUrl);
+ authUrl = [authUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+ 
+ [Utilities responseFromURL:[NSURL URLWithString:authUrl] completionBlock:^(NSString *response, NSError *err)
+ {
+ if (err != nil)
+ {
+ [Utilities errorDisplay];
+ }
+ else
+ {
+ NSDictionary *results = [response JSONValue];
+ [defaults setObject:[results objectForKey:@"access_token"] forKey:@"access_token"];
+ }
+ }];
+ }
+ }
+ return YES;
+ }
+ */
 
 @end

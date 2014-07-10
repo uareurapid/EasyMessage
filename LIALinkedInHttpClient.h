@@ -20,7 +20,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <AFNetworking/AFHTTPRequestOperationManager.h>
+#import "AFNetworking/AFHTTPRequestOperationManager.h"
+#define LINKEDIN_TOKEN_KEY          @"linkedin_token"
+#define LINKEDIN_EXPIRATION_KEY     @"linkedin_expiration"
+#define LINKEDIN_CREATION_KEY       @"linkedin_token_created_at"
 
 @class LIALinkedInApplication;
 

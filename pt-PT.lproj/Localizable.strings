@@ -23,6 +23,7 @@
 "option_send_sms_only" = "Enviar apenas SMS";
 "option_send_facebook_only" = "Enviar para o Facebook";
 "option_send_twitter_only" = "Enviar para o Twitter";
+"option_send_linkedin_only" = "Enviar para o Linkedin";
 "option_send_include_social_network" = "Incluir redes sociais...";
 "footer_select_service" = "Seleccione o(s) serviço(s) a usar para enviar a mensagem";
 "header_preferred_service" = "Serviço Preferencial";
@@ -59,6 +60,8 @@
 "twitter_post_ok" = "Mensagem enviada para o Twitter";
 "facebook_post_canceled" = "Envio para o Facebook cancelado";
 "twitter_post_canceled" = "Envio para o Twitter cancelado";
+"linkedin_post_ok" = "Mensagem enviada para o Linkedin";
+"linkedin_post_canceled" = "Envio para o Linkedin cancelado";
 "no_recipients_only_social" = "Não há destinatários seleccionados. A mensagem será enviada apenas para as redes sociais";
 "done_button" = "Feito";
 "archive_message" = "Guardar no arquivo?";
@@ -93,3 +96,6 @@
 "clear" = "Limpar";
 "delete" = "Eliminar";
 "deleted" = "Eliminado!";
+"added" = "Adicionado";
+"removed" = "Eliminado";
+"share" = "Partilhar";

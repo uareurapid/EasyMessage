@@ -20,6 +20,7 @@
 @property (strong,nonatomic) UIViewController *previousController;
 @property BOOL isFacebookAvailable;
 @property BOOL isTwitterAvailable;
+@property BOOL isLinkedinAvailable;
 @property (assign,nonatomic) NSInteger initiallySelectedNumOfSocialNetworks;
 //@property (assign,nonatomic) NSInteger numSelectedSocialNetworks;
 
