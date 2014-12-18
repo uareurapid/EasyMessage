@@ -53,12 +53,12 @@
     UINavigationController *customMessagesControllerNav = [[UINavigationController alloc] init];
     [customMessagesControllerNav setViewControllers: [[NSArray alloc]  initWithObjects:self.customMessagesController, nil]];
     
-    UINavigationController *inAppPurchasesControllerNav = [[UINavigationController alloc] init];
-    [inAppPurchasesControllerNav setViewControllers: [[NSArray alloc]  initWithObjects:self.inAppPurchasesController, nil]];
+   // UINavigationController *inAppPurchasesControllerNav = [[UINavigationController alloc] init];
+   // [inAppPurchasesControllerNav setViewControllers: [[NSArray alloc]  initWithObjects:self.inAppPurchasesController, nil]];
     
     
     UITabBarController *tabController = [[UITabBarController alloc] init];
-    [tabController setViewControllers: [NSArray arrayWithObjects:easyMessageController,navControllerRecipients,navControllerSettings,customMessagesControllerNav, inAppPurchasesControllerNav, nil] ];
+    [tabController setViewControllers: [NSArray arrayWithObjects:easyMessageController,navControllerRecipients,navControllerSettings,customMessagesControllerNav, /*inAppPurchasesControllerNav*/ nil] ];
    
     //[tabController setSelectedIndex:0];
     

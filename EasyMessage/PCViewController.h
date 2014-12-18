@@ -14,7 +14,6 @@
 #import "EasyMessageIAPHelper.h"
 #import "iToast.h"
 #import <iAd/iAd.h>
-#import "MPAdView.h"
 #import <AddressBook/AddressBook.h>
 #import "AFHTTPRequestOperation.h"
 #import "LIALinkedInHttpClient.h"
@@ -35,7 +34,7 @@
 
 
 @interface PCViewController : UIViewController <MFMailComposeViewControllerDelegate,MFMessageComposeViewControllerDelegate,UIImagePickerControllerDelegate,UITextViewDelegate,
-UITextFieldDelegate, NSURLConnectionDelegate,SKStoreProductViewControllerDelegate,MPAdViewDelegate>
+UITextFieldDelegate, NSURLConnectionDelegate,SKStoreProductViewControllerDelegate>
 - (IBAction)sendMessage:(id)sender;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 - (IBAction)switchSaveMessageValueChanged:(id)sender;
@@ -50,7 +49,6 @@ UITextFieldDelegate, NSURLConnectionDelegate,SKStoreProductViewControllerDelegat
 //@property (strong, nonatomic) IBOutlet ADBannerView *adBannerView;
 
 @property (strong, nonatomic) IBOutlet UIImageView *attachImageView;
-@property (nonatomic, retain) MPAdView *adView;
 
 @property (strong, nonatomic) IBOutlet UIImage *attachImage;
 //@property (strong, nonatomic) IBOutlet UIImage *previewImage;

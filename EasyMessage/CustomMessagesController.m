@@ -261,7 +261,7 @@
         
         //paranoid check
         cell.textLabel.text = [messagesList objectAtIndex:row];
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%d",row];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%ld",(long)row];
         
         if(row == selectedMessageIndex) {
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
@@ -318,7 +318,8 @@
 - (NSString *) tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     if(section==0 && selectedMessageIndex!=-1) {
         
-        return [NSString stringWithFormat: @"%@ %d",NSLocalizedString(@"selected_message",@"Selected message"),selectedMessageIndex];
+        return [NSString stringWithFormat: @"%@ '%@'",NSLocalizedString(@"selected_message",@"Selected message"),
+                [messagesList objectAtIndex:selectedMessageIndex]];
     }
     return @"";
 }

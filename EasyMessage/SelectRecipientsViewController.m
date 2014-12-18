@@ -754,16 +754,28 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
     if(buttonIndex==1) { //0 - cancel, 1 - save
         NSString *groupName = [alertView textFieldAtIndex:0].text;
         
-        if([self checkIfGroupExists:groupName]==NO) {
+        if(groupName.length==0) {
             
-            
-            [self saveGroup: groupName];
+            UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"invalid_name",@"invalid_name") message:NSLocalizedString(@"invalid_name",@"invalid_name") delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
             
         }
         else {
-            UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"invalid_name",@"invalid_name") message:NSLocalizedString(@"group_already_exists",@"group_already_exists") delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            [alert show];
+            if([self checkIfGroupExists:groupName]==NO) {
+                
+                //name OK, save it!
+                [self saveGroup: groupName];
+                
+            }
+            else {
+                //group name already exists
+                UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"invalid_name",@"invalid_name") message:NSLocalizedString(@"group_already_exists",@"group_already_exists") delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                [alert show];
+            }
         }
+        
+        
+        
     }
     
 }

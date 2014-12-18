@@ -42,7 +42,7 @@
 @synthesize imageName;
 @synthesize storeController;
 @synthesize popupView;
-@synthesize adView,showAds;
+@synthesize showAds;
 @synthesize  timeToShowPromoPopup;
 @synthesize attachImageView;
 
@@ -96,15 +96,16 @@
     
     attachImage = [UIImage imageNamed:@"attach"];
     
-    showAds = true;
+    showAds = false;
     //shows / hides the banner, every 30 seconds interval
-    [NSTimer scheduledTimerWithTimeInterval: 30.0 target: self
-                                                      selector: @selector(callBannerCheck:) userInfo: nil repeats: YES];
+    //[NSTimer scheduledTimerWithTimeInterval: 30.0 target: self
+    //                                                  selector: @selector(callBannerCheck:) userInfo: nil repeats: YES];
     
     self._client = [self client];
     
     
     //check popup times counter
+    /**
     NSInteger times;
     if (![[NSUserDefaults standardUserDefaults] valueForKey:PROMO_SHOW_COUNTER]) {
         times = 0;
@@ -132,16 +133,16 @@
   
     [[NSUserDefaults standardUserDefaults] setInteger:times forKey:PROMO_SHOW_COUNTER];
     
-    
+    */
     //to add attachments
     [self setupAttachViewTouch ];
     
     //the ads stuff
-    BOOL purchasedAdsFree = [[EasyMessageIAPHelper sharedInstance] productPurchased:PRODUCT_ADS_FREE];
-    showAds = !purchasedAdsFree;
-    if(showAds) {
-        [self createAdBannerView];
-    }
+    //BOOL purchasedAdsFree = [[EasyMessageIAPHelper sharedInstance] productPurchased:PRODUCT_ADS_FREE];
+    showAds = NO;//!purchasedAdsFree;
+    //if(showAds) {
+    //    [self createAdBannerView];
+    //}
     
     [super viewDidLoad];
     
@@ -204,6 +205,7 @@
 
 
 //update at a given interval
+/*
 -(void) updateBannerView {
     
     if(self.showAds==false){
@@ -213,9 +215,10 @@
     else {
         [self.adView setHidden:!self.adView.isHidden];
     }
-}
+}*/
 
 //called every 30 seconds
+/*
 -(void) callBannerCheck:(NSTimer*) t
 {
  
@@ -224,7 +227,7 @@
         [self updateBannerView];
         
     }
-}
+}*/
 
 
 
@@ -282,15 +285,15 @@
     
     [self updateAttachButton];
     
-    if(timeToShowPromoPopup ) {
-        [self setupPromoViewTouch];
+   // if(timeToShowPromoPopup ) {
+   //     [self setupPromoViewTouch];
         
-        NSTimer *myTimer = [NSTimer scheduledTimerWithTimeInterval:5.0
-                                                            target:self
-                                                          selector:@selector(showPopupView:)
-                                                          userInfo:nil
-                                                           repeats:NO];
-    }
+   //     NSTimer *myTimer = [NSTimer scheduledTimerWithTimeInterval:5.0
+     //                                                       target:self
+     //                                                     selector:@selector(showPopupView:)
+     //                                                   userInfo:nil
+     //                                                      repeats:NO];
+    //}
 }
 
 //clear stuff
@@ -641,7 +644,7 @@
     
     CFArrayRef groups = ABAddressBookCopyArrayOfAllGroups(addressBook);
     CFIndex numGroups = CFArrayGetCount(groups);
-    NSLog(@"Num groups is %d",numGroups);
+    NSLog(@"Num groups is %ld",numGroups);
     for(CFIndex idx=0; idx<numGroups; ++idx) {
         
         ABRecordRef groupItem = CFArrayGetValueAtIndex(groups, idx);
@@ -2070,7 +2073,7 @@ void addressBookChanged(ABAddressBookRef reference,
 //don´t think this is really necessary
 - (void)dealloc {
     // ... your other -dealloc code ...
-    self.adView = nil;
+    //self.adView = nil;
 }
 
 //easymessage ADMOP
@@ -2158,18 +2161,19 @@ void addressBookChanged(ABAddressBookRef reference,
 // iAd's portrait banner size is 320x50, whereas AdMob's banner size is 320x48.
 //In order to resize and position our adView accurately every time a new ad is retrieved,
 //we can implement the -adViewDidLoadAd: delegate callback in our view controller
-
+/*
 - (void)adViewDidLoadAd:(MPAdView *)view
 {
     CGSize size = [view adContentViewSize];
     CGFloat centeredX = (self.view.bounds.size.width - size.width) / 2;
     CGFloat bottomAlignedY = self.view.bounds.size.height - (2 * size.height);
     view.frame = CGRectMake(centeredX, bottomAlignedY, size.width, size.height);
-}
+}*/
 
 /**
  *Create the banner view
  */
+/*
 - (void) createAdBannerView {
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
@@ -2196,15 +2200,15 @@ void addressBookChanged(ABAddressBookRef reference,
     
 
 }
-
+*/
 #pragma mark - ADBannerViewDelegate
 
-
+/*
 - (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave {
     //user clicked on the banner
     return YES;
 }
 
 - (void)bannerViewActionDidFinish:(ADBannerView *)banner {
-}
+}*/
 @end

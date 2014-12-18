@@ -339,6 +339,7 @@
         }
         else if(row==2) {
             cell.imageView.image = [UIImage imageNamed:@"Sms-And-Mms-48"];
+            cell.userInteractionEnabled = [self deviceSupportSMS];
             //Author: CrazEriC, http://crazeric.deviantart.com/
         //License: CC Attribution
         }
@@ -371,15 +372,27 @@
         }
         else if(row==1) {
             cell.imageView.image = [UIImage imageNamed:@"Sms-And-Mms-48"];
+            cell.userInteractionEnabled = [self deviceSupportSMS];
         }
         else {
             cell.imageView.image = [UIImage imageNamed:@"emblem_package"];
+            cell.userInteractionEnabled = [self deviceSupportSMS];
         }
         
     }
  
     
     return cell;
+}
+
+//check if we have SMS support
+-(BOOL) deviceSupportSMS {
+    
+    if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"tel:+11111"]]) {
+        return YES;
+    }
+    return NO;
+        // device has phone capabilities
 }
 
 -(NSString *) labelForOptionIndex: (NSInteger) rowIndex atSection: (NSInteger) section {
