@@ -97,3 +97,7 @@
 "added" = "وأضاف";
 "removed" = "منزوع";
 "share" = "شارك";
+"new_contact" = "New contact";
+"contact_name" = "Name";
+//"contact_phone" = "Phone"
+"contact_email" = "Email";

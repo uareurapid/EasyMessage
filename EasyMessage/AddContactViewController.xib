@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddContactViewController">
+            <connections>
+                <outlet property="lblEmail" destination="fjI-5z-tFI" id="Rrg-0W-Rdp"/>
+                <outlet property="lblName" destination="ecq-Za-jVh" id="4tU-lN-faQ"/>
+                <outlet property="lblPhone" destination="sUP-3h-XWJ" id="WYT-u2-KUP"/>
+                <outlet property="view" destination="iN0-l3-epB" id="zg1-BR-hCM"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uSU-qx-dGM">
+                    <rect key="frame" x="85" y="84" width="70" height="21"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ecq-Za-jVh">
+                    <rect key="frame" x="223" y="75" width="184" height="30"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Email:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NWB-Nu-Ilm">
+                    <rect key="frame" x="85" y="143" width="70" height="21"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fjI-5z-tFI">
+                    <rect key="frame" x="223" y="140" width="184" height="30"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Phone:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tFx-sd-Tb9">
+                    <rect key="frame" x="85" y="212" width="70" height="21"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sUP-3h-XWJ">
+                    <rect key="frame" x="223" y="203" width="184" height="30"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AsI-GL-Vfk">
+                    <rect key="frame" x="310" y="270" width="97" height="30"/>
+                    <animations/>
+                    <color key="backgroundColor" red="0.37357329080000001" green="0.63550729920000004" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <state key="normal" title="Add Contact">
+                        <color key="titleColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="addContactClicked:" destination="-1" eventType="touchUpInside" id="DGy-qh-JZj"/>
+                    </connections>
+                </button>
+            </subviews>
+            <animations/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="tFx-sd-Tb9" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="J2D-9u-rdi"/>
+                <constraint firstItem="fjI-5z-tFI" firstAttribute="leading" secondItem="NWB-Nu-Ilm" secondAttribute="trailing" constant="20" id="Niu-YX-y62"/>
+                <constraint firstItem="sUP-3h-XWJ" firstAttribute="leading" secondItem="tFx-sd-Tb9" secondAttribute="trailing" constant="20" id="O0O-Hb-SyR"/>
+                <constraint firstItem="uSU-qx-dGM" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="Q7g-jj-Jez"/>
+                <constraint firstItem="AsI-GL-Vfk" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="200" id="WTo-0A-4NA"/>
+                <constraint firstItem="ecq-Za-jVh" firstAttribute="leading" secondItem="uSU-qx-dGM" secondAttribute="trailing" constant="20" id="ZNa-1i-vtO"/>
+                <constraint firstItem="NWB-Nu-Ilm" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="g9Y-GY-WNh"/>
+            </constraints>
+        </view>
+    </objects>
+</document>

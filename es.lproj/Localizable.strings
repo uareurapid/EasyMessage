@@ -94,3 +94,7 @@
 "added" = "Adicionado";
 "removed" = "Borrado";
 "share" = "Compartir";
+"new_contact" = "Nuevo contacto";
+"contact_name" = "Nombre";
+//"contact_phone" = "Phone"
+"contact_email" = "Email";

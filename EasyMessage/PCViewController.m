@@ -47,7 +47,8 @@
 @synthesize attachImageView;
 
 @synthesize attachImage;
-
+//google plus sdk
+static NSString * const kClientId = @"122031362005-ibifir1r1aijhke7r3fe404usutpdnlq.apps.googleusercontent.com";
 
 - (void)viewDidLoad
 {
@@ -1830,7 +1831,7 @@ void addressBookChanged(ABAddressBookRef reference,
                                                                                     clientId:@"77l4jha5fww7gl"
                                                                                 clientSecret:@"tJYyGefrcnz7FAyg"
                                                                                        state:@"DCEEFWF45453sdffef424"
-                                                                               grantedAccess:@[@"r_basicprofile", @"w_messages",@"rw_nus"]];
+                                                                               grantedAccess:@[@"r_basicprofile",@"w_share"]]; //@"w_messages"
     return [LIALinkedInHttpClient clientForApplication:application presentingViewController:nil];
 }
 

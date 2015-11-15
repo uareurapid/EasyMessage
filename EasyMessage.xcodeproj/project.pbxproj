@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		720862FF17DD249C0024B662 /* 80-shopping-cart.png in Resources */ = {isa = PBXBuildFile; fileRef = 720862FE17DD249C0024B662 /* 80-shopping-cart.png */; };
 		72137A8F17A7161300C90511 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72137A8E17A7161300C90511 /* Social.framework */; };
+		721512F21BEE84AA00F003D4 /* EasyMessage-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 721512F11BEE84AA00F003D4 /* EasyMessage-Info.plist */; };
 		721A4FE118E3963A00B07B6C /* attach.png in Resources */ = {isa = PBXBuildFile; fileRef = 721A4FE018E3963A00B07B6C /* attach.png */; };
 		7224153C1771148800989C3B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7224153B1771148800989C3B /* UIKit.framework */; };
 		7224153E1771148800989C3B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7224153D1771148800989C3B /* Foundation.framework */; };
@@ -88,6 +89,8 @@
 		72A2C27A177B99F2006FF12F /* email.png in Resources */ = {isa = PBXBuildFile; fileRef = 72A2C279177B99F2006FF12F /* email.png */; };
 		72A2C27C177B9AE9006FF12F /* gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 72A2C27B177B9AE9006FF12F /* gear.png */; };
 		72A2C27E177B9F6D006FF12F /* phone-book.png in Resources */ = {isa = PBXBuildFile; fileRef = 72A2C27D177B9F6D006FF12F /* phone-book.png */; };
+		72AA60F21BF7FFF4006183D3 /* AddContactViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 72AA60F11BF7FFF4006183D3 /* AddContactViewController.xib */; };
+		72AA60F51BF80124006183D3 /* AddContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 72AA60F41BF80124006183D3 /* AddContactViewController.m */; };
 		72AC6C6418E4762C0074DBCF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72AC6C6318E4762C0074DBCF /* AudioToolbox.framework */; };
 		72AC6C6618E476390074DBCF /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72AC6C6518E476390074DBCF /* AVFoundation.framework */; };
 		72AC6C6818E4765E0074DBCF /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72AC6C6718E4765E0074DBCF /* CoreLocation.framework */; };
@@ -106,10 +109,6 @@
 		72B843B917A8764E00067A73 /* Packed-48.png in Resources */ = {isa = PBXBuildFile; fileRef = 72B843B817A8764E00067A73 /* Packed-48.png */; };
 		72B843BB17A8776F00067A73 /* emblem_package.png in Resources */ = {isa = PBXBuildFile; fileRef = 72B843BA17A8776F00067A73 /* emblem_package.png */; };
 		72B843BF17A87DB300067A73 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 72B843BE17A87DB300067A73 /* Default@2x.png */; };
-		72BCE54A18E20C1C00514A96 /* LIALinkedInApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 72BCE54318E20C1C00514A96 /* LIALinkedInApplication.m */; };
-		72BCE54B18E20C1C00514A96 /* LIALinkedInAuthorizationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 72BCE54518E20C1C00514A96 /* LIALinkedInAuthorizationViewController.m */; };
-		72BCE54C18E20C1C00514A96 /* LIALinkedInHttpClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 72BCE54718E20C1C00514A96 /* LIALinkedInHttpClient.m */; };
-		72BCE54D18E20C1C00514A96 /* NSString+LIAEncode.m in Sources */ = {isa = PBXBuildFile; fileRef = 72BCE54918E20C1C00514A96 /* NSString+LIAEncode.m */; };
 		72BCE56218E20E9B00514A96 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 72BCE55018E20E9B00514A96 /* AFHTTPRequestOperation.m */; };
 		72BCE56318E20E9B00514A96 /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 72BCE55218E20E9B00514A96 /* AFHTTPRequestOperationManager.m */; };
 		72BCE56418E20E9B00514A96 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 72BCE55418E20E9B00514A96 /* AFHTTPSessionManager.m */; };
@@ -124,6 +123,15 @@
 		72C46F7318E5E60F0084440A /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72AC6C7518E47F760074DBCF /* EventKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		72C46F7418E5E60F0084440A /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72AC6C7618E47F760074DBCF /* EventKitUI.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		72CA9EFC17847B8F00D8D016 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 72CA9EFE17847B8F00D8D016 /* Localizable.strings */; };
+		72D84D311BF1108A00D6B77C /* LIALinkedInApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 72D84D2A1BF1108A00D6B77C /* LIALinkedInApplication.m */; };
+		72D84D321BF1108A00D6B77C /* LIALinkedInAuthorizationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 72D84D2C1BF1108A00D6B77C /* LIALinkedInAuthorizationViewController.m */; };
+		72D84D331BF1108A00D6B77C /* LIALinkedInHttpClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 72D84D2E1BF1108A00D6B77C /* LIALinkedInHttpClient.m */; };
+		72D84D341BF1108A00D6B77C /* NSString+LIAEncode.m in Sources */ = {isa = PBXBuildFile; fileRef = 72D84D301BF1108A00D6B77C /* NSString+LIAEncode.m */; };
+		72D84D371BF117A700D6B77C /* GoogleOpenSource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72D84D351BF117A700D6B77C /* GoogleOpenSource.framework */; };
+		72D84D381BF117A700D6B77C /* GooglePlus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72D84D361BF117A700D6B77C /* GooglePlus.framework */; };
+		72D84D3A1BF117E100D6B77C /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72D84D391BF117E100D6B77C /* AssetsLibrary.framework */; };
+		72D84D3C1BF117F900D6B77C /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72D84D3B1BF117F900D6B77C /* CoreMotion.framework */; };
+		72D84D3E1BF129E700D6B77C /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72D84D3D1BF129E700D6B77C /* CoreText.framework */; };
 		72F787FB17DCC37500424519 /* 24-gift.png in Resources */ = {isa = PBXBuildFile; fileRef = 72F787FA17DCC37500424519 /* 24-gift.png */; };
 		72F787FD17DCC38D00424519 /* 35-shopping.png in Resources */ = {isa = PBXBuildFile; fileRef = 72F787FC17DCC38D00424519 /* 35-shopping.png */; };
 		72FB67C5177B39E700D5E364 /* SocialNetworksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 72FB67C3177B39E700D5E364 /* SocialNetworksViewController.m */; };
@@ -139,6 +147,7 @@
 /* Begin PBXFileReference section */
 		720862FE17DD249C0024B662 /* 80-shopping-cart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "80-shopping-cart.png"; path = "EasyMessage/80-shopping-cart.png"; sourceTree = "<group>"; };
 		72137A8E17A7161300C90511 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		721512F11BEE84AA00F003D4 /* EasyMessage-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "EasyMessage-Info.plist"; path = "EasyMessage/EasyMessage-Info.plist"; sourceTree = "<group>"; };
 		721A4FE018E3963A00B07B6C /* attach.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = attach.png; sourceTree = "<group>"; };
 		722415381771148800989C3B /* EasyMessage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EasyMessage.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7224153B1771148800989C3B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -252,6 +261,9 @@
 		72A2C279177B99F2006FF12F /* email.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = email.png; sourceTree = "<group>"; };
 		72A2C27B177B9AE9006FF12F /* gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gear.png; sourceTree = "<group>"; };
 		72A2C27D177B9F6D006FF12F /* phone-book.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "phone-book.png"; sourceTree = "<group>"; };
+		72AA60F11BF7FFF4006183D3 /* AddContactViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AddContactViewController.xib; path = EasyMessage/AddContactViewController.xib; sourceTree = "<group>"; };
+		72AA60F31BF80124006183D3 /* AddContactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddContactViewController.h; sourceTree = "<group>"; };
+		72AA60F41BF80124006183D3 /* AddContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddContactViewController.m; sourceTree = "<group>"; };
 		72AC6C6318E4762C0074DBCF /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		72AC6C6518E476390074DBCF /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		72AC6C6718E4765E0074DBCF /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -281,14 +293,6 @@
 		72BCE53618E1DBBE00514A96 /* CustomMessagesController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CustomMessagesController.xib; path = "Resources-iPad/EasyMessage/CustomMessagesController.xib"; sourceTree = "<group>"; };
 		72BCE53718E1DBBE00514A96 /* IAPMasterViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = IAPMasterViewController.xib; path = "Resources-iPad/IAPMasterViewController.xib"; sourceTree = "<group>"; };
 		72BCE53818E1DBBE00514A96 /* GroupDetailsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = GroupDetailsViewController.xib; path = "Resources-iPad/GroupDetailsViewController.xib"; sourceTree = "<group>"; };
-		72BCE54218E20C1C00514A96 /* LIALinkedInApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LIALinkedInApplication.h; sourceTree = "<group>"; };
-		72BCE54318E20C1C00514A96 /* LIALinkedInApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LIALinkedInApplication.m; sourceTree = "<group>"; };
-		72BCE54418E20C1C00514A96 /* LIALinkedInAuthorizationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LIALinkedInAuthorizationViewController.h; sourceTree = "<group>"; };
-		72BCE54518E20C1C00514A96 /* LIALinkedInAuthorizationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LIALinkedInAuthorizationViewController.m; sourceTree = "<group>"; };
-		72BCE54618E20C1C00514A96 /* LIALinkedInHttpClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LIALinkedInHttpClient.h; sourceTree = "<group>"; };
-		72BCE54718E20C1C00514A96 /* LIALinkedInHttpClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LIALinkedInHttpClient.m; sourceTree = "<group>"; };
-		72BCE54818E20C1C00514A96 /* NSString+LIAEncode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+LIAEncode.h"; sourceTree = "<group>"; };
-		72BCE54918E20C1C00514A96 /* NSString+LIAEncode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+LIAEncode.m"; sourceTree = "<group>"; };
 		72BCE54F18E20E9B00514A96 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
 		72BCE55018E20E9B00514A96 /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
 		72BCE55118E20E9B00514A96 /* AFHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperationManager.h; sourceTree = "<group>"; };
@@ -314,6 +318,19 @@
 		72CA9EFB17847B5300D8D016 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		72CA9EFD17847B8F00D8D016 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		72CA9EFF17847BA500D8D016 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		72D84D291BF1108A00D6B77C /* LIALinkedInApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LIALinkedInApplication.h; sourceTree = "<group>"; };
+		72D84D2A1BF1108A00D6B77C /* LIALinkedInApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LIALinkedInApplication.m; sourceTree = "<group>"; };
+		72D84D2B1BF1108A00D6B77C /* LIALinkedInAuthorizationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LIALinkedInAuthorizationViewController.h; sourceTree = "<group>"; };
+		72D84D2C1BF1108A00D6B77C /* LIALinkedInAuthorizationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LIALinkedInAuthorizationViewController.m; sourceTree = "<group>"; };
+		72D84D2D1BF1108A00D6B77C /* LIALinkedInHttpClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LIALinkedInHttpClient.h; sourceTree = "<group>"; };
+		72D84D2E1BF1108A00D6B77C /* LIALinkedInHttpClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LIALinkedInHttpClient.m; sourceTree = "<group>"; };
+		72D84D2F1BF1108A00D6B77C /* NSString+LIAEncode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+LIAEncode.h"; sourceTree = "<group>"; };
+		72D84D301BF1108A00D6B77C /* NSString+LIAEncode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+LIAEncode.m"; sourceTree = "<group>"; };
+		72D84D351BF117A700D6B77C /* GoogleOpenSource.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleOpenSource.framework; sourceTree = "<group>"; };
+		72D84D361BF117A700D6B77C /* GooglePlus.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GooglePlus.framework; sourceTree = "<group>"; };
+		72D84D391BF117E100D6B77C /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		72D84D3B1BF117F900D6B77C /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		72D84D3D1BF129E700D6B77C /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		72F787FA17DCC37500424519 /* 24-gift.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "24-gift.png"; sourceTree = "<group>"; };
 		72F787FC17DCC38D00424519 /* 35-shopping.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "35-shopping.png"; sourceTree = "<group>"; };
 		72FB67C2177B39E700D5E364 /* SocialNetworksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SocialNetworksViewController.h; path = EasyMessage/SocialNetworksViewController.h; sourceTree = "<group>"; };
@@ -332,16 +349,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				72D84D3E1BF129E700D6B77C /* CoreText.framework in Frameworks */,
+				72D84D3C1BF117F900D6B77C /* CoreMotion.framework in Frameworks */,
+				72D84D3A1BF117E100D6B77C /* AssetsLibrary.framework in Frameworks */,
 				72C46F7318E5E60F0084440A /* EventKit.framework in Frameworks */,
 				72C46F7418E5E60F0084440A /* EventKitUI.framework in Frameworks */,
 				72AC6C7418E47F6F0074DBCF /* CFNetwork.framework in Frameworks */,
 				72BCE56E18E2137600514A96 /* Security.framework in Frameworks */,
 				72AC6C7218E476A90074DBCF /* Twitter.framework in Frameworks */,
+				72D84D381BF117A700D6B77C /* GooglePlus.framework in Frameworks */,
 				72AC6C7018E476960074DBCF /* QuartzCore.framework in Frameworks */,
 				72AC6C6E18E4768F0074DBCF /* PassKit.framework in Frameworks */,
 				72AC6C6C18E476820074DBCF /* MobileCoreServices.framework in Frameworks */,
 				72AC6C6A18E4766D0074DBCF /* CoreTelephony.framework in Frameworks */,
 				72AC6C6818E4765E0074DBCF /* CoreLocation.framework in Frameworks */,
+				72D84D371BF117A700D6B77C /* GoogleOpenSource.framework in Frameworks */,
 				72AC6C6618E476390074DBCF /* AVFoundation.framework in Frameworks */,
 				72AC6C6418E4762C0074DBCF /* AudioToolbox.framework in Frameworks */,
 				72BCE57118E213D300514A96 /* SystemConfiguration.framework in Frameworks */,
@@ -441,6 +463,9 @@
 		7224153A1771148800989C3B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				72D84D3D1BF129E700D6B77C /* CoreText.framework */,
+				72D84D3B1BF117F900D6B77C /* CoreMotion.framework */,
+				72D84D391BF117E100D6B77C /* AssetsLibrary.framework */,
 				72AC6C7518E47F760074DBCF /* EventKit.framework */,
 				72AC6C7618E47F760074DBCF /* EventKitUI.framework */,
 				72AC6C7118E476A90074DBCF /* Twitter.framework */,
@@ -529,6 +554,7 @@
 			isa = PBXGroup;
 			children = (
 				727906DE17DB624D0076F0FE /* IAPHelper.h */,
+				721512F11BEE84AA00F003D4 /* EasyMessage-Info.plist */,
 				727906DF17DB624D0076F0FE /* IAPHelper.m */,
 				727906E617DB65900076F0FE /* EasyMessageIAPHelper.h */,
 				727906E717DB65900076F0FE /* EasyMessageIAPHelper.m */,
@@ -544,10 +570,13 @@
 			children = (
 				72611B08177216940043E508 /* SelectRecipientsViewController.h */,
 				72611B09177216940043E508 /* SelectRecipientsViewController.m */,
+				72AA60F31BF80124006183D3 /* AddContactViewController.h */,
+				72AA60F41BF80124006183D3 /* AddContactViewController.m */,
 				72611B0A177216940043E508 /* SelectRecipientsViewController.xib */,
 				72674E7117E26722001275AB /* GroupDetailsViewController.h */,
 				72674E7217E26722001275AB /* GroupDetailsViewController.m */,
 				72674E7317E26722001275AB /* GroupDetailsViewController.xib */,
+				72AA60F11BF7FFF4006183D3 /* AddContactViewController.xib */,
 			);
 			name = Recipients;
 			sourceTree = "<group>";
@@ -555,6 +584,8 @@
 		727906E317DB62A80076F0FE /* SocialNetworks */ = {
 			isa = PBXGroup;
 			children = (
+				72D84D351BF117A700D6B77C /* GoogleOpenSource.framework */,
+				72D84D361BF117A700D6B77C /* GooglePlus.framework */,
 				72BCE54118E20BE400514A96 /* LinkedIn */,
 				72FB67C2177B39E700D5E364 /* SocialNetworksViewController.h */,
 				72FB67C3177B39E700D5E364 /* SocialNetworksViewController.m */,
@@ -601,14 +632,14 @@
 		72BCE54118E20BE400514A96 /* LinkedIn */ = {
 			isa = PBXGroup;
 			children = (
-				72BCE54218E20C1C00514A96 /* LIALinkedInApplication.h */,
-				72BCE54318E20C1C00514A96 /* LIALinkedInApplication.m */,
-				72BCE54418E20C1C00514A96 /* LIALinkedInAuthorizationViewController.h */,
-				72BCE54518E20C1C00514A96 /* LIALinkedInAuthorizationViewController.m */,
-				72BCE54618E20C1C00514A96 /* LIALinkedInHttpClient.h */,
-				72BCE54718E20C1C00514A96 /* LIALinkedInHttpClient.m */,
-				72BCE54818E20C1C00514A96 /* NSString+LIAEncode.h */,
-				72BCE54918E20C1C00514A96 /* NSString+LIAEncode.m */,
+				72D84D291BF1108A00D6B77C /* LIALinkedInApplication.h */,
+				72D84D2A1BF1108A00D6B77C /* LIALinkedInApplication.m */,
+				72D84D2B1BF1108A00D6B77C /* LIALinkedInAuthorizationViewController.h */,
+				72D84D2C1BF1108A00D6B77C /* LIALinkedInAuthorizationViewController.m */,
+				72D84D2D1BF1108A00D6B77C /* LIALinkedInHttpClient.h */,
+				72D84D2E1BF1108A00D6B77C /* LIALinkedInHttpClient.m */,
+				72D84D2F1BF1108A00D6B77C /* NSString+LIAEncode.h */,
+				72D84D301BF1108A00D6B77C /* NSString+LIAEncode.m */,
 			);
 			name = LinkedIn;
 			sourceTree = "<group>";
@@ -745,6 +776,7 @@
 				72963F6717A9793600519FDC /* About-me-icon.png in Resources */,
 				72963F6B17A9825E00519FDC /* Forward.png in Resources */,
 				7263E07017C435160065E538 /* mail-2.png in Resources */,
+				721512F21BEE84AA00F003D4 /* EasyMessage-Info.plist in Resources */,
 				72682BFD17C5184400A3318F /* world.png in Resources */,
 				72682C0017C519DD00A3318F /* world3.png in Resources */,
 				72682C0117C519DD00A3318F /* world2.png in Resources */,
@@ -764,6 +796,7 @@
 				727906ED17DB677F0076F0FE /* IAPMasterViewController.xib in Resources */,
 				72F787FB17DCC37500424519 /* 24-gift.png in Resources */,
 				7285348518E341AC00826581 /* PCPopupViewController.xib in Resources */,
+				72AA60F21BF7FFF4006183D3 /* AddContactViewController.xib in Resources */,
 				72F787FD17DCC38D00424519 /* 35-shopping.png in Resources */,
 				720862FF17DD249C0024B662 /* 80-shopping-cart.png in Resources */,
 				7298EC0517DDEEEA002C30AE /* buy48.png in Resources */,
@@ -787,25 +820,26 @@
 				722415481771148800989C3B /* main.m in Sources */,
 				7224154C1771148800989C3B /* PCAppDelegate.m in Sources */,
 				722415551771148800989C3B /* PCViewController.m in Sources */,
+				72D84D331BF1108A00D6B77C /* LIALinkedInHttpClient.m in Sources */,
 				72BCE56918E20E9B00514A96 /* AFURLResponseSerialization.m in Sources */,
 				72611AFC1771E88B0043E508 /* SettingsViewController.m in Sources */,
+				72D84D321BF1108A00D6B77C /* LIALinkedInAuthorizationViewController.m in Sources */,
 				72611B0017720F740043E508 /* Contact.m in Sources */,
-				72BCE54C18E20C1C00514A96 /* LIALinkedInHttpClient.m in Sources */,
 				72611B04177213660043E508 /* EsyMessageViewController.m in Sources */,
 				72BCE56718E20E9B00514A96 /* AFURLConnectionOperation.m in Sources */,
 				72BCE56318E20E9B00514A96 /* AFHTTPRequestOperationManager.m in Sources */,
 				72611B0B177216940043E508 /* SelectRecipientsViewController.m in Sources */,
-				72BCE54B18E20C1C00514A96 /* LIALinkedInAuthorizationViewController.m in Sources */,
+				72AA60F51BF80124006183D3 /* AddContactViewController.m in Sources */,
 				7269D4441774D6B500AE1662 /* UIPlaceHolderTextView.m in Sources */,
 				728F279A1776362D00A61BC8 /* iToast.m in Sources */,
 				72FB67C5177B39E700D5E364 /* SocialNetworksViewController.m in Sources */,
 				726235F217D9358600DC0CED /* Group.m in Sources */,
+				72D84D341BF1108A00D6B77C /* NSString+LIAEncode.m in Sources */,
 				7285347C18E3247000826581 /* JSONResponseSerializerWithData.m in Sources */,
 				72BCE56A18E20E9B00514A96 /* AFURLSessionManager.m in Sources */,
 				729AAC4417DA839800CABCB0 /* CustomMessagesController.m in Sources */,
 				72BCE56618E20E9B00514A96 /* AFSecurityPolicy.m in Sources */,
 				727906E017DB624D0076F0FE /* IAPHelper.m in Sources */,
-				72BCE54D18E20C1C00514A96 /* NSString+LIAEncode.m in Sources */,
 				72BCE56518E20E9B00514A96 /* AFNetworkReachabilityManager.m in Sources */,
 				727906E817DB65900076F0FE /* EasyMessageIAPHelper.m in Sources */,
 				72BCE56418E20E9B00514A96 /* AFHTTPSessionManager.m in Sources */,
@@ -813,7 +847,7 @@
 				727906EC17DB677F0076F0FE /* IAPMasterViewController.m in Sources */,
 				727A765417DFDF090032EFF8 /* CoreDataModel.xcdatamodeld in Sources */,
 				727A765717DFE1100032EFF8 /* GroupDataModel.m in Sources */,
-				72BCE54A18E20C1C00514A96 /* LIALinkedInApplication.m in Sources */,
+				72D84D311BF1108A00D6B77C /* LIALinkedInApplication.m in Sources */,
 				727A765A17DFE1100032EFF8 /* ContactDataModel.m in Sources */,
 				7264F87F17E115F0000D656C /* CoreDataUtils.m in Sources */,
 				72674E7417E26722001275AB /* GroupDetailsViewController.m in Sources */,
@@ -924,12 +958,14 @@
 		7224155C1771148800989C3B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Paulo Cristo (9HCXF72293)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/MoPubSDK/AdNetworkSupport/Millennial/SDK/SpeechKit",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EasyMessage/EasyMessage-Prefix.pch";
@@ -943,7 +979,7 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "b1b0ce9e-d9c9-4926-8015-2ecc65e1e994";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -952,12 +988,14 @@
 		7224155D1771148800989C3B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Paulo Cristo (VAZ5V665BS)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Paulo Cristo (VAZ5V665BS)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/MoPubSDK/AdNetworkSupport/Millennial/SDK/SpeechKit",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EasyMessage/EasyMessage-Prefix.pch";
@@ -971,7 +1009,7 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "070da1e4-c54d-42ed-a3e5-c100e22b248c";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};

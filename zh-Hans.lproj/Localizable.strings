@@ -94,3 +94,7 @@
 "added" = "更多的";
 "removed" = "移除";
 "share" = "分享";
+"new_contact" = "New contact";
+"contact_name" = "Name";
+//"contact_phone" = "Phone"
+"contact_email" = "Email";

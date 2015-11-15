@@ -80,6 +80,10 @@
 "group_already_exists" = "That group already exists!";
 "new_group" = "New group";
 "enter_group_name" = "Enter the group name";
+"new_contact" = "New contact";
+"contact_name" = "Name";
+//"contact_phone" = "Phone"
+"contact_email" = "Email";
 "cancel" = "Cancel";
 "save" = "Save";
 "custom_msg_christmas" ="Merry Christmas!";

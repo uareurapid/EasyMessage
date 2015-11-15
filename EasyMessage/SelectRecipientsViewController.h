@@ -9,19 +9,22 @@
 #import <UIKit/UIKit.h>
 #import "Contact.h"
 #import "Group.h"
+#import "AddContactViewController.h"
 
 
 @class PCViewController;
 
 
 
-@interface SelectRecipientsViewController : UITableViewController <UISearchBarDelegate>
+@interface SelectRecipientsViewController : UITableViewController <UISearchBarDelegate,UISearchDisplayDelegate>
 
 -(id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil contacts: (NSMutableArray *) contacts;
 -(id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil contacts: (NSMutableArray *) contacts rootViewController: (PCViewController*) viewController;
 -(id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil contacts: (NSMutableArray *) contacts
    selectedOnes: (NSMutableArray *) selectedRecipients rootViewController: (PCViewController*) viewController;
 -(id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil rootViewController: (PCViewController*) viewController;
+
+@property (strong,nonatomic) AddContactViewController *addNewContactController;
 
 -(IBAction)refreshPhonebook:(id)sender;
 
@@ -37,11 +40,12 @@
 @property (strong,nonatomic) NSMutableDictionary *contactsByLastNameInitial;
 
 @property (strong,nonatomic) NSMutableArray *sortedKeys;
+@property (strong,nonatomic) NSMutableArray *searchData;
 
 @property ABRecordID groupId;
 
-//@property (strong, nonatomic) UIImage *imageLock;
-//@property (strong, nonatomic) UIImage *imageUnlock;
+@property (strong,nonatomic) UISearchBar *searchBar;
+@property (strong,nonatomic) UISearchDisplayController *searchDisplayController;
 
 
 //will hold a list of contacts per each letter

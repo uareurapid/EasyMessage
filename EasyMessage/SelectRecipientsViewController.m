@@ -38,6 +38,14 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
     return self;
 }
 
+-(void) showAddContactController {
+    if(self.addNewContactController==nil) {
+      self.addNewContactController = [[AddContactViewController alloc] initWithNibName:@"AddContactViewController" bundle:nil];
+    }
+    [self presentViewController:self.addNewContactController animated:YES completion:nil];
+}
+
+
 
 //THIS IS THE METHOD THAT IS CALLED FROM APPDELEGATE
 -(id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil rootViewController: (PCViewController*) viewController{
@@ -56,13 +64,17 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
         self.navigationItem.leftBarButtonItem = doneButton;
         
         
-        UIBarButtonItem *addToGroupButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"add_to_group",@"add_to_group")
+        //UIBarButtonItem *addToGroupButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"add_to_group",@"add_to_group")
+                                                                      //       style:UIBarButtonItemStyleDone target:self action:@selector(addGroupClicked:)];
+        //also used to create a new contact if nothing is selected
+        UIBarButtonItem *addToGroupButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"new_contact",@"new_contact")
                                                                              style:UIBarButtonItemStyleDone target:self action:@selector(addGroupClicked:)];
         
         //[addToGroupButton setCustomView:[self setupGroupButton]];
         self.navigationItem.rightBarButtonItem = addToGroupButton;
-        [addToGroupButton setEnabled:NO];
-        groupLocked = YES;
+        //[addToGroupButton setEnabled:NO];
+        [addToGroupButton setEnabled:YES];
+        groupLocked = NO;
         
  
         NSArray* toolbarItems = [NSArray arrayWithObjects:
@@ -75,6 +87,24 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
         self.navigationController.toolbarHidden = NO;
         self.tabBarItem.image = [UIImage imageNamed:@"phone-book"];
         self.title =  NSLocalizedString(@"recipients",nil);
+        
+        // Change the position according to your requirements
+        //self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 70, 320, 44)];
+        
+        self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+        /*the search bar widht must be > 1, the height must be at least 44
+         (the real size of the search bar)*/
+        
+        self.searchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
+        /*contents controller is the UITableViewController, this let you to reuse
+         the same TableViewController Delegate method used for the main table.*/
+        
+        self.searchDisplayController.delegate = self;
+        self.searchDisplayController.searchResultsDataSource = self;
+        self.searchDisplayController.searchResultsDelegate = self;
+        //set the delegate = self. Previously declared in ViewController.h
+        
+        self.tableView.tableHeaderView = self.searchBar; //this line add the searchBar
         
     }
     return self;
@@ -93,6 +123,21 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
         self.navigationItem.rightBarButtonItem = doneButton;
         self.title = @"Recipients";
       
+     
+        self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+        /*the search bar widht must be > 1, the height must be at least 44
+         (the real size of the search bar)*/
+        
+        self.searchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
+        /*contents controller is the UITableViewController, this let you to reuse
+         the same TableViewController Delegate method used for the main table.*/
+        
+        self.searchDisplayController.delegate = self;
+        self.searchDisplayController.searchResultsDataSource = self;
+        self.searchDisplayController.searchResultsDelegate = self;
+        //set the delegate = self. Previously declared in ViewController.h
+        
+        self.tableView.tableHeaderView = self.searchBar; //this line add the searchBar
         
     }
     return self;
@@ -110,8 +155,84 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
                                                                        style:UIBarButtonItemStyleDone target:self action:@selector(goBackAfterSelection:)];
         self.navigationItem.rightBarButtonItem = doneButton;
         self.title = @"Recipients";
+        
+        self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+        /*the search bar widht must be > 1, the height must be at least 44
+         (the real size of the search bar)*/
+        
+        self.searchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
+        /*contents controller is the UITableViewController, this let you to reuse
+         the same TableViewController Delegate method used for the main table.*/
+        
+        self.searchDisplayController.delegate = self;
+        self.searchDisplayController.searchResultsDataSource = self;
+        self.searchDisplayController.searchResultsDelegate = self;
+        //set the delegate = self. Previously declared in ViewController.h
+        
+        self.tableView.tableHeaderView = self.searchBar; //this line add the searchBar
+        
+        //TODO http://stackoverflow.com/questions/6947858/adding-uisearchbar-programmatically-to-uitableview
     }
+
+    
     return self;
+}
+
+#pragma mark Content Filtering
+-(void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope {
+    [self.searchData removeAllObjects];
+    /*before starting the search is necessary to remove all elements from the
+     array that will contain found items */
+    
+    //Contact *contact;
+    
+    /* in this loop I search through every element (group) (see the code on top) in
+     the "originalData" array, if the string match, the element will be added in a
+     new array called newGroup. Then, if newGroup has 1 or more elements, it will be
+     added in the "searchData" array. shortly, I recreated the structure of the
+     original array "originalData". */
+    
+    for(Contact *contact in contactsList) //take the n group (eg. group1, group2, group3)
+        //in the original data
+    {
+        //NSMutableArray *newGroup = [[NSMutableArray alloc] init];
+        NSString *name = contact.name;
+        if(name!=nil) {
+            NSLog(@"search string %@",searchText);
+            NSLog(@"contact is: %@",name);
+            NSRange range = [name rangeOfString:searchText
+                                        options:NSCaseInsensitiveSearch];
+            
+            if (range.length > 0) { //if the substring match
+                NSLog(@"name: %@ matches search string: %@",name,searchText);
+                [self.searchData addObject:contact]; //add the element
+            }
+        }
+        
+    }
+    //[self.searchDisplayController.searchResultsTableView reloadData];
+}
+
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+{
+ 
+    
+    [self filterContentForSearchText:searchString scope:
+     [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
+    // Return YES to cause the search result table view to be reloaded.
+    
+    
+    
+    
+    return YES;
+}
+
+-(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption {
+    // Tells the table data source to reload when scope bar selection changes
+    [self filterContentForSearchText:self.searchDisplayController.searchBar.text scope:
+     [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:searchOption]];
+    // Return YES to cause the search result table view to be reloaded.
+    return YES;
 }
 
 
@@ -313,7 +434,7 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
     
    // [theTable reloadData];
     if(row>-1 && section>-1) {
-        NSLog(@"will scroll to section %d and row %d",section,row);
+        NSLog(@"will scroll to section %ld and row %ld",(long)section,(long)row);
        NSIndexPath *scrollToPath = [NSIndexPath indexPathForRow:row inSection:section];
        [self.tableView scrollToRowAtIndexPath:scrollToPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
     }
@@ -348,7 +469,10 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
         [selectedContactsList removeAllObjects];
         dispatch_async(dispatch_get_main_queue(), ^{
            self.navigationItem.leftBarButtonItem.title = NSLocalizedString(@"select_all", @"seleccionar tudo");
-            [self.navigationItem.rightBarButtonItem setEnabled:NO];
+            //[self.navigationItem.rightBarButtonItem setEnabled:NO];
+            //can add a contact
+            self.navigationItem.rightBarButtonItem.title = NSLocalizedString(@"new_contact", @"new_contact");
+            self.groupLocked = true;
 
             
         });
@@ -382,6 +506,9 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
        
         dispatch_async(dispatch_get_main_queue(), ^{
             self.navigationItem.leftBarButtonItem.title = NSLocalizedString(@"unselect_all", @"remover selecção");
+            //can add them to the group
+            self.navigationItem.rightBarButtonItem.title = NSLocalizedString(@"add_to_group", @"add_to_group");
+            self.groupLocked = false;
         });
         
         
@@ -395,14 +522,22 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
     
     initialSelectedContacts = selectedContactsList.count;
     groupLocked = false;
-    //groupLocked =![[EasyMessageIAPHelper sharedInstance] productPurchased:PRODUCT_GROUP_SUPPORT];
-    //if(groupLocked) {
-    //    self.navigationItem.rightBarButtonItem.image = imageLock;
-    //}
-    //else {
-    //    self.navigationItem.rightBarButtonItem.image = imageUnlock;
-    //}
-    [self.navigationItem.rightBarButtonItem setEnabled: !groupLocked && selectedContactsList.count>1 ];
+    
+    
+    [self.navigationItem.rightBarButtonItem setEnabled:YES];
+    
+    if(selectedContactsList.count>1) {
+        //can add a new group
+        groupLocked = false;
+        [self.navigationItem.rightBarButtonItem setTitle:NSLocalizedString(@"add_to_group",@"add_to_group")];
+    }
+    else {
+        //cannot add a group only a contact
+        groupLocked = true;
+        [self.navigationItem.rightBarButtonItem setTitle:NSLocalizedString(@"new_contact",@"new_contact")];
+    }
+    
+    //[self.navigationItem.rightBarButtonItem setEnabled: !groupLocked && selectedContactsList.count>1 ];
      
 }
 
@@ -482,9 +617,16 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
     //NSMutableArray *array = contactsByLastNameInitial ob
     //int count = contactsByLastNameInitial.count;
     
-    NSString *key = [sortedKeys objectAtIndex:section];
-    NSMutableArray *array = (NSMutableArray *) [contactsByLastNameInitial objectForKey:key];
-    return array.count;
+    // Check to see whether the normal table or search results table is being displayed and return the count from the appropriate array
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        return [self.searchData count];
+    } else {
+        NSString *key = [sortedKeys objectAtIndex:section];
+        NSMutableArray *array = (NSMutableArray *) [contactsByLastNameInitial objectForKey:key];
+        return array.count;
+    }
+    
+    
 
 }
 
@@ -507,12 +649,19 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
     
     BOOL isGroup = NO;
     
-    Contact *contact = [array objectAtIndex:row];
+    
+    Contact *contact;
+    // Check to see whether the normal table or search results table is being displayed and set the Candy object from the appropriate array
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        contact = [self.searchData objectAtIndex:indexPath.row];
+    } else {
+        contact = [array objectAtIndex:row];
+    }
     
     
     if([contact isKindOfClass:Group.class]) {
         Group *thisOne = (Group *) contact;
-        cell.detailTextLabel.text = [NSString stringWithFormat: @"Group (%d members)",thisOne.contactsList.count ];
+        cell.detailTextLabel.text = [NSString stringWithFormat: @"Group (%lu members)",(unsigned long)thisOne.contactsList.count ];
         isGroup = YES;
         cell.textLabel.text = contact.name;  
     }
@@ -663,16 +812,33 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
     if(selectedContactsList.count>0) {
         dispatch_async(dispatch_get_main_queue(), ^{
             self.navigationItem.leftBarButtonItem.title = NSLocalizedString(@"unselect_all", @"remover selecção");
+            
+            if(selectedContactsList.count>1) {
+                self.groupLocked = false;
+                self.navigationItem.rightBarButtonItem.title = NSLocalizedString(@"add_to_group", @"add_to_group");
+            }
+            else {
+                //only 1 selected, cannot create a group
+                self.groupLocked = true;
+                self.navigationItem.rightBarButtonItem.title = NSLocalizedString(@"new_contact", @"new_contact");
+            }
+            
         });
     }
     else {
         dispatch_async(dispatch_get_main_queue(), ^{
             self.navigationItem.leftBarButtonItem.title = NSLocalizedString(@"select_all", @"seleccionar tudo");
             
+            self.groupLocked = true;
+            self.navigationItem.rightBarButtonItem.title = NSLocalizedString(@"new_contact", @"new_contact");
+            
         });
     }
+
+    [self.navigationItem.rightBarButtonItem setEnabled:YES];
     
-    [self.navigationItem.rightBarButtonItem setEnabled: ( (selectedContactsList.count>1) && !groupLocked ) ];
+    
+    //[self.navigationItem.rightBarButtonItem setEnabled: ( (selectedContactsList.count>1) && !groupLocked ) ];
     
 
    [self.tableView reloadData];
@@ -742,8 +908,18 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
 //show the input new group dialog
 - (IBAction)addGroupClicked:(id)sender{
     
-    UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"new_group",@"new_group") message:NSLocalizedString(@"enter_group_name",@"enter_group_name") delegate:self cancelButtonTitle:NSLocalizedString(@"cancel",@"cancel") otherButtonTitles:NSLocalizedString(@"save",@"save"),nil];
-    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    UIAlertView * alert;
+    //adding a contact
+    if(self.groupLocked) {
+        [self showAddContactController];
+    }
+    else {
+        //adding a group allowed
+        alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"new_group",@"new_group") message:NSLocalizedString(@"enter_group_name",@"enter_group_name") delegate:self cancelButtonTitle:NSLocalizedString(@"cancel",@"cancel") otherButtonTitles:NSLocalizedString(@"save",@"save"),nil];
+        alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    }
+    
+    
     [alert show];
 }
 
