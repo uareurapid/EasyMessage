@@ -10,8 +10,11 @@
 
 @interface AddContactViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UITextField *lblName;
-
+@property (weak, nonatomic) IBOutlet UITextField *lblLastName;
 @property (weak, nonatomic) IBOutlet UITextField *lblEmail;
 @property (weak, nonatomic) IBOutlet UITextField *lblPhone;
+
+//reference to recipients controller list
+@property (strong,nonatomic) NSMutableArray *contactsList;
 
 @end

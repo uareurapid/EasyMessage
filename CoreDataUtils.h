@@ -16,6 +16,7 @@
 
 + (NSMutableArray *)fetchGroupRecordsFromDatabase;
 + (NSMutableArray *)fetchMessageRecordsFromDatabase;
++ (NSMutableArray *)fetchContactModelRecordsFromDatabase;
 +(ContactDataModel *) fetchContactDataModelByName: (NSString *) message;
 +(GroupDataModel *) fetchGroupDataModelByName: (NSString *) groupName;
 +(BOOL) deleteGroupDataModelByName: (NSString *) groupName;

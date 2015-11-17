@@ -41,8 +41,11 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
 -(void) showAddContactController {
     if(self.addNewContactController==nil) {
       self.addNewContactController = [[AddContactViewController alloc] initWithNibName:@"AddContactViewController" bundle:nil];
+        self.addNewContactController.contactsList = self.contactsList;
     }
-    [self presentViewController:self.addNewContactController animated:YES completion:nil];
+    [self presentViewController:self.addNewContactController animated:YES completion:^{
+        self.reload = true;
+    }];
 }
 
 
@@ -106,6 +109,8 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
         
         self.tableView.tableHeaderView = self.searchBar; //this line add the searchBar
         
+        self.reload = false;
+        
     }
     return self;
 }
@@ -139,6 +144,8 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
         
         self.tableView.tableHeaderView = self.searchBar; //this line add the searchBar
         
+        self.reload = false;
+        
     }
     return self;
 }
@@ -170,6 +177,8 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
         //set the delegate = self. Previously declared in ViewController.h
         
         self.tableView.tableHeaderView = self.searchBar; //this line add the searchBar
+        
+        self.reload = false;
         
         //TODO http://stackoverflow.com/questions/6947858/adding-uisearchbar-programmatically-to-uitableview
     }
@@ -220,9 +229,7 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
     [self filterContentForSearchText:searchString scope:
      [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
     // Return YES to cause the search result table view to be reloaded.
-    
-    
-    
+
     
     return YES;
 }
@@ -537,7 +544,10 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
         [self.navigationItem.rightBarButtonItem setTitle:NSLocalizedString(@"new_contact",@"new_contact")];
     }
     
-    //[self.navigationItem.rightBarButtonItem setEnabled: !groupLocked && selectedContactsList.count>1 ];
+    //from adding new contact
+    if(self.reload) {
+        [self refreshPhonebook:nil];
+    }
      
 }
 
@@ -959,14 +969,7 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
 //save the location record
 -(void)saveGroup:(NSString*)name {
     
-    //NSInteger numContacts = 0 ; //min is 2
-    
-    //for(Contact *selected in selectedContactsList) {
-    //   if([selected isKindOfClass:Contact.class] && ![selected isKindOfClass:Group.class]) {
-    //       numContacts++;
-    //   }
-    //}
-    //if(numContacts>=2) { //min 2 contacts
+  
         
         NSManagedObjectContext *managedObjectContext = [(PCAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
         GroupDataModel *groupModel = (GroupDataModel *)[NSEntityDescription insertNewObjectForEntityForName:@"GroupDataModel" inManagedObjectContext:managedObjectContext];
@@ -990,13 +993,6 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
                     //add to core data
                     ContactDataModel *contactModel = [self prepareModelFromContact: managedObjectContext :contact];
                     
-                    /**(ContactDataModel *)[NSEntityDescription insertNewObjectForEntityForName:@"ContactDataModel" inManagedObjectContext:managedObjectContext];
-                    
-                    contactModel.name = contact.name;
-                    contactModel.phone = contact.phone;
-                    contactModel.email = contact.email;
-                    contactModel.lastname = contact.lastName;*/
-                    
                     [groupModel addContactsObject:contactModel];
                     [contactModel addGroupObject:groupModel];
                     
@@ -1007,13 +1003,6 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
             else {
                 //single contact
                 ContactDataModel *contactModel = [self prepareModelFromContact: managedObjectContext :selected];
-                
-                /**(ContactDataModel *)[NSEntityDescription insertNewObjectForEntityForName:@"ContactDataModel" inManagedObjectContext:managedObjectContext];
-                
-                contactModel.name = selected.name;
-                contactModel.phone = selected.phone;
-                contactModel.email = selected.email;
-                contactModel.lastname = selected.lastName;*/
                 
                 [groupModel addContactsObject:contactModel];
                 [contactModel addGroupObject:groupModel];

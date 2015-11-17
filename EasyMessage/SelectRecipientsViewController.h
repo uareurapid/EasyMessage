@@ -52,4 +52,5 @@
 
 @property NSInteger initialSelectedContacts;
 @property BOOL groupLocked;
+@property BOOL reload;
 @end

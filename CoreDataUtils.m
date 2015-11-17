@@ -46,6 +46,37 @@
 
 }
 
++ (NSMutableArray *)fetchContactModelRecordsFromDatabase {
+    
+
+    
+    NSManagedObjectContext *managedObjectContext = [(PCAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
+    
+    
+    // Define our table/entity to use
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"ContactDataModel" inManagedObjectContext:managedObjectContext];
+    // Setup the fetch request
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:entity];
+    //this is equivalent to SELECT * FROM `LocationEntity`
+    
+    
+    // Define how we will sort the records
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:NO];
+    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+    [request setSortDescriptors:sortDescriptors];
+    //[sortDescriptor release];
+    // Fetch the records and handle an error
+    NSError *error;
+    NSMutableArray *mutableFetchResults = [[managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+    
+    
+    // Save our fetched data to an array
+    return mutableFetchResults;
+    
+    
+}
+
 + (NSMutableArray *)fetchMessageRecordsFromDatabase {
     NSManagedObjectContext *managedObjectContext = [(PCAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
     

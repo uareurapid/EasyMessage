@@ -562,7 +562,10 @@ static NSString * const kClientId = @"122031362005-ibifir1r1aijhke7r3fe404usutpd
             [recipientsController.contactsList removeAllObjects];
             [recipientsController.contactsList addObjectsFromArray:contacts];
             
+            //load also the local contact models, from local database
+            NSMutableArray *models = [self fetchLocalContactModelRecords];
             
+            [recipientsController.contactsList addObjectsFromArray:models];
             
             [recipientsController.selectedContactsList removeAllObjects];
             [recipientsController.selectedContactsList addObjectsFromArray:selectedRecipientsList];
@@ -580,15 +583,18 @@ static NSString * const kClientId = @"122031362005-ibifir1r1aijhke7r3fe404usutpd
         
         [recipientsController.contactsList removeAllObjects];
         [recipientsController.contactsList addObjectsFromArray:contacts];
+        
+        //load also the local contact models, from local database
+        NSMutableArray *models = [self fetchLocalContactModelRecords];
+        
+        [recipientsController.contactsList addObjectsFromArray:models];
         //[recipientsController.contactsList addObjectsFromArray:groupsFromAB];
         
         NSMutableArray *groupsFromDB = [self fetchGroupRecords];
-        
         [recipientsController.contactsList addObjectsFromArray:groupsFromDB];
         
         [recipientsController.groupsList removeAllObjects];
-        //[recipientsController.groupsList addObjectsFromArray:groupsFromAB];
-        //[recipientsController.groupsList addObjectsFromArray:groupsFromDB];
+
         
         [recipientsController.selectedContactsList removeAllObjects];
         [recipientsController.selectedContactsList addObjectsFromArray:selectedRecipientsList];
@@ -633,6 +639,76 @@ static NSString * const kClientId = @"122031362005-ibifir1r1aijhke7r3fe404usutpd
 
        
     }
+    return records;
+    
+}
+
+//ContactModel from the local database, not ALAAssets
+- (NSMutableArray*) fetchLocalContactModelRecords{
+    
+    NSMutableArray *records = [[NSMutableArray alloc] init];
+    NSMutableArray *databaseRecords = [CoreDataUtils fetchContactModelRecordsFromDatabase];
+    NSMutableArray* existingContacts = recipientsController.contactsList;
+        
+        for(ContactDataModel *contact in databaseRecords) {
+            
+            NSLog(@"checking name: %@ out of %ld",contact.name, databaseRecords.count);
+            
+            /*if(contact.group!=nil) {
+                //skip this, is a group
+                NSLog(@"skipping this as it ")
+                continue;
+            }*/
+            
+            NSString *name = contact.name;
+            NSString *email = contact.email;
+            NSString *phone =  contact.phone;
+            
+            BOOL exists = false;
+            
+            for(Contact *existing in existingContacts) {
+                
+                if(name!=nil && existing.name!=nil) {
+                    if([name isEqualToString:existing.name]) {
+                        exists = true;
+                        break;
+                    }
+                }
+                else if(email!=nil && existing.email!=nil) {
+                    if([email isEqualToString:existing.email]) {
+                        exists = true;
+                        break;
+                    }
+                }
+                else if(phone!=nil && existing.phone!=nil) {
+                    if([existing.phone isEqualToString:existing.phone]) {
+                        exists = true;
+                        break;
+                    }
+                }
+                
+                /*if([name isEqualToString:existing.name] || (email!=nil && [email isEqualToString:existing.email] )
+                   || (phone!=nil && [existing.phone isEqualToString:existing.phone]) ) {
+                    exists = true;
+                    break;
+                }*/
+            }
+            if(!exists) {
+                //avoid add repeating ones
+                Contact *c = [[Contact alloc] init];
+                c.name = contact.name;
+                c.phone = contact.phone;
+                c.email = contact.email;
+                c.lastName = contact.lastname;
+                
+                [records addObject:c];
+            }
+            
+            
+            
+            
+        }
+    
     return records;
     
 }
