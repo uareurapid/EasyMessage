@@ -24,4 +24,5 @@
 @property (strong,nonatomic) PCViewController *rootViewController;
 -(id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil rootViewController: (PCViewController *) rootViewController;
 -(NSString * ) getSelectedMessage;
+@property BOOL addNewMessage;
 @end

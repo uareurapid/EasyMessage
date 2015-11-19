@@ -652,7 +652,7 @@ static NSString * const kClientId = @"122031362005-ibifir1r1aijhke7r3fe404usutpd
         
         for(ContactDataModel *contact in databaseRecords) {
             
-            NSLog(@"checking name: %@ out of %ld",contact.name, databaseRecords.count);
+            //NSLog(@"checking name: %@ out of %ld",contact.name, databaseRecords.count);
             
             /*if(contact.group!=nil) {
                 //skip this, is a group
@@ -1243,8 +1243,7 @@ static NSString * const kClientId = @"122031362005-ibifir1r1aijhke7r3fe404usutpd
 -(void) sendToLinkedin: (NSString* ) message withToken: (NSString*) token {
     
         
-        //NSString *token = [self accessToken];
-        //[self requestMeWithToken:token];
+        //https://developer.linkedin.com/docs/share-on-linkedin
         
         NSMutableString *str = [[NSMutableString alloc] init];
         
@@ -1263,7 +1262,7 @@ static NSString * const kClientId = @"122031362005-ibifir1r1aijhke7r3fe404usutpd
         [thePost appendString: [NSString stringWithFormat: @"<title>%@</title>",title] ];
         [thePost appendString: [NSString stringWithFormat: @"<description>%@</description>",message] ];
         [thePost appendString:@"<submitted-url>https://itunes.apple.com/ca/app/easymessage/id668776671?mt=8</submitted-url>"];
-        [thePost appendString:@"<submitted-image-url>http://pcdreams-software.com/images/ic_launcher.png</submitted-image-url>"];
+        [thePost appendString:@"<submitted-image-url>http://a5.mzstatic.com/us/r30/Purple5/v4/9b/70/07/9b700773-1703-c6db-fcf7-fe82d5ed8685/icon175x175.png</submitted-image-url>"];
         [thePost appendString:@"</content>"];
         [thePost appendString:@"<visibility>"];
         [thePost appendString:@"<code>anyone</code>"];

@@ -109,6 +109,9 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
         
         self.tableView.tableHeaderView = self.searchBar; //this line add the searchBar
         
+        self.searchData = [[NSMutableArray alloc] init];
+        self.searchDataSelection = [[NSMutableArray alloc] init];
+        
         self.reload = false;
         
     }
@@ -141,6 +144,8 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
         self.searchDisplayController.searchResultsDataSource = self;
         self.searchDisplayController.searchResultsDelegate = self;
         //set the delegate = self. Previously declared in ViewController.h
+        self.searchData = [[NSMutableArray alloc] init];
+        self.searchDataSelection = [[NSMutableArray alloc] init];
         
         self.tableView.tableHeaderView = self.searchBar; //this line add the searchBar
         
@@ -175,6 +180,8 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
         self.searchDisplayController.searchResultsDataSource = self;
         self.searchDisplayController.searchResultsDelegate = self;
         //set the delegate = self. Previously declared in ViewController.h
+        self.searchDataSelection = [[NSMutableArray alloc] init];
+        self.searchData = [[NSMutableArray alloc] init];
         
         self.tableView.tableHeaderView = self.searchBar; //this line add the searchBar
         
@@ -189,6 +196,7 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
 
 #pragma mark Content Filtering
 -(void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope {
+    
     [self.searchData removeAllObjects];
     /*before starting the search is necessary to remove all elements from the
      array that will contain found items */
@@ -206,20 +214,28 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
     {
         //NSMutableArray *newGroup = [[NSMutableArray alloc] init];
         NSString *name = contact.name;
-        if(name!=nil) {
-            NSLog(@"search string %@",searchText);
-            NSLog(@"contact is: %@",name);
-            NSRange range = [name rangeOfString:searchText
-                                        options:NSCaseInsensitiveSearch];
-            
-            if (range.length > 0) { //if the substring match
-                NSLog(@"name: %@ matches search string: %@",name,searchText);
-                [self.searchData addObject:contact]; //add the element
+        NSString *lastname = contact.lastName;
+        if(name!=nil || lastname!=nil) {
+
+            if(name!=nil) {
+                NSRange range = [name rangeOfString:searchText
+                                            options:NSCaseInsensitiveSearch];
+                if (range.length > 0) { //if the substring match
+                    [self.searchData addObject:contact]; //add the element
+                }
             }
+            else if(lastname!=nil) {
+                NSRange range = [lastname rangeOfString:searchText
+                                            options:NSCaseInsensitiveSearch];
+                if (range.length > 0) { //if the substring match
+                    [self.searchData addObject:contact]; //add the element
+                }
+            }
+            
         }
         
     }
-    //[self.searchDisplayController.searchResultsTableView reloadData];
+   // [self.searchDisplayController.searchResultsTableView reloadData];
 }
 
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
@@ -234,13 +250,13 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
     return YES;
 }
 
--(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption {
+/*-(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption {
     // Tells the table data source to reload when scope bar selection changes
     [self filterContentForSearchText:self.searchDisplayController.searchBar.text scope:
      [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:searchOption]];
     // Return YES to cause the search result table view to be reloaded.
     return YES;
-}
+}*/
 
 
 -(IBAction)refreshPhonebook:(id)sender {
@@ -616,7 +632,11 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
 #warning Potentially incomplete method implementation.
-    // Return the number of sections.
+    
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        return 1;
+    }
+    
     return contactsByLastNameInitial.count;
 }
 
@@ -642,7 +662,9 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+   
     static NSString *CellIdentifier = @"Cell";
+    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
@@ -654,7 +676,6 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
     
     
     NSString *key = [sortedKeys objectAtIndex:section];
-    
     NSMutableArray *array = (NSMutableArray *) [contactsByLastNameInitial objectForKey:key];
     
     BOOL isGroup = NO;
@@ -664,6 +685,7 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
     // Check to see whether the normal table or search results table is being displayed and set the Candy object from the appropriate array
     if (tableView == self.searchDisplayController.searchResultsTableView) {
         contact = [self.searchData objectAtIndex:indexPath.row];
+        
     } else {
         contact = [array objectAtIndex:row];
     }
@@ -706,11 +728,6 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
     }
     
     
-   // if(contact.photo!=nil) {
-     //   cell.imageView.image = contact.photo;
-    //}
-    
-    
     if([selectedContactsList containsObject:contact]) {
     
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
@@ -750,44 +767,6 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
     
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark - Table view delegate
 
@@ -804,12 +783,70 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
     NSInteger row = indexPath.row;
     NSInteger section = indexPath.section;
     
+    Contact *contact;
     
-    NSString *key = [sortedKeys objectAtIndex:section];
-    NSMutableArray *array = (NSMutableArray *) [contactsByLastNameInitial objectForKey:key];
-   
+    /***************************/
+    if (self.searchDisplayController.active) {
+        NSIndexPath *indexPath = [self.searchDisplayController.searchResultsTableView indexPathForSelectedRow];
+        contact = [self.searchData objectAtIndex:indexPath.row];
+        
+        Contact *contactOnRealTable;
+        //get the corresponding cell on the real table
+        NSString *lastName = contact.lastName;
+        if(lastName!=nil) {
+            NSString *key = [NSString stringWithFormat:@"%c", [lastName characterAtIndex:0]];
+            NSInteger indexOfKey = 0;
+            for(NSString *str in sortedKeys) {
+                if([str isEqualToString:key]) {
+                    //section on real table
+                    section = indexOfKey;
+                    break;
+                }
+                else {
+                    indexOfKey++;
+                }
+            }
+            
+            NSMutableArray *array = (NSMutableArray *) [contactsByLastNameInitial objectForKey:key];
+            NSInteger i =0;
+            for(i=0; i < array.count; i++) {
+                Contact *c = [array objectAtIndex:i];
+                if([c isEqual:contact]) {
+                    row = i;
+                    break;
+                }
+            }
 
-   Contact *contact = [array objectAtIndex:row];
+            NSIndexPath *path =  [NSIndexPath indexPathForRow:row inSection:section];
+            [self.tableView selectRowAtIndexPath:path animated:NO scrollPosition:UITableViewScrollPositionNone];
+            
+            //[[[[iToast makeText:[NSString stringWithFormat: NSLocalizedString(@"selected_%@_recipients", @"num of recipients"),@(self.contactsList.count)]]
+              // setGravity:iToastGravityBottom] setDuration:1000] show];
+            // Return the number of sections.
+            
+            if(![self.searchDataSelection containsObject:contact]) {
+                [self.searchDataSelection addObject:contact];
+            }
+            else {
+                [self.searchDataSelection removeObject:contact];
+            }
+            
+           
+            
+            
+        }
+        
+    } else {
+        
+        NSString *key = [sortedKeys objectAtIndex:section];
+        NSMutableArray *array = (NSMutableArray *) [contactsByLastNameInitial objectForKey:key];
+        contact = [array objectAtIndex:row];
+  
+    }
+    /***************************/
+    
+    
+    
     
    if(![selectedContactsList containsObject:contact]) {
            [selectedContactsList addObject:contact];
@@ -834,6 +871,10 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
             }
             
         });
+        
+        [[[[iToast makeText:[NSString stringWithFormat: NSLocalizedString(@"selected_%@_recipients", @"num of recipients"),@(selectedContactsList.count)]]
+           setGravity:iToastGravityBottom] setDuration:1000] show];
+        
     }
     else {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -881,32 +922,27 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
 -(NSString *) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     
     
+    if(tableView==self.searchDisplayController.searchResultsTableView) {
+        return @"";
+    }
    
     NSString *key = [sortedKeys objectAtIndex:section];
-    //if(section==0) {
-    //    return [ NSString stringWithFormat: @"%@%@ %@",NSLocalizedString(@"choose_your_recipients",@"choose recipients"),@"\r\n",key ];
-    //}
     return key;
     
 }
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    
+    if(tableView==self.searchDisplayController.searchResultsTableView)
+        return 0;
+    
     if(section == 0)
     {
         return UITableViewAutomaticDimension;
     }
-    return 16;
+    return 32;
 }
-/**
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if(indexPath.section == 0)
-    {
-        return 40;
-    }
-    return UITableViewAutomaticDimension;
-}*/
 
 -(NSString *) tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     if(section == contactsByLastNameInitial.count-1) { //if is the last section

@@ -20,5 +20,7 @@
 @property (copy,nonatomic) NSString *lastName;
 @property (strong,nonatomic) UIImage *photo;
 
+-(BOOL) isEqual:(id)object;
+
 @property ABRecordRef person;//ref to the person
 @end

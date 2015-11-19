@@ -41,6 +41,7 @@
 
 @property (strong,nonatomic) NSMutableArray *sortedKeys;
 @property (strong,nonatomic) NSMutableArray *searchData;
+@property (strong,nonatomic) NSMutableArray *searchDataSelection;
 
 @property ABRecordID groupId;
 

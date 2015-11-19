@@ -36,14 +36,16 @@
         self.tabBarItem.image = [UIImage imageNamed:@"33-cabinet"];
         self.title = NSLocalizedString(@"archive",@"Archive");
         
-        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"done_button",nil)
+        //self.addNewMessage = YES;
+        
+        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Add"
                                                                        style:UIBarButtonItemStyleDone target:self action:@selector(selectFinished:)];
         //unlock = [UIImage imageNamed:@"Unlock32"];
         //lock = [UIImage imageNamed:@"Lock32"];
         
         UIBarButtonItem *deleteButtonItem = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"delete",@"delete") style:UIBarButtonItemStyleDone target:self action:@selector(deleteMessageClicked:)];
       
-        [doneButton setEnabled:NO];
+        [doneButton setEnabled:YES];
         [deleteButtonItem setEnabled:NO];
         
         self.navigationItem.rightBarButtonItem = doneButton;
@@ -130,9 +132,10 @@
 -(void)viewWillAppear:(BOOL)animated {
     //if ([[EasyMessageIAPHelper sharedInstance] productPurchased:PRODUCT_COMMON_MESSAGES]) {
         [self.navigationItem.leftBarButtonItem setEnabled:[self getSelectedMessageIfAny]!=nil ];
-        [self.navigationItem.rightBarButtonItem setEnabled: [self getSelectedMessageIfAny]!=nil];
+        [self.navigationItem.rightBarButtonItem setEnabled: YES];
         [self.tableView setAllowsSelection:YES];
-       
+    
+    self.addNewMessage = ([self getSelectedMessageIfAny]==nil);
     //}
     //else {
     //    [self.navigationItem.leftBarButtonItem setEnabled:NO];
@@ -140,7 +143,7 @@
     //    [self.tableView setAllowsSelection:NO];
     //}
     [self addRecordsFromDatabase];
-    [self.navigationItem.rightBarButtonItem setEnabled:selectedMessageIndex!=-1];
+    [self.navigationItem.rightBarButtonItem setEnabled:YES];
      
 }
 
@@ -229,6 +232,20 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void) createNewMessage {
+   UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"new_group",@"new_group") message:NSLocalizedString(@"enter_group_name",@"enter_group_name") delegate:self cancelButtonTitle:NSLocalizedString(@"cancel",@"cancel") otherButtonTitles:NSLocalizedString(@"save",@"save"),nil];
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    
+    [alert show];
+}
+//the delegate for the new Group
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    
+    if(buttonIndex==1) { //0 - cancel, 1 - save
+      //TODO save message on database!
+    }
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -286,7 +303,11 @@
     if(row==selectedMessageIndex) {
         selectedMessageIndex = -1;
         selectedMessage = nil;
-        [self.navigationItem.rightBarButtonItem setEnabled:NO];//no save
+        //Nothing selected
+        
+        [self.navigationItem.rightBarButtonItem setEnabled:YES];//no save
+        [self.navigationItem.rightBarButtonItem setTitle:@"Add"];//no save
+        self.addNewMessage = YES;
         [self.navigationItem.leftBarButtonItem setEnabled:NO];//no delete
         //NOTE if the item is not purchased selection is not even possible
     }
@@ -294,6 +315,9 @@
         selectedMessageIndex = row;
         selectedMessage = [messagesList objectAtIndex:selectedMessageIndex];
         [self.navigationItem.rightBarButtonItem setEnabled:YES];//can save
+        self.addNewMessage = NO;
+        [self.navigationItem.rightBarButtonItem setTitle:NSLocalizedString(@"done_button", nil)];//can save
+        
         [self.navigationItem.leftBarButtonItem setEnabled:YES];//can delete
     }
     
@@ -328,11 +352,18 @@
 -(IBAction)selectFinished:(id)sender {
     //go back to compose
     
-    if(selectedMessageIndex!=-1 && selectedMessage!=nil) {
-       self.rootViewController.body.text = selectedMessage;
+    if(self.addNewMessage) {
+        [self createNewMessage];
+    }
+    else {
+        if(selectedMessageIndex!=-1 && selectedMessage!=nil) {
+            self.rootViewController.body.text = selectedMessage;
+        }
+        
+        [self.tabBarController setSelectedIndex:0];
     }
     
-    [self.tabBarController setSelectedIndex:0];
+    
 }
 
 @end

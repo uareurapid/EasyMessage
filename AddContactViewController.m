@@ -39,49 +39,65 @@
 }
 - (IBAction)addContactClicked:(id)sender {
     
-    if([self checkIfContactExists:self.lblName.text]==NO) {
-        
-        //name OK, save it!
-        Contact *contact = [[Contact alloc] init];
-        contact.name = self.lblName.text;
-        contact.phone = self.lblPhone.text;
-        contact.email = self.lblEmail.text;
-        contact.lastName = self.lblLastName.text;
-        
-        NSManagedObjectContext *managedObjectContext = [(PCAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
-        ContactDataModel *contactModel = [self prepareModelFromContact:managedObjectContext :contact ];
-        
-        BOOL OK = NO;
-        NSError *error;
-        
-        if(![managedObjectContext save:&error]){
-            NSLog(@"Unable to save object, error is: %@",error.description);
-            //This is a serious error saying the record
-            //could not be saved. Advise the user to
-            //try again or restart the application.
-        }
-        else {
-            OK = YES;
-            [[[[iToast makeText:NSLocalizedString(@"group_created",@"group_created")]
-               setGravity:iToastGravityBottom] setDuration:2000] show];
-        }
-        
-        if(OK) {
-            //add to the list
-            [self.contactsList addObject:contact];
-            [self dismissViewControllerAnimated:YES completion:nil];
-            
-        }
-        
-        
-        
-        
-    }
-    else {
-        //group name already exists
-        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"invalid_name",@"invalid_name") message:NSLocalizedString(@"group_already_exists",@"group_already_exists") delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    if(self.lblName==nil) {
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"invalid_name",@"invalid_name") message:NSLocalizedString(@"invalid_name",@"invalid_name") delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+    }//TODO msg, need either phone or email
+    else if(self.lblEmail==nil && self.lblPhone==nil) {
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"invalid_name",@"invalid_name") message:NSLocalizedString(@"invalid_name",@"invalid_name") delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
     }
+    else {
+       
+        if([self checkIfContactExists:self.lblName.text]==NO) {
+            
+            //name OK, save it!
+            Contact *contact = [[Contact alloc] init];
+            contact.name = self.lblName.text;
+            contact.phone = self.lblPhone.text;
+            contact.email = self.lblEmail.text;
+            contact.lastName = self.lblLastName.text;
+            
+            NSManagedObjectContext *managedObjectContext = [(PCAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
+            ContactDataModel *contactModel = [self prepareModelFromContact:managedObjectContext :contact ];
+            
+            BOOL OK = NO;
+            NSError *error;
+            
+            if(![managedObjectContext save:&error]){
+                NSLog(@"Unable to save object, error is: %@",error.description);
+                //This is a serious error saying the record
+                //could not be saved. Advise the user to
+                //try again or restart the application.
+            }
+            else {
+                OK = YES;
+                [[[[iToast makeText:NSLocalizedString(@"group_created",@"group_created")]
+                   setGravity:iToastGravityBottom] setDuration:2000] show];
+            }
+            
+            if(OK) {
+                //add to the list
+                [self.contactsList addObject:contact];
+                [self dismissViewControllerAnimated:YES completion:nil];
+                
+            }
+            
+            
+            
+            
+        }
+        else {
+            //TODO contact already exists
+            //group name already exists
+            UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"invalid_name",@"invalid_name") message:NSLocalizedString(@"group_already_exists",@"group_already_exists") delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+        }
+        
+        
+    }
+    
+    
     
     
     

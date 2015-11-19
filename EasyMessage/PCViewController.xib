@@ -45,7 +45,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <animations/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Message:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="222">
@@ -53,7 +53,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <animations/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="224" customClass="UIPlaceHolderTextView">
@@ -73,7 +73,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <animations/>
                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Save message?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="450">
@@ -81,7 +81,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <animations/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="457">
@@ -102,17 +102,21 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <animations/>
                         </imageView>
-                        <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="223">
-                            <rect key="frame" x="112" y="223" width="140" height="102"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="223">
+                            <rect key="frame" x="183" y="222" width="140" height="102"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <animations/>
-                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                            <state key="normal" image="Forward.png">
-                                <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <state key="highlighted">
-                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <inset key="contentEdgeInsets" minX="-17" minY="-12" maxX="0.0" maxY="0.0"/>
+                            <state key="normal" backgroundImage="Forward.png">
+                                <attributedString key="attributedTitle">
+                                    <fragment content="Send">
+                                        <attributes>
+                                            <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" size="18" name="HelveticaNeue"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="justified" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
                             </state>
                             <connections>
                                 <action selector="sendMessage:" destination="-1" eventType="touchUpInside" id="227"/>
@@ -120,11 +124,11 @@
                         </button>
                     </subviews>
                     <animations/>
-                    <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                    <color key="backgroundColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
                 </scrollView>
             </subviews>
             <animations/>
-            <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
         </view>
     </objects>
     <resources>
