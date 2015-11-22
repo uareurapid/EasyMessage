@@ -76,6 +76,8 @@
 "group_created" = "그룹 생성!";
 "invalid_name" = "이름이 잘못되었습니다";
 "group_already_exists" = "이 그룹이 이미 존재합니다!";
+"contact_already_exists" = "이 연락처가 이미 존재합니다!";
+"message_already_exists" = "이 메시지는 이미 존재!";
 "new_group" = "새 그룹";
 "enter_group_name" = "그룹 이름을 입력합니다";
 "cancel" = "상쇄되다";
@@ -92,14 +94,18 @@
 "custom_msg_wayhome" ="집에가는 길 이제";
 "custom_msg_arrivesoon" = "곧 도착할거야";
 "add_to_group" = "그룹을 만들";
+"create_contact" = "연락처 만들기";
 "clear" = "비우다";
 "delete" = "지우다";
 "deleted" = "삭제!";
 "added" = "추가";
 "removed" = "제거";
 "share" = "나누다";
-"new_contact" = "New contact";
-"contact_name" = "Name";
+"new_contact" = "새 연락처";
+"contact_name" = "이름";
 //"contact_phone" = "Phone"
-"contact_email" = "Email";
+"contact_email" = "이메일";
+"contact_last_name" = "성";
+"contact_fields_required" = "이름과 전화 또는 이메일이 필요합니다!";
+"invalid_email" = "잘못된 이메일!";
 

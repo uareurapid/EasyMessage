@@ -320,9 +320,10 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self refreshPhonebook:nil];
+    
     self.tableView.sectionHeaderHeight = 2.0;
     self.tableView.sectionFooterHeight = 2.0;
+    [self refreshPhonebook:nil];
 
     //set the images
     //imageLock = [UIImage imageNamed:@"Lock32"];
@@ -701,6 +702,17 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
         
         if(contact.name!=nil) {
             cell.textLabel.text = contact.name;
+            if(contact.lastName!=nil) {//append also last name
+                //check if last name is already include in name
+                NSRange range = [contact.name rangeOfString:contact.lastName
+                                            options:NSCaseInsensitiveSearch];
+                if (range.length == 0) { //if the substring did not match
+                    //append also lastname
+                    cell.textLabel.text = [NSString stringWithFormat:@"%@ %@",cell.textLabel.text,contact.lastName];
+                }
+                
+                
+            }
         }
         else if(contact.lastName!=nil) {
             cell.textLabel.text = contact.lastName;

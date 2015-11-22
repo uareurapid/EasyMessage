@@ -8,11 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AddContactViewController : UIViewController
-@property (weak, nonatomic) IBOutlet UITextField *lblName;
-@property (weak, nonatomic) IBOutlet UITextField *lblLastName;
-@property (weak, nonatomic) IBOutlet UITextField *lblEmail;
-@property (weak, nonatomic) IBOutlet UITextField *lblPhone;
+@interface AddContactViewController : UIViewController<UITextViewDelegate,UITextFieldDelegate>
+@property (weak, nonatomic) IBOutlet UITextField *txtName;
+@property (weak, nonatomic) IBOutlet UITextField *txtLastName;
+@property (weak, nonatomic) IBOutlet UITextField *txtEmail;
+@property (weak, nonatomic) IBOutlet UITextField *txtPhone;
+@property (weak, nonatomic) IBOutlet UIButton *btnAddContact;
+@property (weak, nonatomic) IBOutlet UILabel *labelEmail;
+@property (weak, nonatomic) IBOutlet UILabel *labelPhone;
+@property (weak, nonatomic) IBOutlet UIButton *btnCancel;
+@property (weak, nonatomic) IBOutlet UILabel *labelLastname;
+@property (weak, nonatomic) IBOutlet UILabel *labelName;
 
 //reference to recipients controller list
 @property (strong,nonatomic) NSMutableArray *contactsList;

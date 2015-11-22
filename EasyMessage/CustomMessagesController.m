@@ -233,7 +233,7 @@
 }
 
 -(void) createNewMessage {
-   UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"new_group",@"new_group") message:NSLocalizedString(@"enter_group_name",@"enter_group_name") delegate:self cancelButtonTitle:NSLocalizedString(@"cancel",@"cancel") otherButtonTitles:NSLocalizedString(@"save",@"save"),nil];
+   UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"EasyMessage" message:NSLocalizedString(@"message_label",@"message_label") delegate:self cancelButtonTitle:NSLocalizedString(@"cancel",@"cancel") otherButtonTitles:NSLocalizedString(@"save",@"save"),nil];
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
     
     [alert show];
@@ -243,6 +243,55 @@
     
     if(buttonIndex==1) { //0 - cancel, 1 - save
       //TODO save message on database!
+        
+        NSString *message = [alertView textFieldAtIndex:0].text;
+        NSLog(@"message is %@",message);
+        if(message.length==0) {
+            UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"EasyMessage" message:NSLocalizedString(@"alert_message_body_empty",@"alert_message_body_empty") delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+        }
+        else {
+            //check if exists already
+            BOOL exists = false;
+            NSLog(@"checking if exists");
+            for(NSString *msg in messagesList) {
+                NSLog(@"model msg: %@",msg);
+                if([msg isEqualToString:message]) {
+                    exists = true;
+                }
+                
+            }
+            if(!exists) {
+                NSLog(@"not exists adding: %@",message);
+                NSManagedObjectContext *managedObjectContext = [(PCAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
+                MessageDataModel *messageModel = (MessageDataModel *)[NSEntityDescription insertNewObjectForEntityForName:@"MessageDataModel" inManagedObjectContext:managedObjectContext];
+                messageModel.msg = message;
+                
+                //BOOL OK = NO;
+                NSError *error;
+                if(![managedObjectContext save:&error]){
+                    NSLog(@"Unable to save object, error is: %@",error.description);
+                }
+                else {
+                    //add to list and reload table
+                    [messagesList addObject:message];
+                    [self.tableView reloadData];
+                    //show a success toast
+                    [[[[iToast makeText:NSLocalizedString(@"added", @"added")]
+                       setGravity:iToastGravityBottom] setDuration:2000] show];
+                }
+            }
+            else {
+                //group name already exists
+                UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"EasyMessage" message:NSLocalizedString(@"message_already_exists",@"message_already_exists") delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                [alert show];
+            }
+            
+            
+        }
+        
+        
+        
     }
 }
 

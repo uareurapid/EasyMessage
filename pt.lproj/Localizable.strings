@@ -77,6 +77,8 @@
 "group_created" = "Grupo criado!";
 "invalid_name" = "Nome inválido";
 "group_already_exists" = "Esse grupo já existe!";
+"contact_already_exists" = "Esse contacto já existe!";
+"message_already_exists" = "Essa mensagem já existe!";
 "new_group" = "Novo grupo";
 "enter_group_name" = "Indique o nome do grupo";
 "cancel" = "Cancelar";
@@ -93,6 +95,7 @@
 "custom_msg_wayhome" ="Estou a ir para casa agora";
 "custom_msg_arrivesoon" = "Estou a chegar";
 "add_to_group" = "Criar grupo";
+"create_contact" = "Criar contacto";
 "clear" = "Limpar";
 "delete" = "Eliminar";
 "deleted" = "Eliminado";
@@ -103,4 +106,8 @@
 "contact_name" = "Nome";
 //"contact_phone" = "Phone"
 "contact_email" = "Email";
+"contact_last_name" = "Apelido";
+"contact_fields_required" = "Nome e telfone e ou email são obrigatórios!";
+"invalid_email" = "Email inválido!";
+
 

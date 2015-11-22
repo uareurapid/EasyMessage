@@ -78,6 +78,8 @@
 "group_created" = "Group created!";
 "invalid_name" = "Invalid name";
 "group_already_exists" = "That group already exists!";
+"contact_already_exists" = "That contact already exists!";
+"message_already_exists" = "That message already exists!";
 "new_group" = "New group";
 "enter_group_name" = "Enter the group name";
 "new_contact" = "New contact";
@@ -98,11 +100,15 @@
 "custom_msg_wayhome" ="On my way home now";
 "custom_msg_arrivesoon" = "I´ll arrive soon";
 "add_to_group" = "Create group";
+"create_contact" = "Create contact";
 "clear" = "Clear";
 "delete" = "Delete";
 "deleted" = "Deleted!";
 "added" = "Added";
 "removed" = "Removed";
 "share" = "Share";
+"contact_last_name" = "Last name";
+"contact_fields_required" = "Name and phone or email are required!";
+"invalid_email" = "Invalid email!";
 
 

@@ -7,10 +7,16 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddContactViewController">
             <connections>
-                <outlet property="lblEmail" destination="fjI-5z-tFI" id="Rrg-0W-Rdp"/>
-                <outlet property="lblLastName" destination="ozG-sW-uux" id="fjq-4p-83b"/>
-                <outlet property="lblName" destination="ecq-Za-jVh" id="4tU-lN-faQ"/>
-                <outlet property="lblPhone" destination="sUP-3h-XWJ" id="WYT-u2-KUP"/>
+                <outlet property="btnAddContact" destination="AsI-GL-Vfk" id="shc-BZ-z2k"/>
+                <outlet property="btnCancel" destination="dv6-70-Gd3" id="OyO-Oi-aUd"/>
+                <outlet property="labelEmail" destination="NWB-Nu-Ilm" id="94T-ES-Dpc"/>
+                <outlet property="labelLastname" destination="pcA-8n-A5t" id="lBj-m5-v9o"/>
+                <outlet property="labelName" destination="uSU-qx-dGM" id="GnB-L4-GCq"/>
+                <outlet property="labelPhone" destination="tFx-sd-Tb9" id="nZv-Ae-0wr"/>
+                <outlet property="txtEmail" destination="fjI-5z-tFI" id="VD7-Bf-9WN"/>
+                <outlet property="txtLastName" destination="ozG-sW-uux" id="0Tl-Ce-fFd"/>
+                <outlet property="txtName" destination="ecq-Za-jVh" id="6wz-4q-dpE"/>
+                <outlet property="txtPhone" destination="sUP-3h-XWJ" id="nw1-1C-kbj"/>
                 <outlet property="view" destination="iN0-l3-epB" id="zg1-BR-hCM"/>
             </connections>
         </placeholder>
@@ -20,7 +26,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uSU-qx-dGM">
-                    <rect key="frame" x="85" y="84" width="91" height="21"/>
+                    <rect key="frame" x="85" y="80" width="95" height="21"/>
                     <animations/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -30,10 +36,10 @@
                     <rect key="frame" x="223" y="75" width="184" height="30"/>
                     <animations/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
+                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
                 </textField>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Email:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NWB-Nu-Ilm">
-                    <rect key="frame" x="85" y="200" width="91" height="21"/>
+                    <rect key="frame" x="85" y="202" width="95" height="21"/>
                     <animations/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -43,23 +49,48 @@
                     <rect key="frame" x="223" y="197" width="184" height="30"/>
                     <animations/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
+                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
                 </textField>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Phone:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tFx-sd-Tb9">
-                    <rect key="frame" x="85" y="269" width="91" height="21"/>
+                    <rect key="frame" x="85" y="266" width="95" height="21"/>
                     <animations/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Last Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pcA-8n-A5t">
+                    <rect key="frame" x="85" y="142" width="95" height="21"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ozG-sW-uux">
+                    <rect key="frame" x="223" y="136" width="184" height="30"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                </textField>
+                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dv6-70-Gd3">
+                    <rect key="frame" x="85" y="325" width="103" height="30"/>
+                    <animations/>
+                    <color key="backgroundColor" red="0.37357329080000001" green="0.63550729920000004" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                    <state key="normal" title="Cancel">
+                        <color key="titleColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="btnCancelClicked:" destination="-1" eventType="touchUpInside" id="b5B-Lo-yQ0"/>
+                    </connections>
+                </button>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sUP-3h-XWJ">
                     <rect key="frame" x="223" y="260" width="184" height="30"/>
                     <animations/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
+                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
                 </textField>
                 <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AsI-GL-Vfk">
-                    <rect key="frame" x="310" y="325" width="97" height="30"/>
+                    <rect key="frame" x="228" y="325" width="170" height="30"/>
                     <animations/>
                     <color key="backgroundColor" red="0.37357329080000001" green="0.63550729920000004" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
@@ -71,44 +102,19 @@
                         <action selector="addContactClicked:" destination="-1" eventType="touchUpInside" id="DGy-qh-JZj"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Last Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pcA-8n-A5t">
-                    <rect key="frame" x="85" y="139" width="91" height="21"/>
-                    <animations/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ozG-sW-uux">
-                    <rect key="frame" x="223" y="136" width="184" height="30"/>
-                    <animations/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
-                </textField>
-                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dv6-70-Gd3">
-                    <rect key="frame" x="211" y="325" width="74" height="30"/>
-                    <animations/>
-                    <color key="backgroundColor" red="0.37357329080000001" green="0.63550729920000004" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                    <state key="normal" title="Cancel">
-                        <color key="titleColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
-                    </state>
-                    <connections>
-                        <action selector="btnCancelClicked:" destination="-1" eventType="touchUpInside" id="b5B-Lo-yQ0"/>
-                    </connections>
-                </button>
             </subviews>
             <animations/>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
             <constraints>
+                <constraint firstItem="dv6-70-Gd3" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="HFb-7z-WQ1"/>
                 <constraint firstItem="tFx-sd-Tb9" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="J2D-9u-rdi"/>
                 <constraint firstItem="fjI-5z-tFI" firstAttribute="leading" secondItem="NWB-Nu-Ilm" secondAttribute="trailing" constant="20" id="Niu-YX-y62"/>
                 <constraint firstItem="sUP-3h-XWJ" firstAttribute="leading" secondItem="tFx-sd-Tb9" secondAttribute="trailing" constant="20" id="O0O-Hb-SyR"/>
                 <constraint firstItem="uSU-qx-dGM" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="Q7g-jj-Jez"/>
-                <constraint firstItem="AsI-GL-Vfk" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="200" id="WTo-0A-4NA"/>
                 <constraint firstItem="ecq-Za-jVh" firstAttribute="leading" secondItem="uSU-qx-dGM" secondAttribute="trailing" constant="20" id="ZNa-1i-vtO"/>
+                <constraint firstItem="AsI-GL-Vfk" firstAttribute="leading" secondItem="dv6-70-Gd3" secondAttribute="trailing" constant="20" id="b0Z-65-wey"/>
                 <constraint firstItem="pcA-8n-A5t" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="dIG-e9-7yg"/>
                 <constraint firstItem="NWB-Nu-Ilm" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="g9Y-GY-WNh"/>
-                <constraint firstItem="AsI-GL-Vfk" firstAttribute="leading" secondItem="dv6-70-Gd3" secondAttribute="trailing" constant="20" id="tkS-vZ-VWe"/>
                 <constraint firstItem="ozG-sW-uux" firstAttribute="leading" secondItem="pcA-8n-A5t" secondAttribute="trailing" constant="20" id="yBv-lw-40m"/>
             </constraints>
         </view>
