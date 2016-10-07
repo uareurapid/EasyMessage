@@ -62,6 +62,10 @@
 	<string>3233463</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSContactsUsageDescription</key>
+	<string>the application need to read the contacts list to send messages</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>the application can send messages with attched images</string>
 	<key>UILaunchStoryboardName</key>
 	<string>PCViewController</string>
 	<key>UIRequiredDeviceCapabilities</key>
