@@ -22,10 +22,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    NSLog(@"CREATE CONTACT CALLED");
     // Do any additional setup after loading the view.
     [self.btnAddContact setTitle:NSLocalizedString(@"create_contact",@"create_contact") forState:UIControlStateNormal];
     [self.btnCancel setTitle:NSLocalizedString(@"cancel",@"cancel") forState:UIControlStateNormal];
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableViewBackground.png"]];
     
     self.txtPhone.delegate = self;
     self.txtName.delegate=self;

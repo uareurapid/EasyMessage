@@ -45,6 +45,7 @@
 @synthesize showAds;
 @synthesize  timeToShowPromoPopup;
 @synthesize attachImageView;
+@synthesize labelAttach;
 
 @synthesize attachImage;
 //google plus sdk
@@ -58,6 +59,7 @@ static NSString * const kClientId = @"122031362005-ibifir1r1aijhke7r3fe404usutpd
     self.title = @"EasyMessage";//NSLocalizedString(@"compose",nil);
     labelSaveArchive.text = NSLocalizedString(@"archive_message", @"save in archive");
  
+    labelAttach.text = NSLocalizedString(@"attach_image", @"Attach an image?");
     
     smsSentOK = NO;
     emailSentOK = NO;
@@ -93,7 +95,7 @@ static NSString * const kClientId = @"122031362005-ibifir1r1aijhke7r3fe404usutpd
     
     //load the contacts list when the view loads
     [self setupAddressBook];
-    self.scrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableViewBackground.png"]];
+    //self.scrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableViewBackground.png"]];
     
     attachImage = [UIImage imageNamed:@"attach"];
     
@@ -1738,8 +1740,7 @@ void addressBookChanged(ABAddressBookRef reference,
         //else
         //    self.adView.currentContentSizeIdentifier = ADBannerContentSizeIdentifierLandscape;
     
-    return (interfaceOrientation == UIInterfaceOrientationLandscapeRight) || (interfaceOrientation == UIInterfaceOrientationLandscapeLeft)
-    || (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return (interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown) || (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 - (BOOL)shouldAutorotate {

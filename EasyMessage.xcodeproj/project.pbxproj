@@ -23,6 +23,7 @@
 		722415551771148800989C3B /* PCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 722415541771148800989C3B /* PCViewController.m */; };
 		72241560177114DC00989C3B /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7224155E177114DC00989C3B /* AddressBook.framework */; };
 		72241561177114DC00989C3B /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7224155F177114DC00989C3B /* AddressBookUI.framework */; };
+		724D9ED21F040A2A00E37659 /* PCViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 724D9ED11F040A2A00E37659 /* PCViewController.xib */; };
 		72611AFC1771E88B0043E508 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 72611AFA1771E88B0043E508 /* SettingsViewController.m */; };
 		72611AFD1771E88B0043E508 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 72611AFB1771E88B0043E508 /* SettingsViewController.xib */; };
 		72611B0017720F740043E508 /* Contact.m in Sources */ = {isa = PBXBuildFile; fileRef = 72611AFF17720F740043E508 /* Contact.m */; };
@@ -50,7 +51,6 @@
 		72682C0017C519DD00A3318F /* world3.png in Resources */ = {isa = PBXBuildFile; fileRef = 72682BFE17C519DD00A3318F /* world3.png */; };
 		72682C0117C519DD00A3318F /* world2.png in Resources */ = {isa = PBXBuildFile; fileRef = 72682BFF17C519DD00A3318F /* world2.png */; };
 		7269D4441774D6B500AE1662 /* UIPlaceHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7269D4431774D6B500AE1662 /* UIPlaceHolderTextView.m */; };
-		726FAC54178595E4008F3EC4 /* PCViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 726FAC53178595E4008F3EC4 /* PCViewController.xib */; };
 		727906DD17DB61F20076F0FE /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 727906DC17DB61F20076F0FE /* StoreKit.framework */; };
 		727906E017DB624D0076F0FE /* IAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 727906DF17DB624D0076F0FE /* IAPHelper.m */; };
 		727906E817DB65900076F0FE /* EasyMessageIAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 727906E717DB65900076F0FE /* EasyMessageIAPHelper.m */; };
@@ -168,6 +168,7 @@
 		722415541771148800989C3B /* PCViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PCViewController.m; sourceTree = "<group>"; };
 		7224155E177114DC00989C3B /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		7224155F177114DC00989C3B /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
+		724D9ED11F040A2A00E37659 /* PCViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PCViewController.xib; sourceTree = "<group>"; };
 		72611AF91771E88B0043E508 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsViewController.h; path = EasyMessage/SettingsViewController.h; sourceTree = "<group>"; };
 		72611AFA1771E88B0043E508 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsViewController.m; path = EasyMessage/SettingsViewController.m; sourceTree = "<group>"; };
 		72611AFB1771E88B0043E508 /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SettingsViewController.xib; path = EasyMessage/SettingsViewController.xib; sourceTree = "<group>"; };
@@ -209,7 +210,6 @@
 		72682C0B17C5296500A3318F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		7269D4421774D6B500AE1662 /* UIPlaceHolderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPlaceHolderTextView.h; sourceTree = "<group>"; };
 		7269D4431774D6B500AE1662 /* UIPlaceHolderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPlaceHolderTextView.m; sourceTree = "<group>"; };
-		726FAC53178595E4008F3EC4 /* PCViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PCViewController.xib; sourceTree = "<group>"; };
 		727906DC17DB61F20076F0FE /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		727906DE17DB624D0076F0FE /* IAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAPHelper.h; sourceTree = "<group>"; };
 		727906DF17DB624D0076F0FE /* IAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAPHelper.m; sourceTree = "<group>"; };
@@ -289,14 +289,6 @@
 		72B843BA17A8776F00067A73 /* emblem_package.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = emblem_package.png; sourceTree = "<group>"; };
 		72B843BC17A87D9500067A73 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		72B843BE17A87DB300067A73 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		72BCE53118E1DBBD00514A96 /* SettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = SettingsViewController.xib; path = "Resources-iPad/EasyMessage/SettingsViewController.xib"; sourceTree = "<group>"; };
-		72BCE53218E1DBBD00514A96 /* EsyMessageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = EsyMessageViewController.xib; path = "Resources-iPad/EasyMessage/EsyMessageViewController.xib"; sourceTree = "<group>"; };
-		72BCE53318E1DBBD00514A96 /* SelectRecipientsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = SelectRecipientsViewController.xib; path = "Resources-iPad/EasyMessage/SelectRecipientsViewController.xib"; sourceTree = "<group>"; };
-		72BCE53418E1DBBE00514A96 /* SocialNetworksViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = SocialNetworksViewController.xib; path = "Resources-iPad/EasyMessage/SocialNetworksViewController.xib"; sourceTree = "<group>"; };
-		72BCE53518E1DBBE00514A96 /* PCViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = PCViewController.xib; path = "Resources-iPad/EasyMessage/PCViewController.xib"; sourceTree = "<group>"; };
-		72BCE53618E1DBBE00514A96 /* CustomMessagesController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CustomMessagesController.xib; path = "Resources-iPad/EasyMessage/CustomMessagesController.xib"; sourceTree = "<group>"; };
-		72BCE53718E1DBBE00514A96 /* IAPMasterViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = IAPMasterViewController.xib; path = "Resources-iPad/IAPMasterViewController.xib"; sourceTree = "<group>"; };
-		72BCE53818E1DBBE00514A96 /* GroupDetailsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = GroupDetailsViewController.xib; path = "Resources-iPad/GroupDetailsViewController.xib"; sourceTree = "<group>"; };
 		72BCE54F18E20E9B00514A96 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
 		72BCE55018E20E9B00514A96 /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
 		72BCE55118E20E9B00514A96 /* AFHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperationManager.h; sourceTree = "<group>"; };
@@ -396,7 +388,6 @@
 				7285348318E341AC00826581 /* PCPopupViewController.xib */,
 				7285347F18E3415D00826581 /* Untitled.png */,
 				72BCE54E18E20E9B00514A96 /* AFNetworking */,
-				72BCE52F18E1DBB900514A96 /* Resources-iPad */,
 				727A765217DFDF090032EFF8 /* CoreDataModel.xcdatamodeld */,
 				727C8F0C17E37C8900BDABA1 /* MessageDataModel.h */,
 				727C8F0D17E37C8900BDABA1 /* MessageDataModel.m */,
@@ -504,6 +495,7 @@
 		722415411771148800989C3B /* EasyMessage */ = {
 			isa = PBXGroup;
 			children = (
+				724D9ED11F040A2A00E37659 /* PCViewController.xib */,
 				7285A6B3177CB874006137B8 /* 111-user.png */,
 				7263E06F17C435160065E538 /* mail-2.png */,
 				72F787FC17DCC38D00424519 /* 35-shopping.png */,
@@ -524,7 +516,6 @@
 				7224154A1771148800989C3B /* PCAppDelegate.h */,
 				7224154B1771148800989C3B /* PCAppDelegate.m */,
 				722415531771148800989C3B /* PCViewController.h */,
-				726FAC53178595E4008F3EC4 /* PCViewController.xib */,
 				722415541771148800989C3B /* PCViewController.m */,
 				722415421771148800989C3B /* Supporting Files */,
 				726235F017D9358600DC0CED /* Group.h */,
@@ -618,21 +609,6 @@
 				729AAC4317DA839800CABCB0 /* CustomMessagesController.xib */,
 			);
 			name = Messages;
-			sourceTree = "<group>";
-		};
-		72BCE52F18E1DBB900514A96 /* Resources-iPad */ = {
-			isa = PBXGroup;
-			children = (
-				72BCE53118E1DBBD00514A96 /* SettingsViewController.xib */,
-				72BCE53218E1DBBD00514A96 /* EsyMessageViewController.xib */,
-				72BCE53318E1DBBD00514A96 /* SelectRecipientsViewController.xib */,
-				72BCE53418E1DBBE00514A96 /* SocialNetworksViewController.xib */,
-				72BCE53518E1DBBE00514A96 /* PCViewController.xib */,
-				72BCE53618E1DBBE00514A96 /* CustomMessagesController.xib */,
-				72BCE53718E1DBBE00514A96 /* IAPMasterViewController.xib */,
-				72BCE53818E1DBBE00514A96 /* GroupDetailsViewController.xib */,
-			);
-			name = "Resources-iPad";
 			sourceTree = "<group>";
 		};
 		72BCE54118E20BE400514A96 /* LinkedIn */ = {
@@ -747,6 +723,7 @@
 				722415501771148800989C3B /* Default@2x.png in Resources */,
 				722415521771148800989C3B /* Default-568h@2x.png in Resources */,
 				72611AFD1771E88B0043E508 /* SettingsViewController.xib in Resources */,
+				724D9ED21F040A2A00E37659 /* PCViewController.xib in Resources */,
 				72611B05177213660043E508 /* EsyMessageViewController.xib in Resources */,
 				72611B0C177216940043E508 /* SelectRecipientsViewController.xib in Resources */,
 				72FFADA21A37B9E900A6F579 /* Icon-120.png in Resources */,
@@ -769,7 +746,6 @@
 				7285348718E34FA600826581 /* close48.png in Resources */,
 				7285A6B4177CB875006137B8 /* 111-user.png in Resources */,
 				72CA9EFC17847B8F00D8D016 /* Localizable.strings in Resources */,
-				726FAC54178595E4008F3EC4 /* PCViewController.xib in Resources */,
 				72FFADA71A37BA0F00A6F579 /* Icon-76.png in Resources */,
 				72B843B117A871CC00067A73 /* contact.png in Resources */,
 				72B843B317A8725000067A73 /* mail-1.png in Resources */,
@@ -969,6 +945,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
+				DEVELOPMENT_TEAM = VAZ5V665BS;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -978,7 +955,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EasyMessage/EasyMessage-Prefix.pch";
 				INFOPLIST_FILE = "EasyMessage/EasyMessage-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/MoPubSDK/AdNetworkSupport/GoogleAdMob/SDK",
@@ -999,6 +976,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
+				DEVELOPMENT_TEAM = VAZ5V665BS;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1008,7 +986,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EasyMessage/EasyMessage-Prefix.pch";
 				INFOPLIST_FILE = "EasyMessage/EasyMessage-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/MoPubSDK/AdNetworkSupport/GoogleAdMob/SDK",

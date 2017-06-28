@@ -104,3 +104,4 @@
 "contact_last_name" = "姓";
 "contact_fields_required" = "姓名和电话或电子邮件是必需的!";
 "invalid_email" = "不合规电邮!";
+"attach_image" = "Attach an image?";

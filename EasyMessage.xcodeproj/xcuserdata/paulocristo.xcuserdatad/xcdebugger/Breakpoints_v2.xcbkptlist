@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EasyMessage/PCViewController.m"
-            timestampString = "417719622.939857"
+            timestampString = "520359754.675919"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "54"
-            endingLineNumber = "54"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
             landmarkName = "-viewDidLoad"
             landmarkType = "7">
          </BreakpointContent>
@@ -26,12 +26,92 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EasyMessage/PCViewController.m"
-            timestampString = "439837552.286188"
+            timestampString = "520359754.675919"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "133"
-            endingLineNumber = "133"
+            startingLineNumber = "135"
+            endingLineNumber = "135"
             landmarkName = "-viewDidLoad"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EasyMessage/PCViewController.m"
+            timestampString = "520377993.12208"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1901"
+            endingLineNumber = "1901"
+            landmarkName = "-requestMeWithToken:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EasyMessage/PCViewController.m"
+            timestampString = "520378061.54639"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1898"
+            endingLineNumber = "1898"
+            landmarkName = "-requestMeWithToken:"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[PCViewController requestMeWithToken:]"
+                  moduleName = "EasyMessage"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/paulocristo/workspace/EASYMESSAGE_GIT/EasyMessage/PCViewController.m"
+                  timestampString = "520378723.09968"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1898"
+                  endingLineNumber = "1898"
+                  offsetFromSymbolStart = "39">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__39-[PCViewController requestMeWithToken:]_block_invoke"
+                  moduleName = "EasyMessage"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/paulocristo/workspace/EASYMESSAGE_GIT/EasyMessage/PCViewController.m"
+                  timestampString = "520378723.10317"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1899"
+                  endingLineNumber = "1899"
+                  offsetFromSymbolStart = "82">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EasyMessage/PCViewController.m"
+            timestampString = "520378089.888496"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1877"
+            endingLineNumber = "1877"
+            landmarkName = "-connectWithLinkedIn:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

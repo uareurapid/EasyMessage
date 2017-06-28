@@ -104,3 +104,4 @@
 "contact_last_name" = "Nom de famille";
 "contact_fields_required" = "Nom et téléphone ou email sont obligatoires!";
 "invalid_email" = "Email invalide!";
+"attach_image" = "Ajouter une image?";

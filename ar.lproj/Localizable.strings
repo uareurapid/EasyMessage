@@ -107,3 +107,4 @@
 "contact_last_name" = "اسم العائلة";
 "contact_fields_required" = "اسم ويطلب من الهاتف أو البريد الإلكتروني!";
 "invalid_email" = "بريد إلكتروني خاطئ!";
+"attach_image" = "Attach an image?";

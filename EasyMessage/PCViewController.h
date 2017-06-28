@@ -45,6 +45,7 @@ UITextFieldDelegate, NSURLConnectionDelegate,SKStoreProductViewControllerDelegat
 
 @property (strong, nonatomic) IBOutlet UISwitch *saveMessageSwitch;
 
+@property (weak, nonatomic) IBOutlet UILabel *labelAttach;
 @property ABAddressBookRef addressBook;
 //@property (strong, nonatomic) IBOutlet ADBannerView *adBannerView;
 
