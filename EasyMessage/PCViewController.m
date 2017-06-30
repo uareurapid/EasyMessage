@@ -24,6 +24,11 @@
 #import "AFHTTPRequestOperation.h"
 #import "JSONResponseSerializerWithData.h"
 
+#define SYSTEM_VERSION_EQUAL_TO(v)                  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedSame)
+#define SYSTEM_VERSION_GREATER_THAN(v)              ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedDescending)
+#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+#define SYSTEM_VERSION_LESS_THAN(v)                 ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
+#define SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(v)     ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedDescending)
 
 @interface PCViewController ()
 
@@ -46,6 +51,7 @@
 @synthesize  timeToShowPromoPopup;
 @synthesize attachImageView;
 @synthesize labelAttach;
+
 
 @synthesize attachImage;
 //google plus sdk
@@ -92,6 +98,9 @@ static NSString * const kClientId = @"122031362005-ibifir1r1aijhke7r3fe404usutpd
     selectedRecipientsList = [[NSMutableArray alloc]init];
     [scrollView flashScrollIndicators];
     [scrollView setContentSize:self.view.frame.size];
+    
+    [self.scrollView setContentOffset: CGPointMake(0, self.scrollView.contentOffset.y)];
+    self.scrollView.directionalLockEnabled = YES;
     
     //load the contacts list when the view loads
     [self setupAddressBook];
@@ -547,9 +556,10 @@ static NSString * const kClientId = @"122031362005-ibifir1r1aijhke7r3fe404usutpd
     
     
     CFErrorRef * error = NULL;
-    //ABAddressBookRef 
     ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, error);
     NSMutableArray __block *contacts;
+    
+    CFRetain(addressBook);
     
     //register a callback to track adressbook changes
     ABAddressBookRegisterExternalChangeCallback(addressBook, addressBookChanged, (__bridge void *)(self));
@@ -559,23 +569,30 @@ static NSString * const kClientId = @"122031362005-ibifir1r1aijhke7r3fe404usutpd
     if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusNotDetermined) {
         ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
             // First time access has been granted, add the contact
-            contacts = [self loadContacts: addressBook];
-       
-            [recipientsController.contactsList removeAllObjects];
-            [recipientsController.contactsList addObjectsFromArray:contacts];
+            if(granted==true) {
+                NSLog(@"granted permission");
+                contacts = [self loadContacts: addressBook];
+                
+                [recipientsController.contactsList removeAllObjects];
+                [recipientsController.contactsList addObjectsFromArray:contacts];
+                
+                //load also the local contact models, from local database
+                NSMutableArray *models = [self fetchLocalContactModelRecords];
+                
+                [recipientsController.contactsList addObjectsFromArray:models];
+                
+                [recipientsController.selectedContactsList removeAllObjects];
+                [recipientsController.selectedContactsList addObjectsFromArray:selectedRecipientsList];
+                
+                [recipientsController refreshPhonebook:nil];
+            }
             
-            //load also the local contact models, from local database
-            NSMutableArray *models = [self fetchLocalContactModelRecords];
-            
-            [recipientsController.contactsList addObjectsFromArray:models];
-            
-            [recipientsController.selectedContactsList removeAllObjects];
-            [recipientsController.selectedContactsList addObjectsFromArray:selectedRecipientsList];
  
         });
         
     }
     else if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized) {
+        NSLog(@"previously granted permission");
         // The user has previously given access, add the contact
         contacts = [self loadContacts: addressBook];
         
@@ -601,15 +618,28 @@ static NSString * const kClientId = @"122031362005-ibifir1r1aijhke7r3fe404usutpd
         [recipientsController.selectedContactsList removeAllObjects];
         [recipientsController.selectedContactsList addObjectsFromArray:selectedRecipientsList];
         
+        [recipientsController refreshPhonebook:nil];
+        
     }
     else {
         // The user has previously denied access
         // Send an alert telling user to change privacy setting in settings app
+        if ( ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusDenied ||
+            ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusRestricted ) {
+            // Display an error.
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Permissions issue!"
+                                                            message:@"Permission was denied. Cannot load address book. Please change privacy setting in settings app"
+                                                           delegate:self
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            
+            [alert show];
+        }
         
     }
-    [recipientsController refreshPhonebook:nil];
  
     CFRelease(addressBook);
+    
     
 }
 
@@ -764,15 +794,20 @@ static NSString * const kClientId = @"122031362005-ibifir1r1aijhke7r3fe404usutpd
     
     return groupsArray;
 }
+
 //Load the contacts list from the address book
--(NSMutableArray *)loadContacts: (ABAddressBookRef) addressBook {
+-(NSMutableArray *)loadContacts : (ABAddressBookRef) addressBook {
+    
+    NSLog(@"START IMPORT");
     
     NSMutableArray *contacts = [[NSMutableArray alloc] init];
     
+    //need to have permission first, otherwise it can crash
+    if(ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized) {
     
        //*****
-        
-        NSArray *arrayOfPeople = (__bridge_transfer NSArray*)ABAddressBookCopyArrayOfAllPeople(addressBook);
+        //CFRetain(addressBook);
+        NSArray *arrayOfPeople = (__bridge NSArray*)ABAddressBookCopyArrayOfAllPeople(addressBook);
         
         for(int i = 0; i < arrayOfPeople.count; i++){
             
@@ -874,14 +909,13 @@ static NSString * const kClientId = @"122031362005-ibifir1r1aijhke7r3fe404usutpd
         }//end for loop
 
        //****
+    //CFRelease(addressBook);
+    }
     
-        
+    NSLog(@"DONE IMPORT");
+    
    return contacts;
     
-    
-    
-    
-        
     
 }
 

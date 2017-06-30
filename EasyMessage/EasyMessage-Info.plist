@@ -21,6 +21,7 @@
 				<string>Icon-76.png</string>
 				<string>Icon-76@2x.png</string>
 				<string>Icon-60@2x.png</string>
+				<string>Icon-167.png</string>
 			</array>
 		</dict>
 	</dict>
@@ -57,7 +58,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.0.0</string>
+	<string>1.0.1</string>
 	<key>LIAppId</key>
 	<string>3233463</string>
 	<key>LSRequiresIPhoneOS</key>
@@ -81,6 +82,8 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 </dict>
 </plist>

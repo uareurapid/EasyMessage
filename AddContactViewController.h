@@ -19,6 +19,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnCancel;
 @property (weak, nonatomic) IBOutlet UILabel *labelLastname;
 @property (weak, nonatomic) IBOutlet UILabel *labelName;
+- (IBAction)btnCancelClicked:(id)sender;
+- (IBAction)btnCreateContactClicked:(id)sender;
 
 //reference to recipients controller list
 @property (strong,nonatomic) NSMutableArray *contactsList;

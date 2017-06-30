@@ -46,7 +46,7 @@ UITextFieldDelegate, NSURLConnectionDelegate,SKStoreProductViewControllerDelegat
 @property (strong, nonatomic) IBOutlet UISwitch *saveMessageSwitch;
 
 @property (weak, nonatomic) IBOutlet UILabel *labelAttach;
-@property ABAddressBookRef addressBook;
+//@property ABAddressBookRef addressBook;
 //@property (strong, nonatomic) IBOutlet ADBannerView *adBannerView;
 
 @property (strong, nonatomic) IBOutlet UIImageView *attachImageView;
@@ -60,6 +60,7 @@ UITextFieldDelegate, NSURLConnectionDelegate,SKStoreProductViewControllerDelegat
 @property (strong, nonatomic) LIALinkedInHttpClient *_client;
 
 @property (strong, nonatomic) PCPopupViewController  *popupView;
+
 
 -(IBAction)loadContactsList:(id)sender;
 - (IBAction)showSettings:(id)sender;

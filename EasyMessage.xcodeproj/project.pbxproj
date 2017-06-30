@@ -23,6 +23,7 @@
 		722415551771148800989C3B /* PCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 722415541771148800989C3B /* PCViewController.m */; };
 		72241560177114DC00989C3B /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7224155E177114DC00989C3B /* AddressBook.framework */; };
 		72241561177114DC00989C3B /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7224155F177114DC00989C3B /* AddressBookUI.framework */; };
+		7235CC3E1F0460C30039E8A3 /* AddContactViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7235CC3D1F0460C30039E8A3 /* AddContactViewController.xib */; };
 		724D9ED21F040A2A00E37659 /* PCViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 724D9ED11F040A2A00E37659 /* PCViewController.xib */; };
 		72611AFC1771E88B0043E508 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 72611AFA1771E88B0043E508 /* SettingsViewController.m */; };
 		72611AFD1771E88B0043E508 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 72611AFB1771E88B0043E508 /* SettingsViewController.xib */; };
@@ -91,7 +92,6 @@
 		72A2C27A177B99F2006FF12F /* email.png in Resources */ = {isa = PBXBuildFile; fileRef = 72A2C279177B99F2006FF12F /* email.png */; };
 		72A2C27C177B9AE9006FF12F /* gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 72A2C27B177B9AE9006FF12F /* gear.png */; };
 		72A2C27E177B9F6D006FF12F /* phone-book.png in Resources */ = {isa = PBXBuildFile; fileRef = 72A2C27D177B9F6D006FF12F /* phone-book.png */; };
-		72AA60F21BF7FFF4006183D3 /* AddContactViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 72AA60F11BF7FFF4006183D3 /* AddContactViewController.xib */; };
 		72AA60F51BF80124006183D3 /* AddContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 72AA60F41BF80124006183D3 /* AddContactViewController.m */; };
 		72AC6C6418E4762C0074DBCF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72AC6C6318E4762C0074DBCF /* AudioToolbox.framework */; };
 		72AC6C6618E476390074DBCF /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72AC6C6518E476390074DBCF /* AVFoundation.framework */; };
@@ -134,6 +134,7 @@
 		72D84D3A1BF117E100D6B77C /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72D84D391BF117E100D6B77C /* AssetsLibrary.framework */; };
 		72D84D3C1BF117F900D6B77C /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72D84D3B1BF117F900D6B77C /* CoreMotion.framework */; };
 		72D84D3E1BF129E700D6B77C /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72D84D3D1BF129E700D6B77C /* CoreText.framework */; };
+		72E0F4BE1F06FC5500D794C0 /* Icon-167.png in Resources */ = {isa = PBXBuildFile; fileRef = 72E0F4BD1F06FC5500D794C0 /* Icon-167.png */; };
 		72F787FB17DCC37500424519 /* 24-gift.png in Resources */ = {isa = PBXBuildFile; fileRef = 72F787FA17DCC37500424519 /* 24-gift.png */; };
 		72F787FD17DCC38D00424519 /* 35-shopping.png in Resources */ = {isa = PBXBuildFile; fileRef = 72F787FC17DCC38D00424519 /* 35-shopping.png */; };
 		72FB67C5177B39E700D5E364 /* SocialNetworksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 72FB67C3177B39E700D5E364 /* SocialNetworksViewController.m */; };
@@ -168,6 +169,7 @@
 		722415541771148800989C3B /* PCViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PCViewController.m; sourceTree = "<group>"; };
 		7224155E177114DC00989C3B /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		7224155F177114DC00989C3B /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
+		7235CC3D1F0460C30039E8A3 /* AddContactViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddContactViewController.xib; sourceTree = "<group>"; };
 		724D9ED11F040A2A00E37659 /* PCViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PCViewController.xib; sourceTree = "<group>"; };
 		72611AF91771E88B0043E508 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsViewController.h; path = EasyMessage/SettingsViewController.h; sourceTree = "<group>"; };
 		72611AFA1771E88B0043E508 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsViewController.m; path = EasyMessage/SettingsViewController.m; sourceTree = "<group>"; };
@@ -265,7 +267,6 @@
 		72A2C279177B99F2006FF12F /* email.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = email.png; sourceTree = "<group>"; };
 		72A2C27B177B9AE9006FF12F /* gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gear.png; sourceTree = "<group>"; };
 		72A2C27D177B9F6D006FF12F /* phone-book.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "phone-book.png"; sourceTree = "<group>"; };
-		72AA60F11BF7FFF4006183D3 /* AddContactViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AddContactViewController.xib; path = EasyMessage/AddContactViewController.xib; sourceTree = "<group>"; };
 		72AA60F31BF80124006183D3 /* AddContactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddContactViewController.h; sourceTree = "<group>"; };
 		72AA60F41BF80124006183D3 /* AddContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddContactViewController.m; sourceTree = "<group>"; };
 		72AC6C6318E4762C0074DBCF /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -327,6 +328,7 @@
 		72D84D391BF117E100D6B77C /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		72D84D3B1BF117F900D6B77C /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		72D84D3D1BF129E700D6B77C /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		72E0F4BD1F06FC5500D794C0 /* Icon-167.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-167.png"; sourceTree = "<group>"; };
 		72F787FA17DCC37500424519 /* 24-gift.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "24-gift.png"; sourceTree = "<group>"; };
 		72F787FC17DCC38D00424519 /* 35-shopping.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "35-shopping.png"; sourceTree = "<group>"; };
 		72FB67C2177B39E700D5E364 /* SocialNetworksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SocialNetworksViewController.h; path = EasyMessage/SocialNetworksViewController.h; sourceTree = "<group>"; };
@@ -416,6 +418,7 @@
 				7293AA481BFF96730001D064 /* Icon-60@2x.png */,
 				7293AA491BFF96740001D064 /* Icon-76@2x.png */,
 				72FFAD9E1A37B9E900A6F579 /* Icon-76.png */,
+				72E0F4BD1F06FC5500D794C0 /* Icon-167.png */,
 				72FFAD9F1A37B9E900A6F579 /* Icon-120.png */,
 				72FFADA01A37B9E900A6F579 /* Icon-152.png */,
 				72B843BA17A8776F00067A73 /* emblem_package.png */,
@@ -565,6 +568,7 @@
 		727906E217DB626F0076F0FE /* Recipients */ = {
 			isa = PBXGroup;
 			children = (
+				7235CC3D1F0460C30039E8A3 /* AddContactViewController.xib */,
 				72611B08177216940043E508 /* SelectRecipientsViewController.h */,
 				72611B09177216940043E508 /* SelectRecipientsViewController.m */,
 				72AA60F31BF80124006183D3 /* AddContactViewController.h */,
@@ -573,7 +577,6 @@
 				72674E7117E26722001275AB /* GroupDetailsViewController.h */,
 				72674E7217E26722001275AB /* GroupDetailsViewController.m */,
 				72674E7317E26722001275AB /* GroupDetailsViewController.xib */,
-				72AA60F11BF7FFF4006183D3 /* AddContactViewController.xib */,
 			);
 			name = Recipients;
 			sourceTree = "<group>";
@@ -729,6 +732,7 @@
 				72FFADA21A37B9E900A6F579 /* Icon-120.png in Resources */,
 				72FB67C6177B39E700D5E364 /* SocialNetworksViewController.xib in Resources */,
 				72A2C27A177B99F2006FF12F /* email.png in Resources */,
+				7235CC3E1F0460C30039E8A3 /* AddContactViewController.xib in Resources */,
 				72A2C27C177B9AE9006FF12F /* gear.png in Resources */,
 				72A2C27E177B9F6D006FF12F /* phone-book.png in Resources */,
 				72FFADA11A37B9E900A6F579 /* Icon-76.png in Resources */,
@@ -760,6 +764,7 @@
 				72963F6717A9793600519FDC /* About-me-icon.png in Resources */,
 				72963F6B17A9825E00519FDC /* Forward.png in Resources */,
 				7263E07017C435160065E538 /* mail-2.png in Resources */,
+				72E0F4BE1F06FC5500D794C0 /* Icon-167.png in Resources */,
 				721512F21BEE84AA00F003D4 /* EasyMessage-Info.plist in Resources */,
 				72682BFD17C5184400A3318F /* world.png in Resources */,
 				72682C0017C519DD00A3318F /* world3.png in Resources */,
@@ -780,7 +785,6 @@
 				727906ED17DB677F0076F0FE /* IAPMasterViewController.xib in Resources */,
 				72F787FB17DCC37500424519 /* 24-gift.png in Resources */,
 				7285348518E341AC00826581 /* PCPopupViewController.xib in Resources */,
-				72AA60F21BF7FFF4006183D3 /* AddContactViewController.xib in Resources */,
 				72F787FD17DCC38D00424519 /* 35-shopping.png in Resources */,
 				720862FF17DD249C0024B662 /* 80-shopping-cart.png in Resources */,
 				7298EC0517DDEEEA002C30AE /* buy48.png in Resources */,

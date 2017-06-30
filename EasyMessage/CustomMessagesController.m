@@ -131,7 +131,7 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     //if ([[EasyMessageIAPHelper sharedInstance] productPurchased:PRODUCT_COMMON_MESSAGES]) {
-        [self.navigationItem.leftBarButtonItem setEnabled:[self getSelectedMessageIfAny]!=nil ];
+        [self.navigationItem.leftBarButtonItem setEnabled:[self getSelectedMessageIfAny]!=nil];
         [self.navigationItem.rightBarButtonItem setEnabled: YES];
         [self.tableView setAllowsSelection:YES];
     
@@ -178,7 +178,9 @@
     if(selectedMessageIndex>-1 && selectedMessage!=nil && selectedMessageIndex < messagesList.count) {
         return [messagesList objectAtIndex:selectedMessageIndex];
     }
-    return nil;
+    else {
+     return nil;
+    }
 }
 
 

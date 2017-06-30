@@ -43,6 +43,7 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -50,7 +51,9 @@
 
 -(id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    return self;
+    if(self) {
+      return self;  
+    }
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
@@ -62,7 +65,7 @@
     return YES;
 }
 
-- (IBAction)addContactClicked:(id)sender {
+- (IBAction)btnCreateContactClicked:(id)sender {
     
     if(self.txtName.text.length==0 || (self.txtEmail.text.length==0 && self.txtPhone.text.length==0) ) {
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"EasyMessage" message:NSLocalizedString(@"contact_fields_required",@"contact_fields_required") delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
