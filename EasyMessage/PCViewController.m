@@ -1844,8 +1844,8 @@ void addressBookChanged(ABAddressBookRef reference,
     //to get any selected ones
     [self checkIfPostToSocial];
     
-    imageName = @"Icon-Small.png";
-    image = [UIImage imageNamed:@"Icon-Small"];
+    imageName = @"icon-ipad-29";
+    image = [UIImage imageNamed:@"icon-ipad-29"];
     [self updateAttachButton];
     
     if(!sendToLinkedin && !sendToTwitter && !sendToFacebook) {
