@@ -31,6 +31,7 @@
 			<array>
 				<string>li3233463</string>
 				<string>tel</string>
+				<string>fb2095874780642911</string>
 			</array>
 		</dict>
 		<dict>
@@ -44,6 +45,17 @@
 			</array>
 		</dict>
 	</array>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+  	<string>fbapi</string>
+  	<string>fb-messenger-api</string>
+  	<string>fbauth2</string>
+  	<string>fbshareextension</string>
+	</array>
+	<key>FacebookAppID</key>
+	<string>2095874780642911</string>
+	<key>FacebookDisplayName</key>
+	<string>EasyMessage</string>
 	<key>CFBundleVersion</key>
 	<string>1.0.3</string>
 	<key>LIAppId</key>

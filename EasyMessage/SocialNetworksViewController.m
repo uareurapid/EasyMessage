@@ -136,34 +136,80 @@
 
 -(UITableViewCell *) labelForOptionIndex: (NSInteger) rowIndex cellView: (UITableViewCell *) cell  {
     
-     if(isFacebookAvailable && !isTwitterAvailable) {
-         cell.textLabel.text = NSLocalizedString(@"option_send_facebook_only",@"send only to facebook");
-         cell.imageView.image = [UIImage imageNamed:@"facebook"];
-         
-     }
-     else if(isTwitterAvailable && !isFacebookAvailable) {
-         cell.textLabel.text = NSLocalizedString(@"option_send_twitter_only",@"send only to twitter");
-         cell.imageView.image = [UIImage imageNamed:@"twitter"];
-     }
-     else if(!isTwitterAvailable && !isFacebookAvailable && isLinkedinAvailable) {
-         cell.textLabel.text = NSLocalizedString(@"option_send_linkedin_only",@"send only to linkedin");
-         cell.imageView.image = [UIImage imageNamed:@"linkedin"];
-     }
-     else {
-    //both available
-         if(rowIndex==0) {
+    NSInteger options = 1;
+    if(isFacebookAvailable) {
+        options+=1;
+    }
+    if(isTwitterAvailable) {
+        options+=1;
+    }
+    
+    if(options==3) {
+        if(rowIndex==0) {
             cell.textLabel.text = NSLocalizedString(@"option_send_facebook_only",@"send only to facebook");
             cell.imageView.image = [UIImage imageNamed:@"facebook"];
-         }
-         else if(rowIndex==1) {
+        }
+        else if(rowIndex==1) {
             cell.textLabel.text = NSLocalizedString(@"option_send_twitter_only",@"send only to twitter");
             cell.imageView.image = [UIImage imageNamed:@"twitter"];
-         }
-         else {
-             cell.textLabel.text = NSLocalizedString(@"option_send_linkedin_only",@"send only to linkedin");
-             cell.imageView.image = [UIImage imageNamed:@"linkedin"];
-         }
-     }
+        }
+        else {
+            cell.textLabel.text = NSLocalizedString(@"option_send_linkedin_only",@"send only to linkedin");
+            cell.imageView.image = [UIImage imageNamed:@"linkedin"];
+        }
+    }
+    else if(options==1) {
+        if(isFacebookAvailable) {
+            cell.textLabel.text = NSLocalizedString(@"option_send_facebook_only",@"send only to facebook");
+            cell.imageView.image = [UIImage imageNamed:@"facebook"];
+            
+        }
+        else if (isLinkedinAvailable) {
+            cell.textLabel.text = NSLocalizedString(@"option_send_linkedin_only",@"send only to linkedin");
+            cell.imageView.image = [UIImage imageNamed:@"linkedin"];
+        }
+        else { //twitter
+            cell.textLabel.text = NSLocalizedString(@"option_send_twitter_only",@"send only to twitter");
+            cell.imageView.image = [UIImage imageNamed:@"twitter"];
+        }
+    }
+    else if(options==2) {
+        if(isFacebookAvailable && isTwitterAvailable) {
+            
+            if(rowIndex==0) {
+                cell.textLabel.text = NSLocalizedString(@"option_send_facebook_only",@"send only to facebook");
+                cell.imageView.image = [UIImage imageNamed:@"facebook"];
+            }
+            else {
+                cell.textLabel.text = NSLocalizedString(@"option_send_twitter_only",@"send only to twitter");
+                cell.imageView.image = [UIImage imageNamed:@"twitter"];
+            }
+            
+            
+        }
+        else if(isFacebookAvailable && isLinkedinAvailable) {
+            if(rowIndex==0) {
+                cell.textLabel.text = NSLocalizedString(@"option_send_facebook_only",@"send only to facebook");
+                cell.imageView.image = [UIImage imageNamed:@"facebook"];
+            }
+            else {
+                cell.textLabel.text = NSLocalizedString(@"option_send_linkedin_only",@"send only to linkedin");
+                cell.imageView.image = [UIImage imageNamed:@"linkedin"];
+            }
+        }
+        else  {
+            //linkeding && twitter
+            if(rowIndex==0) {
+                cell.textLabel.text = NSLocalizedString(@"option_send_twitter_only",@"send only to twitter");
+                cell.imageView.image = [UIImage imageNamed:@"twitter"];
+            }
+            else {
+                cell.textLabel.text = NSLocalizedString(@"option_send_linkedin_only",@"send only to linkedin");
+                cell.imageView.image = [UIImage imageNamed:@"linkedin"];
+            }
+        }
+    }
+    
     return cell;
 }
 

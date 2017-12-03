@@ -30,6 +30,10 @@
 #define SYSTEM_VERSION_LESS_THAN(v)                 ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
 #define SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(v)     ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedDescending)
 
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import <FBSDKShareKit/FBSDKShareKit.h>
+
 @interface PCViewController ()
 
 @end
@@ -155,6 +159,11 @@ static NSString * const kClientId = @"122031362005-ibifir1r1aijhke7r3fe404usutpd
     //if(showAds) {
     //    [self createAdBannerView];
     //}
+    
+    //FBSDKLoginButton *loginButton = [[FBSDKLoginButton alloc] init];
+    // Optional: Place the button in the center of your view.
+    //loginButton.center = self.view.center;
+    //[self.view addSubview:loginButton];
     
     [super viewDidLoad];
     
@@ -397,6 +406,10 @@ static NSString * const kClientId = @"122031362005-ibifir1r1aijhke7r3fe404usutpd
     
     if(isFacebookAvailable) {
         isFacebookSelected = [settingsController.socialOptionsController.selectedServiceOptions containsObject: OPTION_SENDTO_FACEBOOK_ONLY];
+        
+        //if ([FBSDKAccessToken currentAccessToken]) {
+            // User is logged in, do work such as go to next view controller.
+        //}
     }
     if(isTwitterAvailable) {
         isTwitterSelected = [settingsController.socialOptionsController.selectedServiceOptions containsObject: OPTION_SENDTO_TWITTER_ONLY];
@@ -1127,7 +1140,14 @@ static NSString * const kClientId = @"122031362005-ibifir1r1aijhke7r3fe404usutpd
 //will send the message to facebook
 - (void)sendToFacebook:(NSString *)message {
     
-    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
+    FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
+    content.contentURL = [NSURL URLWithString:@"https://itunes.apple.com/ca/app/easymessage/id668776671?mt=8"];
+    content.quote = message;
+    [FBSDKShareDialog showFromViewController:self
+                                 withContent:content
+                                    delegate:nil];
+    
+    /*if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
         
         SLComposeViewController *mySLComposerSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
         
@@ -1183,7 +1203,7 @@ static NSString * const kClientId = @"122031362005-ibifir1r1aijhke7r3fe404usutpd
         }];
         
         [self presentViewController:mySLComposerSheet animated:YES completion:nil];
-    }
+    }*/
 }
 
 //reset the booleans after sending the message

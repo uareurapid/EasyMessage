@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		720862FF17DD249C0024B662 /* 80-shopping-cart.png in Resources */ = {isa = PBXBuildFile; fileRef = 720862FE17DD249C0024B662 /* 80-shopping-cart.png */; };
+		7209458D1FD4B8AE00AD7EDF /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7209458A1FD4B8AC00AD7EDF /* FBSDKCoreKit.framework */; };
+		7209458E1FD4B8AE00AD7EDF /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7209458B1FD4B8AD00AD7EDF /* FBSDKLoginKit.framework */; };
+		7209458F1FD4B8AE00AD7EDF /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7209458C1FD4B8AE00AD7EDF /* FBSDKShareKit.framework */; };
+		720945911FD4BCAF00AD7EDF /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 720945901FD4BCAF00AD7EDF /* Bolts.framework */; };
 		72137A8F17A7161300C90511 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72137A8E17A7161300C90511 /* Social.framework */; };
 		721512F21BEE84AA00F003D4 /* EasyMessage-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 721512F11BEE84AA00F003D4 /* EasyMessage-Info.plist */; };
 		721A4FE118E3963A00B07B6C /* attach.png in Resources */ = {isa = PBXBuildFile; fileRef = 721A4FE018E3963A00B07B6C /* attach.png */; };
@@ -149,6 +153,10 @@
 
 /* Begin PBXFileReference section */
 		720862FE17DD249C0024B662 /* 80-shopping-cart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "80-shopping-cart.png"; path = "EasyMessage/80-shopping-cart.png"; sourceTree = "<group>"; };
+		7209458A1FD4B8AC00AD7EDF /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		7209458B1FD4B8AD00AD7EDF /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		7209458C1FD4B8AE00AD7EDF /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
+		720945901FD4BCAF00AD7EDF /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		72137A8E17A7161300C90511 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		721512F11BEE84AA00F003D4 /* EasyMessage-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "EasyMessage-Info.plist"; path = "EasyMessage/EasyMessage-Info.plist"; sourceTree = "<group>"; };
 		721A4FE018E3963A00B07B6C /* attach.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = attach.png; sourceTree = "<group>"; };
@@ -371,10 +379,14 @@
 				728F913F1775C8E200254D36 /* CoreMedia.framework in Frameworks */,
 				728F913E1775C8D300254D36 /* MediaPlayer.framework in Frameworks */,
 				7224153C1771148800989C3B /* UIKit.framework in Frameworks */,
+				7209458F1FD4B8AE00AD7EDF /* FBSDKShareKit.framework in Frameworks */,
 				72611B071772143A0043E508 /* MessageUI.framework in Frameworks */,
+				7209458D1FD4B8AE00AD7EDF /* FBSDKCoreKit.framework in Frameworks */,
 				72241560177114DC00989C3B /* AddressBook.framework in Frameworks */,
 				72241561177114DC00989C3B /* AddressBookUI.framework in Frameworks */,
 				7224153E1771148800989C3B /* Foundation.framework in Frameworks */,
+				720945911FD4BCAF00AD7EDF /* Bolts.framework in Frameworks */,
+				7209458E1FD4B8AE00AD7EDF /* FBSDKLoginKit.framework in Frameworks */,
 				722415401771148800989C3B /* CoreGraphics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -471,6 +483,10 @@
 		7224153A1771148800989C3B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				720945901FD4BCAF00AD7EDF /* Bolts.framework */,
+				7209458A1FD4B8AC00AD7EDF /* FBSDKCoreKit.framework */,
+				7209458B1FD4B8AD00AD7EDF /* FBSDKLoginKit.framework */,
+				7209458C1FD4B8AE00AD7EDF /* FBSDKShareKit.framework */,
 				72D84D3D1BF129E700D6B77C /* CoreText.framework */,
 				72D84D3B1BF117F900D6B77C /* CoreMotion.framework */,
 				72D84D391BF117E100D6B77C /* AssetsLibrary.framework */,

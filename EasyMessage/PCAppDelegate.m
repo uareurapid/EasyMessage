@@ -14,6 +14,8 @@
 #import "CustomMessagesController.h"
 #import "EasyMessageIAPHelper.h"
 #import "IAPMasterViewController.h"
+//  AppDelegate.m
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
 
 
 @implementation PCAppDelegate
@@ -67,11 +69,46 @@
     self.window.rootViewController = tabController;//navController;
     [self.window makeKeyAndVisible];
     
-    
+    [[FBSDKApplicationDelegate sharedInstance] application:application
+                             didFinishLaunchingWithOptions:launchOptions];
+    // Add any custom logic here.
     
     
     return YES;
 }
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    
+    BOOL handled = [[FBSDKApplicationDelegate sharedInstance] application:application
+                                                                  openURL:url
+                                                        sourceApplication:sourceApplication
+                                                               annotation:annotation
+                    ];
+    // Add any custom logic here.
+    return handled;
+}
+
+/**
+ TO add a facebook login button
+ // Add this to the header of your file, e.g. in ViewController.m
+ // after #import "ViewController.h"
+ #import <FBSDKCoreKit/FBSDKCoreKit.h>
+ #import <FBSDKLoginKit/FBSDKLoginKit.h>
+ 
+ // Add this to the body
+ @implementation ViewController
+ 
+ - (void)viewDidLoad {
+ [super viewDidLoad];
+ FBSDKLoginButton *loginButton = [[FBSDKLoginButton alloc] init];
+ // Optional: Place the button in the center of your view.
+ loginButton.center = self.view.center;
+ [self.view addSubview:loginButton];
+ }
+ 
+ @end
+ */
 
 #pragma CORE DATA instance methods
 

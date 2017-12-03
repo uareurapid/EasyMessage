@@ -113,13 +113,13 @@
     
     isLinkedinAvailable = true;
     //facebook
-    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
-        isFacebookAvailable=YES;
+    //if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
+    isFacebookAvailable=true;
 
-    }
-    else {
-        isFacebookAvailable = NO;
-    }
+    //}
+    //else {
+    //    isFacebookAvailable = NO;
+    //}
     //twitter
     
     if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {

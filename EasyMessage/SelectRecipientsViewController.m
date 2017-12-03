@@ -280,16 +280,16 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
             initial = [[contact.name substringToIndex:1] uppercaseString];
         }
         else {
-            if(contact.lastName!=nil) {
+            if(contact.lastName!=nil && contact.lastName.length>0) {
                 initial = [[contact.lastName substringToIndex:1] uppercaseString];
             }
-            else if(contact.name!=nil) {
+            else if(contact.name!=nil && contact.name.length>0) {
                 initial = [[contact.name substringToIndex:1] uppercaseString];
             }
-            else if(contact.email!=nil) {
+            else if(contact.email!=nil && contact.email.length>0) {
                 initial = [[contact.email substringToIndex:1] uppercaseString];
             }
-            else if(contact.phone!=nil) {
+            else if(contact.phone!=nil && contact.phone.length>0) {
                 initial = [[contact.phone substringToIndex:1] uppercaseString];
             }
         }
