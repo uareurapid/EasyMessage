@@ -61,17 +61,19 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
         self.databaseRecords = [[NSMutableArray alloc] init];
         self.rootViewController = viewController;
         
-        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"select_all",nil)
+        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"select_all.png"]
                                                                        style:UIBarButtonItemStyleDone target:self action:@selector(selectAllContacts:)];
-        
+        //initWithTitle:NSLocalizedString(@"select_all",nil)
         self.navigationItem.leftBarButtonItem = doneButton;
         
         
         //UIBarButtonItem *addToGroupButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"add_to_group",@"add_to_group")
                                                                       //       style:UIBarButtonItemStyleDone target:self action:@selector(addGroupClicked:)];
         //also used to create a new contact if nothing is selected
-        UIBarButtonItem *addToGroupButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"new_contact",@"new_contact")
-                                                                             style:UIBarButtonItemStyleDone target:self action:@selector(addGroupClicked:)];
+        UIBarButtonItem *addToGroupButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"add_contact.png"] style:UIBarButtonItemStyleDone target:self action:@selector(addGroupClicked:)];
+    
+    //initWithTitle:NSLocalizedString(@"new_contact",@"new_contact")
+      //                                                                       style:UIBarButtonItemStyleDone target:self action:@selector(addGroupClicked:)];
         
         //[addToGroupButton setCustomView:[self setupGroupButton]];
         self.navigationItem.rightBarButtonItem = addToGroupButton;
@@ -314,6 +316,13 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
         
     }
 
+    if(self.sortedKeys.count > 0) {
+        NSArray *other = [[NSArray alloc] initWithArray:self.sortedKeys];
+        [self.sortedKeys removeAllObjects];
+        [self.sortedKeys addObjectsFromArray: [other sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)]];
+    }
+    
+
     return dic;
 }
 
@@ -492,16 +501,18 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
         
         [selectedContactsList removeAllObjects];
         dispatch_async(dispatch_get_main_queue(), ^{
-           self.navigationItem.leftBarButtonItem.title = NSLocalizedString(@"select_all", @"seleccionar tudo");
+            
+            self.navigationItem.leftBarButtonItem.image = [UIImage imageNamed:@"select_all.png"];
+           //self.navigationItem.leftBarButtonItem.title = NSLocalizedString(@"select_all", @"seleccionar tudo");
             //[self.navigationItem.rightBarButtonItem setEnabled:NO];
             //can add a contact
-            self.navigationItem.rightBarButtonItem.title = NSLocalizedString(@"new_contact", @"new_contact");
+            //self.navigationItem.rightBarButtonItem.title = NSLocalizedString(@"new_contact", @"new_contact");
+            self.navigationItem.rightBarButtonItem.image = [UIImage imageNamed:@"add_contact.png"];
+            
             self.groupLocked = true;
 
             
         });
-        
-        
         
     }
     else {
@@ -529,9 +540,11 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
         }
        
         dispatch_async(dispatch_get_main_queue(), ^{
-            self.navigationItem.leftBarButtonItem.title = NSLocalizedString(@"unselect_all", @"remover selecção");
+            self.navigationItem.leftBarButtonItem.image = [UIImage imageNamed:@"remove_selection.png"];
+            //title = NSLocalizedString(@"unselect_all", @"remover selecção");
             //can add them to the group
-            self.navigationItem.rightBarButtonItem.title = NSLocalizedString(@"add_to_group", @"add_to_group");
+            self.navigationItem.rightBarButtonItem.image = [UIImage imageNamed:@"add_group.png"];
+            //.title = NSLocalizedString(@"add_to_group", @"add_to_group");
             self.groupLocked = false;
         });
         
@@ -870,16 +883,17 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
     
     if(selectedContactsList.count>0) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            self.navigationItem.leftBarButtonItem.title = NSLocalizedString(@"unselect_all", @"remover selecção");
+            self.navigationItem.leftBarButtonItem.image = [UIImage imageNamed:@"remove_selection.png"];
+            //NSLocalizedString(@"unselect_all", @"remover selecção");
             
             if(selectedContactsList.count>1) {
                 self.groupLocked = false;
-                self.navigationItem.rightBarButtonItem.title = NSLocalizedString(@"add_to_group", @"add_to_group");
+                self.navigationItem.rightBarButtonItem.image = [UIImage imageNamed:@"add_group.png"];
             }
             else {
                 //only 1 selected, cannot create a group
                 self.groupLocked = true;
-                self.navigationItem.rightBarButtonItem.title = NSLocalizedString(@"new_contact", @"new_contact");
+                self.navigationItem.rightBarButtonItem.image = [UIImage imageNamed:@"add_contact.png"];
             }
             
         });
@@ -890,10 +904,12 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
     }
     else {
         dispatch_async(dispatch_get_main_queue(), ^{
-            self.navigationItem.leftBarButtonItem.title = NSLocalizedString(@"select_all", @"seleccionar tudo");
+            self.navigationItem.leftBarButtonItem.image = [UIImage imageNamed:@"select_all.png"];
+            //NSLocalizedString(@"select_all", @"seleccionar tudo");
             
             self.groupLocked = true;
-            self.navigationItem.rightBarButtonItem.title = NSLocalizedString(@"new_contact", @"new_contact");
+            self.navigationItem.rightBarButtonItem.image = [UIImage imageNamed:@"add_contact.png"];
+            //NSLocalizedString(@"new_contact", @"new_contact");
             
         });
     }

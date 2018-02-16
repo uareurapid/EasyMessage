@@ -122,12 +122,12 @@
     //}
     //twitter
     
-    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
-        isTwitterAvailable=YES;
-    }
-    else {
-        isTwitterAvailable = NO;
-    }
+    //if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
+    isTwitterAvailable=YES;
+    //}
+    //else {
+    //    isTwitterAvailable = NO;
+    //}
     
     if(isTwitterAvailable || isFacebookAvailable || isLinkedinAvailable) {
         if(![sendOptions containsObject:OPTION_INCLUDE_SOCIAL_SERVICES]) {

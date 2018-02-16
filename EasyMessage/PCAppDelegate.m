@@ -16,6 +16,10 @@
 #import "IAPMasterViewController.h"
 //  AppDelegate.m
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <TwitterKit/TwitterKit.h>
+#import <Appirater.h>
+
+
 
 
 @implementation PCAppDelegate
@@ -72,9 +76,52 @@
     [[FBSDKApplicationDelegate sharedInstance] application:application
                              didFinishLaunchingWithOptions:launchOptions];
     // Add any custom logic here.
+    [[Twitter sharedInstance] startWithConsumerKey:@"SfrtbFrUq0IjXVaCHi8784rUN" consumerSecret:@"uMGMGTXzUaJFifZgdpel7Z5hA5MMovDn6vCKxQbvWDk7MOJJGC"];
     
+    [Appirater setAppId:@"668776671"];
+    [Appirater setDaysUntilPrompt:0];
+    [Appirater setUsesUntilPrompt:1];
+    [Appirater setSignificantEventsUntilPrompt:-1];
+    [Appirater setTimeBeforeReminding:2];
+    [Appirater appLaunched:YES];
+    [Appirater setDebug:NO];
+    
+    [self registerForRemoteNotifications];
     
     return YES;
+}
+
+- (void)registerForRemoteNotifications {
+    if(SYSTEM_VERSION_GRATERTHAN_OR_EQUALTO(@"10.0")){
+        UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+        center.delegate = self;
+        [center requestAuthorizationWithOptions:(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAuthorizationOptionBadge) completionHandler:^(BOOL granted, NSError * _Nullable error){
+            if(!error){
+                [[UIApplication sharedApplication] registerForRemoteNotifications];
+            }
+        }];
+    }
+    else {
+        // Code for old versions
+        if ([[UIApplication sharedApplication]  respondsToSelector:@selector(isRegisteredForRemoteNotifications)])
+        {
+            // for iOS 8
+            [[UIApplication sharedApplication]  registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+            [[UIApplication sharedApplication]  registerForRemoteNotifications];
+        }
+    }
+}
+
+- (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
+{
+    NSLog(@"Failed to get token, error: %@", error);
+}
+
+- (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
+{
+    NSLog(@"My token is: %@", deviceToken);
+    NSString * deviceTokenString = [[[[deviceToken description] stringByReplacingOccurrencesOfString: @"<" withString: @""] stringByReplacingOccurrencesOfString: @">" withString: @""]   stringByReplacingOccurrencesOfString: @" " withString: @""];
+    NSLog(@"the generated device token string is : %@",deviceTokenString);
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
@@ -87,6 +134,25 @@
                     ];
     // Add any custom logic here.
     return handled;
+}
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+    //[super application:application didReceiveLocalNotification:notification]; // In most case, you don't need this line
+    
+    //Get notification type
+    NSString *notificationType = [notification.userInfo valueForKey:@"Type"];
+    //notificationType as: message, friend Request, video call, Audio call.
+    NSLog(@"notification type %@",notificationType);
+    
+    NSString *notificationContactName = [notification.userInfo valueForKey:@"contactName"];
+    
+    if ([notificationType isEqualToString:@"birthday"]) {
+        NSLog(@"prefill load message aniversary %@", notificationContactName);
+        NSUserDefaults *defaults = NSUserDefaults.standardUserDefaults;
+        
+        [defaults setObject:[NSString stringWithFormat:@"%@ %@",NSLocalizedString(@"custom_msg_birthday",@"Happy Birthday"), notificationContactName] forKey:@"prefillMessage"];
+        //Handle message
+    }
 }
 
 /**
@@ -162,8 +228,12 @@
     NSError *error = nil;
     persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc]
                                   initWithManagedObjectModel:[self managedObjectModel]];
+    
+    //tell core data that we want to support lightweight migrations
+    NSDictionary *options = @{NSMigratePersistentStoresAutomaticallyOption: @YES, NSInferMappingModelAutomaticallyOption: @YES};
+
     if (![persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType
-                                                  configuration:nil URL:storeUrl options:nil error:&error]) {
+                                                  configuration:nil URL:storeUrl options:options error:&error]) {
         /*
          Replace this implementation with code to handle the error appropriately.
          
@@ -224,6 +294,11 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+// Objective C
+#pragma TwitterDelegate
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options {
+    return [[Twitter sharedInstance] application:app openURL:url options:options];
 }
 
 @end

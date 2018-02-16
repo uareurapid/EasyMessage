@@ -38,12 +38,12 @@
         
         //self.addNewMessage = YES;
         
-        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Add"
+        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"add.png"]
                                                                        style:UIBarButtonItemStyleDone target:self action:@selector(selectFinished:)];
         //unlock = [UIImage imageNamed:@"Unlock32"];
         //lock = [UIImage imageNamed:@"Lock32"];
         
-        UIBarButtonItem *deleteButtonItem = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"delete",@"delete") style:UIBarButtonItemStyleDone target:self action:@selector(deleteMessageClicked:)];
+        UIBarButtonItem *deleteButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"delete.png"] style:UIBarButtonItemStyleDone target:self action:@selector(deleteMessageClicked:)];
       
         [doneButton setEnabled:YES];
         [deleteButtonItem setEnabled:NO];
@@ -370,7 +370,24 @@
         [self.navigationItem.rightBarButtonItem setTitle:NSLocalizedString(@"done_button", nil)];//can save
         
         [self.navigationItem.leftBarButtonItem setEnabled:YES];//can delete
+        
+        if(selectedMessageIndex <= 10) {
+           [self.navigationItem.leftBarButtonItem setEnabled:NO];//no delete of built in
+        }
+        else {
+            [self.navigationItem.leftBarButtonItem setEnabled:YES];//no delete
+        }
+        
     }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if(self.addNewMessage){
+            [self.navigationItem.rightBarButtonItem setImage:[UIImage imageNamed:@"add.png"]];
+        }
+        else{
+            [self.navigationItem.rightBarButtonItem setImage:[UIImage imageNamed:@"done.png"]];
+        }
+    });
     
     
     [self.tableView reloadData];

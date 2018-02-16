@@ -20,6 +20,10 @@
 #import "LIALinkedInApplication.h"
 #import "PCPopupViewController.h"
 #import <StoreKit/StoreKit.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import <FBSDKShareKit/FBSDKShareKit.h>
+#import <TwitterKit/TwitterKit.h>
 
 @class SelectRecipientsViewController;
 @class IAPMasterViewController;
@@ -33,7 +37,7 @@
 #define PROMO_SHOW_COUNTER @"promo_show_counter"
 
 
-@interface PCViewController : UIViewController <MFMailComposeViewControllerDelegate,MFMessageComposeViewControllerDelegate,UIImagePickerControllerDelegate,UITextViewDelegate,
+@interface PCViewController : UIViewController <MFMailComposeViewControllerDelegate,MFMessageComposeViewControllerDelegate,UIImagePickerControllerDelegate,UITextViewDelegate,FBSDKSharingDelegate,
 UITextFieldDelegate, NSURLConnectionDelegate,SKStoreProductViewControllerDelegate>
 - (IBAction)sendMessage:(id)sender;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;

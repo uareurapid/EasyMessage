@@ -18,6 +18,7 @@
 @property (copy,nonatomic) NSString *phone;
 @property (copy,nonatomic) NSString *name;
 @property (copy,nonatomic) NSString *lastName;
+@property (copy,nonatomic) NSDate *birthday;
 @property (strong,nonatomic) UIImage *photo;
 
 -(BOOL) isEqual:(id)object;

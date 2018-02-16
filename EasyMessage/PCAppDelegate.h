@@ -9,7 +9,10 @@
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 
+#import <UserNotifications/UserNotifications.h>
+
 #define IS_IPAD ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)
+#define SYSTEM_VERSION_GRATERTHAN_OR_EQUALTO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending) 
 
 @class PCViewController;
 @class SettingsViewController;
@@ -17,7 +20,7 @@
 @class CustomMessagesController;
 @class IAPMasterViewController;
 
-@interface PCAppDelegate : UIResponder <UIApplicationDelegate>
+@interface PCAppDelegate : UIResponder <UIApplicationDelegate, UNUserNotificationCenterDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 

@@ -21,7 +21,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.1</string>
+	<string>2.1</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -29,6 +29,7 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
+				<string>twitterkit-SfrtbFrUq0IjXVaCHi8784rUN</string>
 				<string>li3233463</string>
 				<string>tel</string>
 				<string>fb2095874780642911</string>
@@ -45,27 +46,29 @@
 			</array>
 		</dict>
 	</array>
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-  	<string>fbapi</string>
-  	<string>fb-messenger-api</string>
-  	<string>fbauth2</string>
-  	<string>fbshareextension</string>
-	</array>
+	<key>CFBundleVersion</key>
+	<string>1.0.0</string>
 	<key>FacebookAppID</key>
 	<string>2095874780642911</string>
 	<key>FacebookDisplayName</key>
 	<string>EasyMessage</string>
-	<key>CFBundleVersion</key>
-	<string>1.0.3</string>
 	<key>LIAppId</key>
 	<string>3233463</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>twitter</string>
+		<string>twitterauth</string>
+		<string>fbapi</string>
+		<string>fb-messenger-api</string>
+		<string>fbauth2</string>
+		<string>fbshareextension</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSContactsUsageDescription</key>
-	<string>the application need to read the contacts list to send messages</string>
+	<string>the application needs to read the contacts list in order to be able to choose recipients for the messages. No information about personal data is transmited anywhere.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>the application can send messages with attched images</string>
+	<string>The application can send messages with attached images. User can choose the images from the device library</string>
 	<key>UILaunchStoryboardName</key>
 	<string>PCViewController</string>
 	<key>UIRequiredDeviceCapabilities</key>

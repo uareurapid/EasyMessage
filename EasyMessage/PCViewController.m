@@ -30,9 +30,6 @@
 #define SYSTEM_VERSION_LESS_THAN(v)                 ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
 #define SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(v)     ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedDescending)
 
-#import <FBSDKCoreKit/FBSDKCoreKit.h>
-#import <FBSDKLoginKit/FBSDKLoginKit.h>
-#import <FBSDKShareKit/FBSDKShareKit.h>
 
 @interface PCViewController ()
 
@@ -66,7 +63,7 @@ static NSString * const kClientId = @"122031362005-ibifir1r1aijhke7r3fe404usutpd
     //[super viewDidLoad];
     //settingsController = [[SettingsViewController alloc] initWithNibName:@"SettingsViewController" bundle:nil];
 	// Do any additional setup after loading the view, typically from a nib.
-    self.title = @"EasyMessage";//NSLocalizedString(@"compose",nil);
+    self.title = NSLocalizedString(@"app_name",@"EasyMessage");
     labelSaveArchive.text = NSLocalizedString(@"archive_message", @"save in archive");
  
     labelAttach.text = NSLocalizedString(@"attach_image", @"Attach an image?");
@@ -90,7 +87,7 @@ static NSString * const kClientId = @"122031362005-ibifir1r1aijhke7r3fe404usutpd
     [body setPlaceholder: NSLocalizedString(@"placeholder_your_message", nil)];
     
     labelSubject.text = NSLocalizedString(@"subject_label",nil);
-    labelMessage.text = NSLocalizedString(@"message_label",nil);
+    labelMessage.text = [NSString stringWithFormat:@"%@ (*)", NSLocalizedString(@"message_label",nil)];
     
     //the table that shows the in app purchases
     inAppPurchaseTableController = [[IAPMasterViewController alloc] initWithNibName:@"IAPMasterViewController" bundle:nil];
@@ -170,6 +167,106 @@ static NSString * const kClientId = @"122031362005-ibifir1r1aijhke7r3fe404usutpd
  
   
 }
+
+-(void) viewDidAppear:(BOOL)animated {
+    
+    //if we have a prefill text we use it
+    NSUserDefaults *defaults = NSUserDefaults.standardUserDefaults;
+    if([defaults valueForKey:@"prefillMessage"] != nil) {
+        self.body.text = [defaults valueForKey:@"prefillMessage"];
+        [defaults removeObjectForKey:@"prefillMessage"];
+        [defaults synchronize];
+    }
+    
+}
+//before IOS 10
+-(void) notif: (NSString *) name{
+    //Get all previous noti..
+    NSLog(@"scheduled notifications: --%@----", [[UIApplication sharedApplication] scheduledLocalNotifications]);
+    
+    NSDate *now = [NSDate date];
+    now = [now dateByAddingTimeInterval:60]; //60 seconds
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    
+    [calendar setTimeZone:[NSTimeZone localTimeZone]];
+    NSDateComponents *components = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit|NSTimeZoneCalendarUnit fromDate:now];
+    
+    
+    NSDate *SetAlarmAt = [calendar dateFromComponents:components];
+    
+    
+    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+    
+    localNotification.fireDate = SetAlarmAt;
+    
+    
+    NSLog(@"FIRE DATE --%@----",[SetAlarmAt description]);
+    
+    localNotification.alertBody = [NSString stringWithFormat:@"Its the Aniversary of %@", name];
+    
+    localNotification.alertAction = [NSString stringWithFormat:@"My test for Weekly alarm"];
+    
+    localNotification.userInfo = @{
+                                   @"alarmID":[NSString stringWithFormat:@"123"],//,
+                                   @"Type":@"birthday",
+                                   @"contactName":name
+                                   //@"SOUND_TYPE":[NSString stringWithFormat:@"hello.mp3"]
+                                   };
+    
+    localNotification.repeatInterval=0; //[NSCalendar currentCalendar];
+    
+    
+    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+}
+
+-(void) notifsAfter10 {
+    //https://stackoverflow.com/questions/39941778/how-to-schedule-a-local-notification-in-ios-10-objective-c
+    NSDate *now = [NSDate date];
+    
+    // NSLog(@"NSDate--before:%@",now);
+    
+    now = [now dateByAddingTimeInterval:60];
+    
+    NSLog(@"NSDate:%@",now);
+    
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    
+    [calendar setTimeZone:[NSTimeZone localTimeZone]];
+    
+    NSDateComponents *components = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit|NSTimeZoneCalendarUnit fromDate:now];
+    
+    NSDate *todaySehri = [calendar dateFromComponents:components]; //unused
+    
+    
+    
+    UNMutableNotificationContent *objNotificationContent = [[UNMutableNotificationContent alloc] init];
+    objNotificationContent.title = [NSString localizedUserNotificationStringForKey:@"Notification!" arguments:nil];
+    objNotificationContent.body = [NSString localizedUserNotificationStringForKey:@"This is local notification message!"
+                                                                        arguments:nil];
+    objNotificationContent.sound = [UNNotificationSound defaultSound];
+    
+    /// 4. update application icon badge number
+    objNotificationContent.badge = @([[UIApplication sharedApplication] applicationIconBadgeNumber] + 1);
+    
+    
+    UNCalendarNotificationTrigger *trigger = [UNCalendarNotificationTrigger triggerWithDateMatchingComponents:components repeats:NO];
+    
+    
+    UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:@"ten"
+                                                                          content:objNotificationContent trigger:trigger];
+    /// 3. schedule localNotification
+    UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+    [center addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
+        if (!error) {
+            NSLog(@"Local Notification succeeded");
+        }
+        else {
+            NSLog(@"Local Notification failed");
+        }
+    }];
+}
+
+
 //override
 -(id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -177,14 +274,14 @@ static NSString * const kClientId = @"122031362005-ibifir1r1aijhke7r3fe404usutpd
         self.tabBarItem.image = [UIImage imageNamed:@"email"];
         self.tabBarItem.title = NSLocalizedString(@"compose",nil);
         
-        UIBarButtonItem *clearButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"clear",@"clear")
+        UIBarButtonItem *clearButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"clear.png"]
                                                                        style:UIBarButtonItemStyleDone target:self action:@selector(clearClicked:)];
         self.navigationItem.rightBarButtonItem = clearButton;
         
    
         
         //attach buttom
-        UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"share",@"share")
+        UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"share.png"]
                                                                          style:UIBarButtonItemStyleDone target:self action:@selector(shareClicked:)];
         self.navigationItem.leftBarButtonItem = shareButton;
         
@@ -553,7 +650,31 @@ static NSString * const kClientId = @"122031362005-ibifir1r1aijhke7r3fe404usutpd
 -(void)setupAddressBook {
     
     @try {
-        [self loadContactsList:nil];
+        //TODO https://cocoacasts.com/migrating-a-data-model-with-core-data/
+        
+        //check if we need some migration work first
+        /*NSString *appVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+        NSLog(@"APP_VERSION --> %@",appVersion);
+        //NSString *appVersion = [NSString stringWithFormat:@"Version %@",[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
+        if([appVersion isEqualToString:@"2.1"]) {
+            NSUserDefaults *defaults = NSUserDefaults.standardUserDefaults;
+            if([defaults boolForKey:@"hasDoneBirthdayMigration"] == false) {
+                NSLog(@"performing data model migration routine...");
+                [CoreDataUtils deleteContactsList];
+                [CoreDataUtils deleteGroupsList];
+                
+                
+                //we updated the model with birthday field
+                [defaults setBool:true forKey:@"hasDoneBirthdayMigration"];
+                
+                [self loadContactsList:nil];
+            }
+        }
+        else {*/
+           [self loadContactsList:nil];
+        //}
+        
+        
     }
     @catch (NSException *exception) {
         [self showAlertBox:[NSString stringWithFormat: NSLocalizedString(@"unable_load_contacts_error_%@", @"unable to read contacts from AB"),exception.description]];
@@ -616,7 +737,7 @@ static NSString * const kClientId = @"122031362005-ibifir1r1aijhke7r3fe404usutpd
         [recipientsController.contactsList removeAllObjects];
         [recipientsController.contactsList addObjectsFromArray:contacts];
         
-        //load also the local contact models, from local database
+        //load also the local contact models, from local database (the ones added manually)
         NSMutableArray *models = [self fetchLocalContactModelRecords];
         
         [recipientsController.contactsList addObjectsFromArray:models];
@@ -813,6 +934,9 @@ static NSString * const kClientId = @"122031362005-ibifir1r1aijhke7r3fe404usutpd
     
     NSLog(@"START IMPORT");
     
+    //get current date
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:[NSDate date]];
+    
     NSMutableArray *contacts = [[NSMutableArray alloc] init];
     
     //need to have permission first, otherwise it can crash
@@ -833,7 +957,20 @@ static NSString * const kClientId = @"122031362005-ibifir1r1aijhke7r3fe404usutpd
             NSString *name = (__bridge NSString*)ABRecordCopyCompositeName(person);
             NSString *lastName =  (__bridge NSString*)ABRecordCopyValue(person, kABPersonLastNameProperty);
             
-            
+            NSDate *data = (__bridge NSDate *)ABRecordCopyValue(person, kABPersonBirthdayProperty);
+            if(data!=nil) {
+                //NSDateFormatter *f = [[NSDateFormatter alloc]init];
+                //[f setDateFormat:@"MMMM dd,yyyy"]
+                contact.birthday = data;
+                
+                NSDateComponents *componentsContact = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:data];
+                //we have a birthday
+                if(components.day == componentsContact.day && components.month == componentsContact.month) {
+                    NSLog(@"CONTACT: %@ HAS ANNIVERSARY",name);
+                    [self notif: name];
+                }
+                
+            }
             //save the reference
             contact.person=person;
             
@@ -1024,7 +1161,7 @@ static NSString * const kClientId = @"122031362005-ibifir1r1aijhke7r3fe404usutpd
         //it means it´s selected only email... and we don´t have email adresses and we´re not sending SMS next either
         
         //but if we have social networks, we don´t care and will post to those only
-        if(sendToFacebook || sendToTwitter) {
+        if(sendToFacebook || sendToTwitter || sendToLinkedin) {
             
             [self sendToSocialNetworks: body.text];
         }
@@ -1143,9 +1280,11 @@ static NSString * const kClientId = @"122031362005-ibifir1r1aijhke7r3fe404usutpd
     FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
     content.contentURL = [NSURL URLWithString:@"https://itunes.apple.com/ca/app/easymessage/id668776671?mt=8"];
     content.quote = message;
+    //if(image!=nil && imageName!=nil) {
+    //}
     [FBSDKShareDialog showFromViewController:self
                                  withContent:content
-                                    delegate:nil];
+                                    delegate:self];
     
     /*if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
         
@@ -1229,7 +1368,28 @@ static NSString * const kClientId = @"122031362005-ibifir1r1aijhke7r3fe404usutpd
 //send the message also to twitter (facebook is always first if available)
 - (void)sendToTwitter:(NSString *)message {
     
-    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
+    // Objective-C
+    
+    // Check if current session has users logged in
+    if ([[Twitter sharedInstance].sessionStore hasLoggedInUsers]) {
+        [self doTwitterShare:message];
+    } else {
+        [[Twitter sharedInstance] logInWithCompletion:^(TWTRSession *session, NSError *error) {
+            if (session) {
+                [self doTwitterShare:message];
+            } else {
+                UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"No Twitter Accounts Available" message:@"You must log in before presenting a composer." preferredStyle:UIAlertControllerStyleAlert];
+                [alert addAction:ok];
+                [self presentViewController:alert animated:YES completion:nil];
+            }
+        }];
+    }
+    
+    
+    
+    
+    /*if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
         
         SLComposeViewController *mySLComposerSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
         
@@ -1292,7 +1452,47 @@ static NSString * const kClientId = @"122031362005-ibifir1r1aijhke7r3fe404usutpd
         }];
         
         [self presentViewController:mySLComposerSheet animated:YES completion:nil];
-    }
+    }*/
+}
+
+-(void) doTwitterShare:(NSString *) message {
+    TWTRComposer *composer = [[TWTRComposer alloc] init];
+    
+    [composer setText:message];
+    [composer setImage:[UIImage imageNamed:@"icon-ipad-76"]];
+    
+    // Called from a UIViewController
+    [composer showFromViewController:self completion:^(TWTRComposerResult result) {
+        
+        NSString *msg;
+        BOOL clear = YES;
+        
+        if (result == TWTRComposerResultCancelled) {
+            NSLog(@"Tweet composition cancelled");
+            msg = NSLocalizedString(@"twitter_post_canceled", @"twitter_post_canceled");
+            clear = NO;
+        }
+        else {
+            NSLog(@"Sending Tweet!");
+            msg = NSLocalizedString(@"twitter_post_ok", @"twitter_post_ok");
+        }
+        
+        if(msg!=nil) {
+            [[[[iToast makeText:msg]
+               setGravity:iToastGravityBottom] setDuration:1000] show];
+        }
+        
+        //check if send to linkedin
+        if(sendToLinkedin) {
+            
+            //before send check if we need authorization
+            [self authorizeAndSendToLinkedin:message];
+            
+        }
+        else {
+            [self resetSocialNetworks:clear];
+        }
+    }];
 }
 
 //post to linkedin
@@ -1393,7 +1593,7 @@ static NSString * const kClientId = @"122031362005-ibifir1r1aijhke7r3fe404usutpd
         //means we have no available phones
         //since we´re not sending SMS, social networks will not be on that dismiss, so we need to check if send it now
       
-        if(sendToTwitter || sendToFacebook) {
+        if(sendToTwitter || sendToFacebook || sendToLinkedin) {
             [self sendToSocialNetworks: body.text];
         }
         else {
@@ -2342,4 +2542,57 @@ void addressBookChanged(ABAddressBookRef reference,
 
 - (void)bannerViewActionDidFinish:(ADBannerView *)banner {
 }*/
+
+#pragma FacebookShareDelegate
+- (void) sharer: (id<FBSDKSharing>)sharer didCompleteWithResults: (NSDictionary *)results {
+    NSString* message = self.body.text;
+    NSString *msg = NSLocalizedString(@"facebook_post_ok", @"facebook_post_ok");
+    
+    if(msg!=nil) {
+        [[[[iToast makeText:msg]
+           setGravity:iToastGravityBottom] setDuration:1000] show];
+    }
+    
+    if(sendToTwitter) {
+        [self sendToTwitter:message]; //will reset inside
+    }
+    else if(sendToLinkedin) {
+        //before send check if we need authorization
+        [self authorizeAndSendToLinkedin:message];
+    }
+    else {
+        //reset now
+        [self resetSocialNetworks:YES];
+    }
+}
+
+- (void) sharer:  (id<FBSDKSharing>)sharer didFailWithError: (NSError *)error {
+    [self handleFacebookFailure];
+}
+
+- (void) sharerDidCancel:(id<FBSDKSharing>)sharer {
+    [self handleFacebookFailure];
+}
+
+-(void) handleFacebookFailure {
+    NSString* message = self.body.text;
+    NSString *msg = NSLocalizedString(@"facebook_post_canceled", @"facebook_post_canceled");
+    if(msg!=nil) {
+        [[[[iToast makeText:msg]
+           setGravity:iToastGravityBottom] setDuration:1000] show];
+    }
+    
+    if(sendToTwitter) {
+        [self sendToTwitter:message]; //will reset inside
+    }
+    else if(sendToLinkedin) {
+        //before send check if we need authorization
+        [self authorizeAndSendToLinkedin:message];
+    }
+    else {
+        //reset now
+        [self resetSocialNetworks:NO];
+    }
+}
+
 @end
