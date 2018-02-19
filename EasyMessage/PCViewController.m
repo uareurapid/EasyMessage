@@ -162,6 +162,8 @@ static NSString * const kClientId = @"122031362005-ibifir1r1aijhke7r3fe404usutpd
     //loginButton.center = self.view.center;
     //[self.view addSubview:loginButton];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkForPrefilledMessage:) name:UIApplicationDidBecomeActiveNotification object:self];
+    
     [super viewDidLoad];
     
  
@@ -170,17 +172,59 @@ static NSString * const kClientId = @"122031362005-ibifir1r1aijhke7r3fe404usutpd
 
 -(void) viewDidAppear:(BOOL)animated {
     
+    
+    //check time of last import, and do it again if older than 5 hours
+    double nowMilis = [[NSDate date] timeIntervalSince1970] * 1000;
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *lastImport = [defaults valueForKey:@"last_import"];
+    
+    bool forceImport = [defaults boolForKey:@"force_import"];
+    
+    if(lastImport != nil || forceImport) {
+        double lastImportMilis = lastImport.doubleValue;
+        //last import done more than 1 hours ago? load them again!
+        if( (nowMilis - lastImportMilis > 1*60*60*1000) || forceImport ) {
+            [self setupAddressBook];
+            [defaults setValue: [NSString stringWithFormat:@"%f",  nowMilis] forKey:@"last_import"];
+            
+            if(forceImport) {
+                [defaults setBool:false forKey:@"force_import"];
+            }
+        }
+    }
+    
+    
+    
     //if we have a prefill text we use it
+    [self checkForPrefilledMessage];
+}
+
+-(void) checkForPrefilledMessage{
     NSUserDefaults *defaults = NSUserDefaults.standardUserDefaults;
     if([defaults valueForKey:@"prefillMessage"] != nil) {
         self.body.text = [defaults valueForKey:@"prefillMessage"];
         [defaults removeObjectForKey:@"prefillMessage"];
+        
+        //is a prefill message of type birthday
+        if([[defaults valueForKey:@"prefillMessageType"] isEqualToString:@"birthday"] ) {
+            //day & month of the birthday (same as today date maybe?)
+            NSUInteger day = [[defaults valueForKey:@"day"] integerValue];
+            NSUInteger month = [[defaults valueForKey:@"month"] integerValue];
+            
+            [defaults removeObjectForKey:@"day"];
+            [defaults removeObjectForKey:@"month"];
+            
+            //TODO improve this, i should not need to fetch the contacts again, but for 1st implementation is OK!
+            [self.recipientsController searchForBirthdayIn:day month:month];
+            
+        }
+        
         [defaults synchronize];
     }
-    
 }
 //before IOS 10
--(void) notif: (NSString *) name{
+//TODO make generic for other type of notifications
+-(void) scheduleNotification: (NSString *) type nameOfContacts: (NSMutableArray *) names month: (NSInteger) month day: (NSInteger) day{
     //Get all previous noti..
     NSLog(@"scheduled notifications: --%@----", [[UIApplication sharedApplication] scheduledLocalNotifications]);
     
@@ -199,21 +243,36 @@ static NSString * const kClientId = @"122031362005-ibifir1r1aijhke7r3fe404usutpd
     
     localNotification.fireDate = SetAlarmAt;
     
+    //if more than one we do not add the name, but if only 1 then it is more personalized msg!!!
+    //TODO translate this str
     
-    NSLog(@"FIRE DATE --%@----",[SetAlarmAt description]);
+    if([type isEqualToString:@"birthday"]) {
+        NSString *messageToAppend = @"";
+        if(names.count == 1)  {
+            messageToAppend = (NSString *)[names objectAtIndex:0];
+        }
+        else {
+            messageToAppend = [NSString stringWithFormat:@"%@ and others",(NSString *)[names objectAtIndex:0] ];
+        }
+        
+        NSLog(@"FIRE DATE --%@----",[SetAlarmAt description]);
+        
+        localNotification.alertBody = [NSString stringWithFormat:@"Its the Aniversary of %@", messageToAppend];
+        
+        localNotification.alertAction = [NSString stringWithFormat:@"My test for Weekly alarm"];
+        
+        localNotification.userInfo = @{
+                                       @"alarmID":[NSString stringWithFormat:@"123"],//,
+                                       @"Type":type,
+                                       @"day" : [NSString stringWithFormat:@"%ld", (long)day ],
+                                       @"month" : [NSString stringWithFormat:@"%ld", (long)month ],
+                                       };
+        localNotification.repeatInterval=0; //[NSCalendar currentCalendar];
+    }//else do other cases on other releases
     
-    localNotification.alertBody = [NSString stringWithFormat:@"Its the Aniversary of %@", name];
     
-    localNotification.alertAction = [NSString stringWithFormat:@"My test for Weekly alarm"];
     
-    localNotification.userInfo = @{
-                                   @"alarmID":[NSString stringWithFormat:@"123"],//,
-                                   @"Type":@"birthday",
-                                   @"contactName":name
-                                   //@"SOUND_TYPE":[NSString stringWithFormat:@"hello.mp3"]
-                                   };
     
-    localNotification.repeatInterval=0; //[NSCalendar currentCalendar];
     
     
     [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
@@ -650,31 +709,11 @@ static NSString * const kClientId = @"122031362005-ibifir1r1aijhke7r3fe404usutpd
 -(void)setupAddressBook {
     
     @try {
-        //TODO https://cocoacasts.com/migrating-a-data-model-with-core-data/
-        
-        //check if we need some migration work first
-        /*NSString *appVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-        NSLog(@"APP_VERSION --> %@",appVersion);
-        //NSString *appVersion = [NSString stringWithFormat:@"Version %@",[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
-        if([appVersion isEqualToString:@"2.1"]) {
-            NSUserDefaults *defaults = NSUserDefaults.standardUserDefaults;
-            if([defaults boolForKey:@"hasDoneBirthdayMigration"] == false) {
-                NSLog(@"performing data model migration routine...");
-                [CoreDataUtils deleteContactsList];
-                [CoreDataUtils deleteGroupsList];
-                
-                
-                //we updated the model with birthday field
-                [defaults setBool:true forKey:@"hasDoneBirthdayMigration"];
-                
-                [self loadContactsList:nil];
-            }
-        }
-        else {*/
-           [self loadContactsList:nil];
-        //}
-        
-        
+        [self loadContactsList:nil];
+        double nowMilis = [[NSDate date] timeIntervalSince1970] * 1000;
+        NSString *lastImport = [NSString stringWithFormat:@"%f",  nowMilis];
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setValue:lastImport forKey:@"last_import"];
     }
     @catch (NSException *exception) {
         [self showAlertBox:[NSString stringWithFormat: NSLocalizedString(@"unable_load_contacts_error_%@", @"unable to read contacts from AB"),exception.description]];
@@ -707,11 +746,15 @@ static NSString * const kClientId = @"122031362005-ibifir1r1aijhke7r3fe404usutpd
                 NSLog(@"granted permission");
                 contacts = [self loadContacts: addressBook];
                 
+                NSLog(@"readed %ld contacts from local address book",(unsigned long)contacts.count);
+                
                 [recipientsController.contactsList removeAllObjects];
                 [recipientsController.contactsList addObjectsFromArray:contacts];
                 
                 //load also the local contact models, from local database
                 NSMutableArray *models = [self fetchLocalContactModelRecords];
+                
+                NSLog(@"readed %ld contacts from core data models",(unsigned long)models.count);
                 
                 [recipientsController.contactsList addObjectsFromArray:models];
                 
@@ -815,50 +858,59 @@ static NSString * const kClientId = @"122031362005-ibifir1r1aijhke7r3fe404usutpd
     NSMutableArray *records = [[NSMutableArray alloc] init];
     NSMutableArray *databaseRecords = [CoreDataUtils fetchContactModelRecordsFromDatabase];
     NSMutableArray* existingContacts = recipientsController.contactsList;
-        
+    
+    NSMutableArray *nameOfContacts;
+    
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate: [NSDate date]];
+    
+    NSLog(@"num of database contacts %ld",(unsigned long) databaseRecords.count);
         for(ContactDataModel *contact in databaseRecords) {
-            
-            //NSLog(@"checking name: %@ out of %ld",contact.name, databaseRecords.count);
-            
-            /*if(contact.group!=nil) {
-                //skip this, is a group
-                NSLog(@"skipping this as it ")
-                continue;
-            }*/
+       
+            NSLog(@"readed model name: %@",contact.name);
+            NSLog(@"readed model lastname: %@",contact.lastname);
+            NSLog(@"readed model email: %@",contact.email);
+            NSLog(@"readed model phone: %@",contact.phone);
             
             NSString *name = contact.name;
             NSString *email = contact.email;
             NSString *phone =  contact.phone;
+            NSString *lastname = contact.lastname;
             
             BOOL exists = false;
             
+            NSLog(@"existing contacts size: %ld", existingContacts.count);
             for(Contact *existing in existingContacts) {
                 
                 if(name!=nil && existing.name!=nil) {
                     if([name isEqualToString:existing.name]) {
-                        exists = true;
-                        break;
+                        //also check last name, just the name is not enough
+                        if(lastname!=nil && existing.lastName!=nil && [lastname isEqualToString:existing.lastName] ) {
+                              NSLog(@"same contact %@ %@",name, lastname);
+                              exists = true;
+                              break;
+                        }
+                        
+                        //exists = true;
+                        //break;
                     }
                 }
                 else if(email!=nil && existing.email!=nil) {
                     if([email isEqualToString:existing.email]) {
+                        NSLog(@"same email %@",email);
                         exists = true;
                         break;
                     }
                 }
                 else if(phone!=nil && existing.phone!=nil) {
-                    if([existing.phone isEqualToString:existing.phone]) {
+                    if([phone isEqualToString:existing.phone]) {
+                        NSLog(@"same phone %@",phone);
                         exists = true;
                         break;
                     }
                 }
                 
-                /*if([name isEqualToString:existing.name] || (email!=nil && [email isEqualToString:existing.email] )
-                   || (phone!=nil && [existing.phone isEqualToString:existing.phone]) ) {
-                    exists = true;
-                    break;
-                }*/
             }
+            NSLog(@"it exists is? %d",exists);
             if(!exists) {
                 //avoid add repeating ones
                 Contact *c = [[Contact alloc] init];
@@ -867,6 +919,26 @@ static NSString * const kClientId = @"122031362005-ibifir1r1aijhke7r3fe404usutpd
                 c.email = contact.email;
                 c.lastName = contact.lastname;
                 
+               
+                NSDate *data = contact.birthday;
+                if(data!=nil) {
+                    
+                    
+                    NSDateComponents *componentsContact = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:data];
+                    //we have a birthday
+                    if(components.day == componentsContact.day && components.month == componentsContact.month) {
+                        //TODO also send the email or other field... ate the end we need to prefill the message and pre-select the recipient
+                        //so we need to clearly identify it
+                        
+                        if(nameOfContacts == nil) {
+                            nameOfContacts = [[NSMutableArray alloc] init];
+                        }
+                        [nameOfContacts addObject:name];
+                    }
+                    
+                }
+                
+                NSLog(@"adding this contact: %@",c.name);
                 [records addObject:c];
             }
             
@@ -874,6 +946,10 @@ static NSString * const kClientId = @"122031362005-ibifir1r1aijhke7r3fe404usutpd
             
             
         }
+    
+    if(nameOfContacts != nil) {
+        [self scheduleNotification:@"birthday" nameOfContacts:nameOfContacts month:components.month day:components.day];
+    }
     
     return records;
     
@@ -939,6 +1015,8 @@ static NSString * const kClientId = @"122031362005-ibifir1r1aijhke7r3fe404usutpd
     
     NSMutableArray *contacts = [[NSMutableArray alloc] init];
     
+    NSMutableArray *nameOfContacts; //for birthday reminder
+    
     //need to have permission first, otherwise it can crash
     if(ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized) {
     
@@ -946,9 +1024,7 @@ static NSString * const kClientId = @"122031362005-ibifir1r1aijhke7r3fe404usutpd
         //CFRetain(addressBook);
         NSArray *arrayOfPeople = (__bridge NSArray*)ABAddressBookCopyArrayOfAllPeople(addressBook);
         
-        for(int i = 0; i < arrayOfPeople.count; i++){
-            
-            
+        for(int i = 0; i < arrayOfPeople.count; i++) {
             
             Contact *contact = [[Contact alloc] init];
             ABRecordRef person = (__bridge ABRecordRef)[arrayOfPeople objectAtIndex:i];
@@ -966,8 +1042,13 @@ static NSString * const kClientId = @"122031362005-ibifir1r1aijhke7r3fe404usutpd
                 NSDateComponents *componentsContact = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:data];
                 //we have a birthday
                 if(components.day == componentsContact.day && components.month == componentsContact.month) {
-                    NSLog(@"CONTACT: %@ HAS ANNIVERSARY",name);
-                    [self notif: name];
+                    //TODO also send the email or other field... ate the end we need to prefill the message and pre-select the recipient
+                    //so we need to clearly identify it
+                    
+                    if(nameOfContacts == nil) {
+                       nameOfContacts = [[NSMutableArray alloc] init];
+                    }
+                    [nameOfContacts addObject:name];
                 }
                 
             }
@@ -1063,6 +1144,9 @@ static NSString * const kClientId = @"122031362005-ibifir1r1aijhke7r3fe404usutpd
     }
     
     NSLog(@"DONE IMPORT");
+    if(nameOfContacts != nil) {
+        [self scheduleNotification: @"birthday" nameOfContacts: nameOfContacts month: components.month day: components.day];
+    }
     
    return contacts;
     

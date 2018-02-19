@@ -30,6 +30,10 @@
 
 -(void) deleteGroup:(Group *)group;
 
+-(void) searchForBirthdayIn: (NSInteger) day month: (NSInteger) month;
+
+-(void) reloadContacts: (NSMutableArray *) contacts;
+
 @property (strong,nonatomic) NSMutableArray *contactsList;
 @property (strong,nonatomic) NSMutableArray *groupsList;
 

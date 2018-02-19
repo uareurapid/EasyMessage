@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <AddressBook/AddressBook.h>
 
-@interface Contact : NSObject
+@interface Contact : NSObject // <NSCoding>
 
 
 

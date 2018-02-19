@@ -21,7 +21,7 @@
 "option_send_sms_only" = "仅发送短信";
 "option_send_facebook_only" = "发布到Facebook";
 "option_send_twitter_only" = "发布到Twitter";
-"option_send_twitter_only" = "发布到Linkedin";
+"option_send_linkedin_only" = "发布到Linkedin";
 "option_send_include_social_network" = "包括社交网络......";
 "footer_select_service" = "选择服务发送消息";
 "header_preferred_service" = "首选服务";
@@ -104,4 +104,5 @@
 "contact_last_name" = "姓";
 "contact_fields_required" = "姓名和电话或电子邮件是必需的!";
 "invalid_email" = "不合规电邮!";
-"attach_image" = "Attach an image?";
+"attach_image" = "附上图像?";
+"app_name" = "轻松群发短信";

@@ -139,19 +139,29 @@
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
     //[super application:application didReceiveLocalNotification:notification]; // In most case, you don't need this line
     
+    
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+    
     //Get notification type
     NSString *notificationType = [notification.userInfo valueForKey:@"Type"];
     //notificationType as: message, friend Request, video call, Audio call.
     NSLog(@"notification type %@",notificationType);
     
-    NSString *notificationContactName = [notification.userInfo valueForKey:@"contactName"];
-    
     if ([notificationType isEqualToString:@"birthday"]) {
-        NSLog(@"prefill load message aniversary %@", notificationContactName);
+        
+        NSLog(@"prefill load message aniversary...");
+        
         NSUserDefaults *defaults = NSUserDefaults.standardUserDefaults;
         
-        [defaults setObject:[NSString stringWithFormat:@"%@ %@",NSLocalizedString(@"custom_msg_birthday",@"Happy Birthday"), notificationContactName] forKey:@"prefillMessage"];
-        //Handle message
+        NSString *day = [notification.userInfo valueForKey:@"day"];
+        NSString *month = [notification.userInfo valueForKey:@"month"];
+        
+        [defaults setObject:NSLocalizedString(@"custom_msg_birthday",@"Happy Birthday") forKey:@"prefillMessage"];
+        [defaults setObject:@"birthday" forKey:@"prefillMessageType"];
+        [defaults setObject:month forKey:@"month"];
+        [defaults setObject:day forKey:@"day"];
+        
+        [self.viewController checkForPrefilledMessage];
     }
 }
 

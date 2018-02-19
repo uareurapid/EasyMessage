@@ -32,6 +32,7 @@
     self.txtName.delegate=self;
     self.txtLastName.delegate=self;
     self.txtEmail.delegate=self;
+    self.datePicker.userInteractionEnabled = YES;
     
     [self.labelEmail setText: [NSString stringWithFormat:@"%@:", NSLocalizedString(@"contact_email",@"contact_email")] ];
     [self.labelPhone setText: [NSString stringWithFormat:@"%@:",NSLocalizedString(@"phone_label",@"phone_label")] ];
@@ -86,14 +87,23 @@
         }
        
         if(emailValid) {
-            if([self checkIfContactExists:self.txtName.text]==NO) {
+            if([self checkIfContactExists]==NO) {
                 
+                NSDate *birthday = self.datePicker.date;
                 //name OK, save it!
                 Contact *contact = [[Contact alloc] init];
                 contact.name = self.txtName.text;
+                contact.birthday = birthday;
                 contact.phone = self.txtPhone.text.length==0 ? @"" : self.txtPhone.text;
                 contact.email = self.txtEmail.text.length==0 ? @"" : self.txtEmail.text;
                 contact.lastName = self.txtLastName.text.length==0? @"": self.txtLastName.text;
+                
+                NSLog(@"-----------------------------------");
+                NSLog(@"contact name: %@",contact.name);
+                NSLog(@"contact birthday: %@",contact.birthday.description);
+                NSLog(@"contact phone: %@",contact.phone);
+                NSLog(@"contact last name: %@",contact.lastName);
+                NSLog(@"-----------------------------------");
                 
                 NSManagedObjectContext *managedObjectContext = [(PCAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
                 ContactDataModel *contactModel = [self prepareModelFromContact:managedObjectContext :contact ];
@@ -102,6 +112,8 @@
                 NSError *error;
                 
                 if(![managedObjectContext save:&error]){
+                    [[[[iToast makeText: [NSString stringWithFormat:@"Unable to save object, error is: %@",error.description]]
+                       setGravity:iToastGravityBottom] setDuration:2000] show];
                     NSLog(@"Unable to save object, error is: %@",error.description);
                     //This is a serious error saying the record
                     //could not be saved. Advise the user to
@@ -109,7 +121,16 @@
                     
                 }
                 else {
+                    
+                    NSLog(@"-----------------------------------");
+                    NSLog(@"contactModel name: %@",contactModel.name);
+                    NSLog(@"contactModel birthday: %@",contactModel.birthday.description);
+                    NSLog(@"contactModel phone: %@",contactModel.phone);
+                    NSLog(@"contactModel last name: %@",contactModel.lastname);
+                    NSLog(@"-----------------------------------");
+                    
                     OK = YES;
+                    
                     [[[[iToast makeText:NSLocalizedString(@"added",@"added")]
                        setGravity:iToastGravityBottom] setDuration:2000] show];
                 }
@@ -117,6 +138,12 @@
                 if(OK) {
                     //add to the list
                     [self.contactsList addObject:contact];
+                    
+                    //force a reload of list on viewDidAppear
+                    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                    [defaults setBool:true forKey:@"force_import"];
+                    
+                    
                     [self dismissViewControllerAnimated:YES completion:nil];
                     
                 }
@@ -152,6 +179,7 @@
     contactModel.name = contact.name;
     contactModel.phone = contact.phone;
     contactModel.email = contact.email;
+    contactModel.birthday = contact.birthday;
     contactModel.lastname = contact.lastName;
     contactModel.group = nil;
     
@@ -159,11 +187,38 @@
 }
 
 
--(BOOL) checkIfContactExists: (NSString *) name {
+-(BOOL) checkIfContactExists {
 
+    if(self.txtEmail.text == nil ) {
+        self.txtEmail.text = @"";
+    }
+    
+    if(self.txtName.text == nil) {
+        self.txtName.text = @"";
+    }
+    
+    if(self.txtLastName == nil) {
+        self.txtLastName.text = @"";
+    }
+    
+    if(self.txtPhone == nil) {
+        self.txtPhone.text = @"";
+    }
+    
     for(Contact * contact in self.contactsList) {
-        if([contact.name isEqualToString:name]){
+        
+        
+        if([self.txtName.text isEqualToString:contact.name ] && [self.txtLastName.text isEqualToString:contact.lastName] &&
+           self.txtName.text.length > 0 && self.txtLastName.text.length > 0){
             
+            return YES;
+        }
+        
+        else if([self.txtEmail.text isEqualToString:contact.email] && self.txtEmail.text.length > 0) {
+            return YES;
+        }
+        
+        else if([self.txtPhone.text isEqualToString:contact.phone] && self.txtPhone.text.length > 0) {
             return YES;
         }
     }
@@ -190,4 +245,13 @@
 }
 */
 
+- (IBAction)dateSwitchChanged:(id)sender {
+    UISwitch *stwitch = (UISwitch *) sender;
+    if(stwitch.isOn) {
+        self.datePicker.enabled = true;
+    }
+    else {
+        self.datePicker.enabled = false;
+    }
+}
 @end

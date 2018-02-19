@@ -109,5 +109,18 @@
     return newOne;
 }*/
 
+/*
+- (void)encodeWithCoder:(nonnull NSCoder *)aCoder {
+     [aCoder encodeObject:self.name forKey:@"name"];
+     [aCoder encodeObject:self.lastName forKey:@"lastaName"];
+     [aCoder encodeObject:self.phone forKey:@"phone"];
+     [aCoder encodeObject:self.email forKey:@"email"];
+     [aCoder encodeObject:self.phone forKey:@"name"];
+     [aCoder encodeObject:self.name forKey:@"name"];
+}
+
+- (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder {
+    <#code#>
+}*/
 
 @end

@@ -78,6 +78,7 @@ void addressBookChanged(ABAddressBookRef reference,
                         CFDictionaryRef dictionary,
                         void *context);
 -(void)setupAddressBook;
+-(void) checkForPrefilledMessage;
 
 @property (strong, nonatomic) IBOutlet UITextField *subject;
 

@@ -21,4 +21,6 @@
 +(GroupDataModel *) fetchGroupDataModelByName: (NSString *) groupName;
 +(BOOL) deleteGroupDataModelByName: (NSString *) groupName;
 +(BOOL) deleteMessageDataModelByMsg: (NSString *) msg;
++(BOOL) deleteContactsList;
++(BOOL) deleteGroupsList;
 @end

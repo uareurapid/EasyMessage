@@ -108,5 +108,6 @@
 "contact_last_name" = "성";
 "contact_fields_required" = "이름과 전화 또는 이메일이 필요합니다!";
 "invalid_email" = "잘못된 이메일!";
-"attach_image" = "Attach an image?";
+"attach_image" = "이미지 부착?";
+"app_name" = "EasyMessage";
 

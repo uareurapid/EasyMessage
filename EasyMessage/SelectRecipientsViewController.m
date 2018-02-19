@@ -120,6 +120,15 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
     return self;
 }
 
+//called from main to refresh the list
+-(void) reloadContacts: (NSMutableArray *) contacts {
+    [self.contactsList removeAllObjects];
+    [self.contactsList addObjectsFromArray:contacts];
+    NSLog(@"the new list has %ld",(unsigned long)contacts.count);
+    dispatch_async(dispatch_get_main_queue(), ^(){
+        [self.tableView reloadData];
+    });
+}
 
 -(id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil contacts: (NSMutableArray *) contacts rootViewController: (PCViewController*) viewController{
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -263,7 +272,11 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
 
 -(IBAction)refreshPhonebook:(id)sender {
     contactsByLastNameInitial = [self loadInitialNamesDictionary];
-    [self.tableView reloadData];
+    NSLog(@"numer of contacts in list: %lu", (unsigned long)self.contactsList.count);
+    dispatch_async(dispatch_get_main_queue(), ^(){
+        [self.tableView reloadData];
+    });
+    
 }
 
 //will group the contacts by last name initial
@@ -551,11 +564,13 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
         
     }
         
-    [self.tableView reloadData];
+    dispatch_async(dispatch_get_main_queue(), ^(){
+        [self.tableView reloadData];
+    });
 
 }
 
--(void) viewWillAppear:(BOOL)animated {
+-(void) viewDidAppear:(BOOL)animated {
     
     initialSelectedContacts = selectedContactsList.count;
     groupLocked = false;
@@ -601,6 +616,13 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
         // in the navigation stack.
     //}
    
+    [self dismissAndPrefillContactList];
+    
+    
+   
+}
+
+-(void) dismissAndPrefillContactList {
     [rootViewController.selectedRecipientsList removeAllObjects];
     [rootViewController.selectedRecipientsList addObjectsFromArray:selectedContactsList];
     
@@ -610,9 +632,42 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
         [[[[iToast makeText:msg]
            setGravity:iToastGravityBottom] setDuration:2000] show];
     }
+}
+
+//selects users with birthday in this date
+-(void) searchForBirthdayIn:(NSInteger)day month:(NSInteger)month {
     
+    if(self.contactsList == nil) {
+        self.contactsList = [[NSMutableArray alloc] init];
+    }
     
-   
+    if(self.selectedContactsList == nil) {
+        self.selectedContactsList = [[NSMutableArray alloc] init];
+    }
+    else {
+        [self.selectedContactsList removeAllObjects];
+    }
+    
+    for(Contact *contact in self.contactsList) {
+        if(contact.birthday !=nil) {
+            NSDate *data = contact.birthday;
+            NSDateComponents *componentsContact = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate: data];
+            if(day == componentsContact.day && month == componentsContact.month) {
+                //this is one of the targets
+                [self.selectedContactsList addObject:contact];
+            }
+        }
+    }
+    
+    if(selectedContactsList.count > 0 ) {
+        
+        NSString *msg = [NSString stringWithFormat: NSLocalizedString(@"selected_%@_recipients", @"num of recipients"),@(selectedContactsList.count)];
+        [[[[iToast makeText:msg]
+           setGravity:iToastGravityBottom] setDuration:2000] show];
+        
+        [rootViewController.selectedRecipientsList removeAllObjects];
+        [rootViewController.selectedRecipientsList addObjectsFromArray:selectedContactsList];
+    }
 }
 
 #pragma groups stuff
@@ -737,8 +792,8 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
             cell.textLabel.text = contact.phone;
         }
         
-        BOOL hasPhone = contact.phone!=nil;
-        BOOL hasEmail = contact.email!=nil;
+        BOOL hasPhone = contact.phone!=nil && contact.phone.length > 0;
+        BOOL hasEmail = contact.email!=nil && contact.email.length > 0;
         
         if(hasEmail && hasPhone) {
             cell.detailTextLabel.text =  [NSString stringWithFormat:@"Email + %@", NSLocalizedString(@"phone_label",@"Phone") ];
@@ -812,6 +867,9 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
     
     /***************************/
     if (self.searchDisplayController.active) {
+        
+        //self.searchBar.showsCancelButton = false;
+        //self.searchBar.showsSearchResultsButton = true;
         NSIndexPath *indexPath = [self.searchDisplayController.searchResultsTableView indexPathForSelectedRow];
         contact = [self.searchData objectAtIndex:indexPath.row];
         
@@ -841,13 +899,13 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
                     break;
                 }
             }
-
-            NSIndexPath *path =  [NSIndexPath indexPathForRow:row inSection:section];
-            [self.tableView selectRowAtIndexPath:path animated:NO scrollPosition:UITableViewScrollPositionNone];
             
-            //[[[[iToast makeText:[NSString stringWithFormat: NSLocalizedString(@"selected_%@_recipients", @"num of recipients"),@(self.contactsList.count)]]
-              // setGravity:iToastGravityBottom] setDuration:1000] show];
-            // Return the number of sections.
+            /*if(![self.selectedContactsList containsObject:contact]) {
+                [self.contactsList addObject:contact];
+            }
+            else {
+                [self.selectedContactsList removeObject:contactsList];
+            }*/
             
             if(![self.searchDataSelection containsObject:contact]) {
                 [self.searchDataSelection addObject:contact];
@@ -855,8 +913,17 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
             else {
                 [self.searchDataSelection removeObject:contact];
             }
+
+            NSIndexPath *path =  [NSIndexPath indexPathForRow:row inSection:section];
+            [self.tableView selectRowAtIndexPath:path animated:YES scrollPosition:UITableViewScrollPositionNone];
             
-           
+            //[[[[iToast makeText:[NSString stringWithFormat: NSLocalizedString(@"selected_%@_recipients", @"num of recipients"),@(self.contactsList.count)]]
+              // setGravity:iToastGravityBottom] setDuration:1000] show];
+            // Return the number of sections.
+            
+            
+            
+            [self.searchDisplayController setActive:false];
             
             
         }
@@ -874,7 +941,7 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
     
     
    if(![selectedContactsList containsObject:contact]) {
-           [selectedContactsList addObject:contact];
+        [selectedContactsList addObject:contact];
    }
    else {
      //already contains, remove it
@@ -920,7 +987,9 @@ const NSString *MY_ALPHABET = @"ABCDEFGIJKLMNOPQRSTUVWXYZ";
     //[self.navigationItem.rightBarButtonItem setEnabled: ( (selectedContactsList.count>1) && !groupLocked ) ];
     
 
-   [self.tableView reloadData];
+    dispatch_async(dispatch_get_main_queue(), ^(){
+        [self.tableView reloadData];
+    });
 
 }
 

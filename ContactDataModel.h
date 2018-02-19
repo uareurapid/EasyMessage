@@ -18,6 +18,7 @@
 @property (nonatomic, retain) NSString * lastname;
 @property (nonatomic, retain) NSString * email;
 @property (nonatomic, retain) NSSet *group;
+@property (nonatomic, retain) NSDate *birthday;
 @end
 
 @interface ContactDataModel (CoreDataGeneratedAccessors)

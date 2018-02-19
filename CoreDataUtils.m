@@ -46,6 +46,69 @@
 
 }
 
++(BOOL) deleteContactsList {
+    BOOL deleted = NO;
+    @try {
+        NSManagedObjectContext *managedObjectContext = [(PCAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
+        
+        
+        // Define our table/entity to use
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"ContactDataModel" inManagedObjectContext:managedObjectContext];
+        // Setup the fetch request
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+        [request setEntity:entity];
+        
+        NSError *error;
+        NSMutableArray *mutableFetchResults = [[managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+        
+        if(mutableFetchResults!=nil && mutableFetchResults.count>0) {
+            
+            for (ContactDataModel *toDelete in mutableFetchResults) {
+              [managedObjectContext deleteObject:toDelete];
+            }
+            
+            deleted = YES;
+        }
+    }
+    @catch (NSException *exception) {
+        NSLog(@"error deleting group on db %@",exception.description);
+    }
+    @finally {
+        return deleted;
+    };
+}
+
++(BOOL) deleteGroupsList {
+    BOOL deleted = NO;
+    @try {
+        NSManagedObjectContext *managedObjectContext = [(PCAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
+        
+        
+        // Define our table/entity to use
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"GroupDataModel" inManagedObjectContext:managedObjectContext];
+        // Setup the fetch request
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+        [request setEntity:entity];
+        
+        NSError *error;
+        NSMutableArray *mutableFetchResults = [[managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+        
+        if(mutableFetchResults!=nil && mutableFetchResults.count>0) {
+            
+            for (GroupDataModel *toDelete in mutableFetchResults) {
+                [managedObjectContext deleteObject:toDelete];
+            }
+            deleted = YES;
+        }
+    }
+    @catch (NSException *exception) {
+        NSLog(@"error deleting group on db %@",exception.description);
+    }
+    @finally {
+        return deleted;
+    };
+}
+
 + (NSMutableArray *)fetchContactModelRecordsFromDatabase {
     
 

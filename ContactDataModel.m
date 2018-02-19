@@ -17,5 +17,6 @@
 @dynamic email;
 @dynamic lastname;
 @dynamic group;
+@dynamic birthday;
 
 @end

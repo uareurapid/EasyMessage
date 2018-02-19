@@ -105,4 +105,6 @@
 "contact_fields_required" = "Nombre y están obligados teléfono o correo electrónico!";
 "invalid_email" = "¡Email inválido!";
 "attach_image" = "Adicionar un imagen?";
+"app_name" = "EasyMessage";
+
 

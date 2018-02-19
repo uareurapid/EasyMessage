@@ -22,6 +22,9 @@
 - (IBAction)btnCancelClicked:(id)sender;
 - (IBAction)btnCreateContactClicked:(id)sender;
 
+@property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
+- (IBAction)dateSwitchChanged:(id)sender;
+
 //reference to recipients controller list
 @property (strong,nonatomic) NSMutableArray *contactsList;
 
